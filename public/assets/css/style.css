@@ -2063,8 +2063,8 @@ img {
   top: 180%;
   background: #fff;
   width: 200px;
-  opacity: 0;
-  visibility: hidden;
+  /* opacity: 0;
+  visibility: hidden; */
   -webkit-transition: all .3s;
   transition: all .3s;
   -webkit-box-shadow: 0 5px 14.25px 0.75px rgba(12, 105, 184, 0.1);
@@ -3274,6 +3274,11 @@ img {
   font-size: 30px;
   font-weight: 600;
   margin-bottom: 15px;
+}
+
+.category-details {
+  padding: 10px 0px;
+  font-size: 15px;
 }
 
 @media (max-width: 1200px) {

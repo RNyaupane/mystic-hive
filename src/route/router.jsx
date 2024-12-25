@@ -15,6 +15,10 @@ const WishlistPage = lazy(() => import("../pages/wishlist/wishlist-page.jsx"));
 const CartPage = lazy(() => import("../pages/cart/cart.jsx"));
 const CheckoutPage = lazy(() => import("../pages/checkout/checkout-page.jsx"));
 const OrderHistoryPage = lazy(() => import("../pages/order/order-history.jsx"));
+const BlogPage = lazy(() => import("../pages/blogs/blog-page.jsx"));
+const Page404 = lazy(() => import("../components/page-404.jsx"));
+const BlogDetailsPage = lazy(() => import("../pages/blogs/details.jsx"));
+const FaqPage = lazy(() => import("../pages/faq/faq-page.jsx"));
 
 const AppRouter = () => {
   const routes = useRoutes([
@@ -33,6 +37,14 @@ const AppRouter = () => {
         {
           path: "shop",
           element: <ShopPage />,
+        },
+        {
+          path: "blogs",
+          element: <BlogPage />,
+        },
+        {
+          path: "blogs/:id",
+          element: <BlogDetailsPage />,
         },
         {
           path: "product/:id",
@@ -58,6 +70,10 @@ const AppRouter = () => {
           path: "contact",
           element: <ContactPage />,
         },
+        {
+          path: "faq",
+          element: <FaqPage />,
+        },
       ],
     },
     {
@@ -67,6 +83,10 @@ const AppRouter = () => {
         { path: "login", element: <Login /> },
         { path: "register", element: <Register /> },
       ],
+    },
+    {
+      path: "*",
+      element: <Page404 />,
     },
   ]);
 

@@ -6,7 +6,7 @@ import HomeTestimonials from "../../modules/home/home-testimonials.jsx";
 export default function AboutPage() {
   return (
     <>
-      <Breadcrumb />
+      <Breadcrumb title="About Us" />
 
       <AboutStart />
 

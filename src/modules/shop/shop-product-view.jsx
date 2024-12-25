@@ -36,17 +36,17 @@ const ShopProductView = () => {
             </li>
           </ul>
         </div>
-        <div className="shoping-product">
+        {/* <div className="shoping-product">
           <span>Showing Products 1 - 9 Of 13 Result</span>
-        </div>
+        </div> */}
         <div className="short-by">
           <ul>
-            <li>Short By :</li>
+            <li>Sort By :</li>
             <li>
               <select name="show">
-                <option value="">Show 9 Items</option>
-                <option value="">Show 18 Items</option>
-                <option value="">Show 27 Items</option>
+                <option value="">Date posted</option>
+                <option value="">Price high-low</option>
+                <option value="">Price low-high</option>
               </select>
             </li>
           </ul>

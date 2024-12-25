@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const [isOpenWishlist, setIsOpenWishlist] = useState(false);
+  const [isOpenCart, setIsOpenCart] = useState(false);
   return (
-    <header id="header" className="site-header header-style-1">
+    <header id="header" className="site-header header-style-1 header-style-2">
       <nav className="navigation navbar navbar-expand-lg">
         <div className="container">
           <div className="row">
@@ -15,11 +18,11 @@ const Header = () => {
                   <span className="icon-bar last-angle"></span>
                 </button>
                 <Link className="navbar-brand" to="/">
-                  <img src="/assets/images/logo.png" alt="" /> Annahl
+                  <img src="/assets/images/logo.png" alt="" /> MYSTIC HIVE
                 </Link>
               </div>
             </div>
-            <div className="col-lg-5">
+            <div className="col-lg-7">
               <div
                 id="navbar"
                 className="collapse navbar-collapse navigation-holder"
@@ -37,6 +40,12 @@ const Header = () => {
                   <li>
                     <Link to="/shop">Shop</Link>
                   </li>
+                  <li>
+                    <Link to="/blogs">Blogs</Link>
+                  </li>
+                  <li>
+                    <Link to="/faq">FAQs</Link>
+                  </li>
 
                   <li>
                     <Link to="/contact">Contact</Link>
@@ -44,42 +53,28 @@ const Header = () => {
                 </ul>
               </div>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-2">
               <div className="header-right d-flex">
-                <div className="header-profile-form-wrapper">
-                  <button className="profile-toggle-btn">
-                    <i className="fi flaticon-user"></i>
-                  </button>
-                  <div className="header-profile-content">
-                    <ul>
-                      <li>
-                        <Link to="/auth/login">Login</Link>
-                      </li>
-                      <li>
-                        <Link to="/auth/register">Register</Link>
-                      </li>
-                      <li>
-                        <a href="order.html">Order History</a>
-                      </li>
-                      <li>
-                        <a href="cart.html">Cart</a>
-                      </li>
-                      <li>
-                        <a href="wishlist.html">Wishlist</a>
-                      </li>
-                      <li>
-                        <a href="checkout.html">Checkout</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
                 <div className="mini-cart">
-                  <button className="cart-toggle-btn">
+                  <button
+                    className="cart-toggle-btn"
+                    onClick={() => setIsOpenCart(!isOpenCart)}
+                  >
                     <i className="fi flaticon-bag"></i>
                     <span className="cart-count">2</span>
                   </button>
-                  <div className="mini-cart-content">
-                    <button className="mini-cart-close">
+                  <div
+                    className="mini-cart-content"
+                    style={{
+                      opacity: isOpenCart ? 1 : 0,
+                      visibility: isOpenCart ? "inherit" : "hidden",
+                      right: isOpenCart ? 0 : 1,
+                    }}
+                  >
+                    <button
+                      className="mini-cart-close"
+                      onClick={() => setIsOpenCart(!isOpenCart)}
+                    >
                       <i className="ti-close"></i>
                     </button>
                     <div className="mini-cart-items">
@@ -119,12 +114,12 @@ const Header = () => {
                         Total: $215.14
                       </span>
                       <div className="mini-btn">
-                        <a href="checkout.html" className="view-cart-btn s1">
+                        <Link to="/checkout" className="view-cart-btn s1">
                           Checkout
-                        </a>
-                        <a href="cart.html" className="view-cart-btn">
+                        </Link>
+                        <Link to="/cart" className="view-cart-btn">
                           View Cart
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="visible-icon">
@@ -136,12 +131,25 @@ const Header = () => {
                   </div>
                 </div>
                 <div className="header-wishlist-form-wrapper">
-                  <button className="wishlist-toggle-btn">
+                  <button
+                    className="wishlist-toggle-btn"
+                    onClick={() => setIsOpenWishlist(!isOpenWishlist)}
+                  >
                     <i className="fi flaticon-heart"></i>
                     <span className="cart-count">2</span>
                   </button>
-                  <div className="mini-wislist-content">
-                    <button className="mini-cart-close">
+                  <div
+                    className="mini-wislist-content"
+                    style={{
+                      opacity: isOpenWishlist ? 1 : 0,
+                      visibility: isOpenWishlist ? "inherit" : "hidden",
+                      right: isOpenWishlist ? 0 : 1,
+                    }}
+                  >
+                    <button
+                      className="mini-cart-close"
+                      onClick={() => setIsOpenWishlist(!isOpenWishlist)}
+                    >
                       <i className="ti-close"></i>
                     </button>
                     <div className="mini-cart-items">
@@ -181,9 +189,9 @@ const Header = () => {
                         Total: $215.14
                       </span>
                       <div className="mini-btn">
-                        <a href="wishlist.html" className="view-cart-btn">
+                        <Link to="/wishlist" className="view-cart-btn">
                           View Wishlist
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="visible-icon">

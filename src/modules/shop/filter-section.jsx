@@ -96,11 +96,11 @@ const FilterSection = () => {
           <RadioList items={sizeOptions} name="topcoat2" />
         </FilterItem>
 
-        <FilterItem title="Color">
+        {/* <FilterItem title="Color">
           <div className="shop-filter-item color">
             <ColorList colors={colorOptions} />
           </div>
-        </FilterItem>
+        </FilterItem> */}
 
         <FilterItem title="Brand">
           <RadioList items={brandOptions} name="topcoat3" />
