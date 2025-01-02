@@ -7984,7 +7984,7 @@ input[type=radio]:checked+.topcoat-radio-button:after {
 
 .tp-login-area .form-style input {
   width: 100%;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   padding-left: 20px;
   height: 60px;
   border: 1px solid #e5e5e5 !important;
@@ -8238,6 +8238,7 @@ input[type=radio]:checked+.topcoat-radio-button:after {
   .tp-login-area .tp-accountInfo {
     width: 100%;
     min-height: 400px;
+    display: none;
   }
 
   .tp-login-area .tp-accountForm {
@@ -8253,6 +8254,7 @@ input[type=radio]:checked+.topcoat-radio-button:after {
   .tp-login-area .tp-accountInfo {
     width: 100%;
     padding: 15px;
+    display: none;
   }
 
   .tp-login-area .tp-accountForm {

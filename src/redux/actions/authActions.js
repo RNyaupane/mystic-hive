@@ -6,12 +6,17 @@ import base_url from "../../utils/base_url";
 const register = async (registerData) => {
   try {
     const response = await axios.post(
-      `${base_url}candidate/signup?`,
+      `${base_url}auth/register/`,
       registerData
     );
+    if (response.status === 200 || response?.status === 201) {
+      toast.success(response?.data?.message || "Register Successfully");
+    } else {
+      toast.error(response?.error?.message?.[0] || response?.error?.message);
+    }
     return response.data;
   } catch (error) {
-    console.error("Error during register:", error);
+    toast.error(error?.response?.data?.message?.[0]);
     throw error;
   }
 };
@@ -19,15 +24,15 @@ const register = async (registerData) => {
 //   Login Service
 const login = async (data) => {
   try {
-    const response = await axios.post(`${base_url}auth/local`, data);
+    const response = await axios.post(`${base_url}auth/login/`, data);
     if (response.status === 200) {
-      toast.success(response?.message || "Login Successfully");
+      toast.success(response?.data?.message || "Login Successfully");
     } else {
-      toast.error(response?.error?.message);
+      toast.error(response?.error?.message?.[0] || response?.error?.message);
     }
     return response.data;
   } catch (error) {
-    toast.error(error?.response?.data?.error?.message);
+    toast.error(error?.response?.data?.message?.[0]);
     throw error;
   }
 };

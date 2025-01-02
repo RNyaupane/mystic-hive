@@ -1,12 +1,60 @@
 import { Link } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { authService } from "../../redux/actions/authActions"; // Replace with your actual action
+
+// Validation schema
+const schema = yup.object().shape({
+  first_name: yup.string().required("First Name is required"),
+  last_name: yup.string().required("Last Name is required"),
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("Confirm Password is required"),
+});
 
 const Register = () => {
+  const dispatch = useDispatch();
+
+  // React Hook Form setup
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  // Form submission handler
+  const onSubmit = (data) => {
+    const payload = {
+      email: data.email,
+      password: data.password,
+      first_name: data.first_name,
+      last_name: data.last_name,
+    };
+    dispatch(authService.register(payload));
+  };
+
   return (
     <div className="tp-login-area">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <form className="tp-accountWrapper" action="#">
+            <form
+              className="tp-accountWrapper"
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <div className="tp-accountInfo">
                 <div className="tp-accountInfoHeader">
                   <Link to="/">
@@ -20,7 +68,7 @@ const Register = () => {
                   <img src="/assets/images/login.png" alt="" />
                 </div>
                 <div className="back-home">
-                  <Link className="tp-accountBtn" to="">
+                  <Link className="tp-accountBtn" to="/">
                     <span>Back To Home</span>
                   </Link>
                 </div>
@@ -31,69 +79,157 @@ const Register = () => {
                   <p>Sign into your pages account</p>
                 </div>
                 <div className="row">
+                  {/* First Name */}
                   <div className="col-lg-12 col-md-12 col-12">
-                    <label htmlFor="name">Full Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      placeholder="Your name here.."
+                    <Controller
+                      name="first_name"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <div className="form-group mb-4">
+                          <label htmlFor="first_name">First Name</label>
+                          <input
+                            type="text"
+                            id="first_name"
+                            placeholder="Your first name here.."
+                            {...field}
+                            className={`form-control ${
+                              errors.first_name ? "is-invalid" : ""
+                            }`}
+                          />
+                          {errors.first_name && (
+                            <div className="invalid-feedback">
+                              {errors.first_name.message}
+                            </div>
+                          )}
+                        </div>
+                      )}
                     />
                   </div>
+
+                  {/* Last Name */}
                   <div className="col-lg-12 col-md-12 col-12">
-                    <label>Email</label>
-                    <input
-                      type="text"
-                      id="email"
+                    <Controller
+                      name="last_name"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <div className="form-group mb-4">
+                          <label htmlFor="last_name">Last Name</label>
+                          <input
+                            type="text"
+                            id="last_name"
+                            placeholder="Your last name here.."
+                            {...field}
+                            className={`form-control ${
+                              errors.last_name ? "is-invalid" : ""
+                            }`}
+                          />
+                          {errors.last_name && (
+                            <div className="invalid-feedback">
+                              {errors.last_name.message}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div className="col-lg-12 col-md-12 col-12">
+                    <Controller
                       name="email"
-                      placeholder="Your email here.."
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <div className="form-group mb-4">
+                          <label htmlFor="email">Email</label>
+                          <input
+                            type="text"
+                            id="email"
+                            placeholder="Your email here.."
+                            {...field}
+                            className={`form-control ${
+                              errors.email ? "is-invalid" : ""
+                            }`}
+                          />
+                          {errors.email && (
+                            <div className="invalid-feedback">
+                              {errors.email.message}
+                            </div>
+                          )}
+                        </div>
+                      )}
                     />
                   </div>
+
+                  {/* Password */}
                   <div className="col-lg-12 col-md-12 col-12">
-                    <div className="form-group">
-                      <label>Password</label>
-                      <input
-                        className="pwd2"
-                        type="password"
-                        placeholder="Your password here.."
-                        name="pass"
-                      />
-                      <span className="input-group-btn">
-                        <button
-                          className="btn btn-default reveal3"
-                          type="button"
-                        >
-                          <i className="fa fa-eye"></i>
-                        </button>
-                      </span>
-                    </div>
+                    <Controller
+                      name="password"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <div className="form-group mb-4">
+                          <label>Password</label>
+                          <input
+                            type="password"
+                            placeholder="Your password here.."
+                            {...field}
+                            className={`form-control ${
+                              errors.password ? "is-invalid" : ""
+                            }`}
+                          />
+                          {errors.password && (
+                            <div className="invalid-feedback">
+                              {errors.password.message}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    />
                   </div>
+
+                  {/* Confirm Password */}
                   <div className="col-lg-12 col-md-12 col-12">
-                    <div className="form-group">
-                      <label>Confirm Password</label>
-                      <input
-                        className="pwd3"
-                        type="password"
-                        placeholder="Your password here.."
-                        name="pass"
-                      />
-                      <span className="input-group-btn">
-                        <button
-                          className="btn btn-default reveal2"
-                          type="button"
-                        >
-                          <i className="fa fa-eye"></i>
-                        </button>
-                      </span>
-                    </div>
+                    <Controller
+                      name="confirmPassword"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <div className="form-group mb-4">
+                          <label>Confirm Password</label>
+                          <input
+                            type="password"
+                            placeholder="Confirm your password here.."
+                            {...field}
+                            className={`form-control ${
+                              errors.confirmPassword ? "is-invalid" : ""
+                            }`}
+                          />
+                          {errors.confirmPassword && (
+                            <div className="invalid-feedback">
+                              {errors.confirmPassword.message}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    />
                   </div>
+
+                  {/* Submit Button */}
                   <div className="col-lg-12 col-md-12 col-12">
-                    <button type="submit" className="tp-accountBtn">
-                      Signup
+                    <button
+                      type="submit"
+                      className="tp-accountBtn"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Signing up..." : "Signup"}
                     </button>
                   </div>
                 </div>
-                <h4 className="or">
+
+                {/* <h4 className="or">
                   <span>OR</span>
                 </h4>
                 <ul className="tp-socialLoginBtn">
@@ -118,9 +254,9 @@ const Register = () => {
                       </span>
                     </button>
                   </li>
-                </ul>
+                </ul> */}
                 <p className="subText">
-                  I have an account <a href="login.html">Login account</a>
+                  I have an account <Link to="/auth/login">Login account</Link>
                 </p>
               </div>
             </form>

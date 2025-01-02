@@ -1,12 +1,45 @@
 import { Link } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../redux/reducers/authSlice";
+
+// Validation schema
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: yup.string().required("Password is required"),
+});
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+  // React Hook Form setup
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  // Form submission handler
+  const onSubmit = (data) => {
+    dispatch(loginUser(data));
+  };
+
   return (
     <div className="tp-login-area">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <form className="tp-accountWrapper" action="#">
+            <form
+              className="tp-accountWrapper"
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <div className="tp-accountInfo">
                 <div className="tp-accountInfoHeader">
                   <Link to="/">
@@ -31,86 +64,95 @@ const Login = () => {
                   <p>Sign into your pages account</p>
                 </div>
                 <div className="row">
+                  {/* Email Field */}
                   <div className="col-lg-12 col-md-12 col-12">
-                    <label htmlFor="email">Email</label>
-                    <input
-                      type="text"
-                      id="email"
+                    <Controller
                       name="email"
-                      placeholder="demo@gmail.com"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <div className="form-group mb-4">
+                          <label htmlFor="email">Email</label>
+                          <input
+                            type="text"
+                            id="email"
+                            {...field}
+                            placeholder="demo@gmail.com"
+                            className={`form-control ${
+                              errors.email ? "is-invalid" : ""
+                            }`}
+                          />
+                          {errors.email && (
+                            <div className="invalid-feedback">
+                              {errors.email.message}
+                            </div>
+                          )}
+                        </div>
+                      )}
                     />
                   </div>
+
+                  {/* Password Field */}
                   <div className="col-lg-12 col-md-12 col-12">
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <input
-                        className="pwd"
-                        type="password"
-                        id="password"
-                        value="123456"
-                        name="pass"
-                      />
-                      <span className="input-group-btn">
-                        <button
-                          className="btn btn-default reveal"
-                          type="button"
-                        >
-                          <i className="fa fa-eye"></i>
-                        </button>
-                      </span>
-                    </div>
+                    <Controller
+                      name="password"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <div className="form-group mb-4">
+                          <label htmlFor="password">Password</label>
+                          <input
+                            type="password"
+                            id="password"
+                            {...field}
+                            placeholder="Enter your password"
+                            className={`form-control ${
+                              errors.password ? "is-invalid" : ""
+                            }`}
+                          />
+                          {errors.password && (
+                            <div className="invalid-feedback">
+                              {errors.password.message}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    />
                   </div>
+
+                  {/* Remember Me */}
                   <div className="col-lg-12 col-md-12 col-12">
                     <div className="check-box-wrap">
                       <div className="input-box">
                         <input
                           type="checkbox"
-                          id="fruit4"
-                          name="fruit-4"
-                          value="Strawberry"
+                          id="rememberMe"
+                          name="rememberMe"
                         />
-                        <label htmlFor="fruit4">Remember Me</label>
+                        <label htmlFor="rememberMe">Remember Me</label>
                       </div>
                       <div className="forget-btn">
-                        <a href="forgot.html">Forgot Password?</a>
+                        <Link to="/auth/forgot-password">Forgot Password?</Link>
                       </div>
                     </div>
                   </div>
+
+                  {/* Submit Button */}
                   <div className="col-lg-12 col-md-12 col-12">
-                    <button type="submit" className="tp-accountBtn">
-                      Login
+                    <button
+                      type="submit"
+                      className="tp-accountBtn"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Logging in..." : "Login"}
                     </button>
                   </div>
                 </div>
-                <h4 className="or">
-                  <span>OR</span>
-                </h4>
-                <ul className="tp-socialLoginBtn">
-                  <li>
-                    <button className="facebook" type="button">
-                      <span>
-                        <i className="fa fa-facebook"></i>
-                      </span>
-                    </button>
-                  </li>
-                  <li>
-                    <button className="twitter" type="button">
-                      <span>
-                        <i className="fa fa-twitter"></i>
-                      </span>
-                    </button>
-                  </li>
-                  <li>
-                    <button className="linkedin" type="button">
-                      <span>
-                        <i className="fa fa-linkedin"></i>
-                      </span>
-                    </button>
-                  </li>
-                </ul>
+
+                {/* Footer */}
                 <p className="subText">
                   Don&apos;t have an account?{" "}
-                  <a href="register.html">Create free account</a>
+                  <Link to="/auth/register">Create free account</Link>
                 </p>
               </div>
             </form>

@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { useRoutes } from "react-router-dom";
 import PreLoader from "../components/pre-loader";
 import Register from "../pages/auth/register.jsx";
+import ProtectedRoute from "./PrivateRoutes.jsx";
 
 const MainLayout = lazy(() => import("../layout/main-layout"));
 const AboutPage = lazy(() => import("../pages/about/about-page.jsx"));
@@ -32,7 +33,7 @@ const AppRouter = () => {
         },
         {
           path: "about",
-          element: <AboutPage />,
+          element: <ProtectedRoute element={AboutPage} />,
         },
         {
           path: "shop",

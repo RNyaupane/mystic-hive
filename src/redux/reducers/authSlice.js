@@ -8,8 +8,9 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   statusCode: 0,
-  message: "",
-  token: "",
+  message: null,
+  accessToken: null,
+  refreshToken: null,
 };
 
 export const loginUser = createAsyncThunk(
@@ -38,14 +39,16 @@ export const authSlice = createSlice({
         state.user = [];
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        console.log(action);
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
         state.isAuthenticated = true;
-        state.user = action?.payload?.user;
-        state.token = action?.payload?.jwt;
+        state.user = action?.payload?.data?.user;
+        state.accessToken = action?.payload?.data?.access;
+        state.refreshToken = action?.payload?.data?.refresh;
         try {
-          localStorage.setItem("user-token", action.payload.jwt);
+          localStorage.setItem("user-token", action.payload?.data?.access);
         } catch (error) {
           console.error("Error storing token in local storage:", error);
         }
