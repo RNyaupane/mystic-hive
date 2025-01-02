@@ -32,9 +32,6 @@ const Header = () => {
                 </a>
                 <ul className="nav navbar-nav me-auto mb-2 mb-lg-0">
                   <li>
-                    <Link to="/">Home</Link>
-                  </li>
-                  <li>
                     <Link to="/about">About</Link>
                   </li>
                   <li>
