@@ -1,28 +1,55 @@
+/* eslint-disable no-extra-boolean-cast */
 import OwlCarousel from "react-owl-carousel";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "../../hooks/use-params";
+import { useEffect } from "react";
+import { getProductDetail } from "../../redux/reducers/product/productDetailSlice";
+import PreLoader from "../../components/pre-loader";
 
+const mainCarouselOptions = {
+  items: 1,
+  loop: true,
+  nav: true,
+  dots: false,
+  autoplay: true,
+  autoplayTimeout: 3000,
+  autoplayHoverPause: true,
+};
+
+const thumbnailCarouselOptions = {
+  loop: true,
+  margin: 10,
+  nav: true,
+  dots: false,
+
+  autoplay: true,
+  autoplayTimeout: 3000,
+  autoplayHoverPause: true,
+};
 const ProductDetailsPage = () => {
-  const mainCarouselOptions = {
-    items: 1,
-    loop: true,
-    nav: true,
-    dots: false,
-    autoplay: true,
-    autoplayTimeout: 3000,
-    autoplayHoverPause: true,
-  };
+  const dispatch = useDispatch();
+  const params = useParams();
 
-  const thumbnailCarouselOptions = {
-    items: 3,
-    loop: true,
-    margin: 10,
-    nav: true,
-    dots: false,
-    autoplay: true,
-    autoplayTimeout: 3000,
-    autoplayHoverPause: true,
-  };
+  const { details, isLoading } = useSelector((state) => state.productDetails);
+
+  useEffect(() => {
+    if (!!params?.id) {
+      dispatch(
+        getProductDetail({
+          id: params?.id,
+        })
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params?.id]);
+
+  if (isLoading) {
+    return <PreLoader />;
+  }
+
+  console.log(details);
   return (
-    <div className="product-single-section section-padding">
+    <div className="product-single-section section-padding mt-5">
       <div className="container">
         <div className="product-details">
           <div className="row align-items-center">
@@ -33,142 +60,96 @@ const ProductDetailsPage = () => {
                   className="product-active"
                   {...mainCarouselOptions}
                 >
-                  <div className="item">
-                    <img
-                      src="/assets/images/product-details/1.jpg"
-                      alt="Product 1"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="/assets/images/product-details/2.jpg"
-                      alt="Product 2"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="/assets/images/product-details/3.jpg"
-                      alt="Product 3"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="/assets/images/product-details/1.jpg"
-                      alt="Product 1"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="/assets/images/product-details/2.jpg"
-                      alt="Product 2"
-                    />
-                  </div>
+                  {details?.images?.length > 0 &&
+                    details?.images?.map((item, index) => (
+                      <div className="item" key={index}>
+                        <img src={item?.image} alt={item?.alt_text} />
+                      </div>
+                    ))}
                 </OwlCarousel>
 
                 {/* Thumbnail Carousel */}
                 <OwlCarousel
                   className="product-thumbnil-active"
                   {...thumbnailCarouselOptions}
+                  items={details?.images.length}
                 >
-                  <div className="item">
-                    <img
-                      src="/assets/images/product-details/1.jpg"
-                      alt="Thumbnail 1"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="/assets/images/product-details/2.jpg"
-                      alt="Thumbnail 2"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="/assets/images/product-details/3.jpg"
-                      alt="Thumbnail 3"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="/assets/images/product-details/1.jpg"
-                      alt="Thumbnail 1"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="/assets/images/product-details/2.jpg"
-                      alt="Thumbnail 2"
-                    />
-                  </div>
+                  {details?.images?.length > 0 &&
+                    details?.images?.map((item, index) => (
+                      <div className="item" key={index}>
+                        <img src={item?.image} alt={item?.alt_text} />
+                      </div>
+                    ))}
                 </OwlCarousel>
               </div>
             </div>
             <div className="col-lg-7">
               <div className="product-single-content">
-                <h5>Queen Bee Honey</h5>
-                <h6>350.00 USD</h6>
+                <h5>{details?.name}</h5>
+                <h6>{details?.unit_price} USD</h6>
                 <ul className="rating">
-                  <li>
-                    <i className="fa fa-star" aria-hidden="true"></i>
-                  </li>
-                  <li>
-                    <i className="fa fa-star" aria-hidden="true"></i>
-                  </li>
-                  <li>
-                    <i className="fa fa-star" aria-hidden="true"></i>
-                  </li>
-                  <li>
-                    <i className="fa fa-star" aria-hidden="true"></i>
-                  </li>
-                  <li>
-                    <i className="fa fa-star" aria-hidden="true"></i>
-                  </li>
+                  {details?.average_rating &&
+                    [...Array(5)].map((_, index) => (
+                      <li key={index}>
+                        <i
+                          className={`fa ${
+                            index < details?.average_rating
+                              ? "fa-star"
+                              : "fa-star-o"
+                          }`}
+                          aria-hidden="true"
+                        ></i>
+                      </li>
+                    ))}
                 </ul>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                  quis ultrices lectus lobortis, dolor et tempus porta, leo mi
-                  efficitur ante, in varius felis sem ut mauris. Proin volutpat
-                  lorem inorci sed vestibulum tempus. Lorem ipsum dolor sit
-                  amet, consectetur adipiscing elit. Aliquam hendrerit sem porta
-                  dolor congue sagittis Lorem ipsum dolor sit amet consectetur.
+                <p className="mb-5">
+                  {details?.description?.length > 300
+                    ? `${details.description.slice(0, 300)}...`
+                    : details?.description}
                 </p>
-                <div className="product-filter-item color">
-                  <div className="color-name">
-                    <span>Color :</span>
-                    <ul>
-                      <li className="color1">
-                        <input id="a1" type="radio" name="color" value="30" />
-                        <label htmlFor="a1"></label>
-                      </li>
-                      <li className="color2">
-                        <input id="a2" type="radio" name="color" value="30" />
-                        <label htmlFor="a2"></label>
-                      </li>
-                      <li className="color3">
-                        <input id="a3" type="radio" name="color" value="30" />
-                        <label htmlFor="a3"></label>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+
                 <div className="product-filter-item color filter-size">
                   <div className="color-name">
                     <span>Weight :</span>
                     <ul>
                       <li className="color">
-                        <input id="wa1" type="radio" name="size" value="30" />
+                        <input
+                          id="wa1"
+                          type="radio"
+                          name="size"
+                          value="30"
+                          readOnly
+                        />
                         <label htmlFor="wa1">4L</label>
                       </li>
                       <li className="color">
-                        <input id="wa2" type="radio" name="size" value="30" />
+                        <input
+                          id="wa2"
+                          type="radio"
+                          name="size"
+                          value="30"
+                          readOnly
+                        />
                         <label htmlFor="wa2">2L</label>
                       </li>
                       <li className="color">
-                        <input id="wa3" type="radio" name="size" value="30" />
+                        <input
+                          id="wa3"
+                          type="radio"
+                          name="size"
+                          value="30"
+                          readOnly
+                        />
                         <label htmlFor="wa3">500ML</label>
                       </li>
                       <li className="color">
-                        <input id="wa4" type="radio" name="size" value="30" />
+                        <input
+                          id="wa4"
+                          type="radio"
+                          name="size"
+                          value="30"
+                          readOnly
+                        />
                         <label htmlFor="wa4">200ML</label>
                       </li>
                     </ul>
@@ -176,15 +157,13 @@ const ProductDetailsPage = () => {
                 </div>
                 <div className="pro-single-btn">
                   <div className="quantity cart-plus-minus">
-                    <input type="text" value="1" />
-                    <div className="dec qtybutton"></div>
-                    <div className="inc qtybutton"></div>
+                    <input type="number" defaultValue={1} />
                   </div>
-                  <a href="#" className="theme-btn">
+                  <a href="#" className="theme-btn ">
                     Add to cart
                   </a>
                 </div>
-                <div className="social-share">
+                {/* <div className="social-share">
                   <span>Share with : </span>
                   <ul className="socialLinks">
                     <li>
@@ -213,7 +192,7 @@ const ProductDetailsPage = () => {
                       </a>
                     </li>
                   </ul>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -231,7 +210,7 @@ const ProductDetailsPage = () => {
                 aria-controls="descripton"
                 aria-selected="true"
               >
-                descripton
+                Descripton
               </button>
             </li>
             <li className="nav-item" role="presentation">
@@ -274,23 +253,7 @@ const ProductDetailsPage = () => {
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="Descriptions-item">
-                      <p>
-                        Sed ut perspiciatis unde omnis iste natus error sit
-                        voluptatem accusantium doloremque laudantium, totam rem
-                        aperiam, eaque ipsa quae ab illo inventore veritatis et
-                        quasi architecto beatae vitae dicta sunt explicabo. Nemo
-                        enim ipsam voluptatem quia voluptas sit aspernatur aut
-                        odit aut fugit, sed quia consequuntur magni dolores eos
-                        qui ratione voluptatem sequi nesciunt. Neque porro
-                        quisquam.Sed ut perspiciatis unde omnis iste natus error
-                        sit voluptatem accusantium doloremque laudantium, totam
-                        rem aperiam, eaque ipsa quae ab illo inventore veritatis
-                        et quasi architecto beatae vitae dicta sunt explicabo.
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur
-                        aut odit aut fugit, sed quia consequuntur magni dolores
-                        eos qui ratione voluptatem sequi nesciunt. Neque porro
-                        quisquam{" "}
-                      </p>
+                      <p>{details?.description}</p>
                       <div className="Description-table">
                         <h4>Find Your Category :</h4>
                         <form
@@ -678,6 +641,7 @@ const ProductDetailsPage = () => {
                                   <label>
                                     <input
                                       type="radio"
+                                      readOnly
                                       name="stars"
                                       value="1"
                                     />
@@ -686,6 +650,7 @@ const ProductDetailsPage = () => {
                                   <label>
                                     <input
                                       type="radio"
+                                      readOnly
                                       name="stars"
                                       value="2"
                                     />
@@ -694,6 +659,7 @@ const ProductDetailsPage = () => {
                                   </label>
                                   <label>
                                     <input
+                                      readOnly
                                       type="radio"
                                       name="stars"
                                       value="3"
@@ -705,6 +671,7 @@ const ProductDetailsPage = () => {
                                   <label>
                                     <input
                                       type="radio"
+                                      readOnly
                                       name="stars"
                                       value="4"
                                     />
@@ -715,6 +682,7 @@ const ProductDetailsPage = () => {
                                   </label>
                                   <label>
                                     <input
+                                      readOnly
                                       type="radio"
                                       name="stars"
                                       value="5"

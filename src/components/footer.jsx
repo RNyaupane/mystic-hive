@@ -9,8 +9,7 @@ const Footer = () => {
               <div className="widget about-widget">
                 <div className="logo widget-title">
                   <a href="index.html">
-                    <img src="/assets/images/logo2.png" alt="Annahl Logo" />{" "}
-                    Annahl
+                    <img src="/assets/images/logo.png" alt="Annahl Logo" />{" "}
                   </a>
                 </div>
                 <p>
@@ -123,8 +122,8 @@ const Footer = () => {
           <div className="row">
             <div className="col col-xs-12">
               <p className="copyright">
-                Copyright &copy; 2021 Annahl by{" "}
-                <a href="index.html">themepresss</a>. All Rights Reserved.
+                Copyright &copy; 2019-2025. <a href="index.html">Mystic Hive</a>
+                . All Rights Reserved.
               </p>
             </div>
           </div>

@@ -17,8 +17,12 @@ const Header = () => {
                   <span className="icon-bar middle-angle"></span>
                   <span className="icon-bar last-angle"></span>
                 </button>
-                <Link className="navbar-brand" to="/">
-                  <img src="/assets/images/logo.png" alt="" /> MYSTIC HIVE
+                <Link
+                  className="navbar-brand"
+                  to="/"
+                  style={{ maxWidth: "120px" }}
+                >
+                  <img src="/assets/images/logo.png" alt="" />
                 </Link>
               </div>
             </div>

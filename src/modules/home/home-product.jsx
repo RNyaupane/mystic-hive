@@ -1,4 +1,13 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getProducts } from "../../redux/reducers/product/productSlice";
+
 const HomeProduct = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
   return (
     <section className="product-area section-padding">
       <div className="container">

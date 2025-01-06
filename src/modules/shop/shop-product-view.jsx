@@ -1,6 +1,13 @@
+/* eslint-disable no-unused-vars */
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import PreLoader from "../../components/pre-loader";
 
 const ShopProductView = () => {
+  const { products = [], isLoading } = useSelector((state) => state.product);
+  if (isLoading) {
+    return <PreLoader />;
+  }
   return (
     <div className="col-lg-8">
       <div className="shop-section-top-inner">
@@ -61,92 +68,89 @@ const ShopProductView = () => {
         >
           <div className="product-wrap">
             <div className="row align-items-center">
-              {Array.from({ length: 12 }).map((item, index) => (
-                <div
-                  key={index}
-                  className="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12"
-                >
-                  <div className="product-item">
-                    <div className="product-img">
-                      <img src="/assets/images/product/1.png" alt="" />
-                      <ul>
-                        <li>
-                          <a
-                            data-bs-toggle="tooltip"
-                            data-bs-html="true"
-                            title="Add to Cart"
-                            href="cart.html"
+              {products?.length > 0 &&
+                products?.map((item, index) => (
+                  <div
+                    key={index}
+                    className="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12"
+                  >
+                    <div className="product-item">
+                      <div className="product-img">
+                        <img
+                          src={item?.images?.[0]?.image}
+                          alt="Product Image"
+                        />
+                        <ul>
+                          <li>
+                            <a
+                              data-bs-toggle="tooltip"
+                              data-bs-html="true"
+                              title="Add to Cart"
+                              href="cart.html"
+                            >
+                              <i className="fi flaticon-shopping-cart"></i>
+                            </a>
+                          </li>
+                          <li
+                            data-bs-toggle="modal"
+                            data-bs-target="#popup-quickview"
                           >
-                            <i className="fi flaticon-shopping-cart"></i>
-                          </a>
-                        </li>
-                        <li
-                          data-bs-toggle="modal"
-                          data-bs-target="#popup-quickview"
-                        >
-                          <button
-                            data-bs-toggle="tooltip"
-                            data-bs-html="true"
-                            title="Quick View"
-                          >
-                            <i className="fi ti-eye"></i>
-                          </button>
-                        </li>
-                        <li>
-                          <a
-                            data-bs-toggle="tooltip"
-                            data-bs-html="true"
-                            title="Add to Wishlist"
-                            href="wishlist.html"
-                          >
-                            <i className="fi flaticon-like"></i>
-                          </a>
-                        </li>
-                      </ul>
-                      <div className="offer-thumb">
-                        <span>-28%</span>
-                      </div>
-                    </div>
-                    <div className="product-content">
-                      <h3>
-                        <Link to="/product/2">Manuka Honey</Link>
-                      </h3>
-                      <div className="product-btm">
-                        <div className="product-price">
-                          <ul>
-                            <li>$85.00</li>
-                            <li>$98.00</li>
-                          </ul>
+                            <button
+                              data-bs-toggle="tooltip"
+                              data-bs-html="true"
+                              title="Quick View"
+                            >
+                              <i className="fi ti-eye"></i>
+                            </button>
+                          </li>
+                          <li>
+                            <a
+                              data-bs-toggle="tooltip"
+                              data-bs-html="true"
+                              title="Add to Wishlist"
+                              href="wishlist.html"
+                            >
+                              <i className="fi flaticon-like"></i>
+                            </a>
+                          </li>
+                        </ul>
+                        <div className="offer-thumb">
+                          <span>-28%</span>
                         </div>
-                        <div className="product-ratting">
-                          <ul>
-                            <li>
-                              <i className="fa fa-star" aria-hidden="true"></i>
-                            </li>
-                            <li>
-                              <i className="fa fa-star" aria-hidden="true"></i>
-                            </li>
-                            <li>
-                              <i className="fa fa-star" aria-hidden="true"></i>
-                            </li>
-                            <li>
-                              <i className="fa fa-star" aria-hidden="true"></i>
-                            </li>
-                            <li>
-                              <span>
-                                <i
-                                  className="fa fa-star"
-                                  aria-hidden="true"
-                                ></i>
-                              </span>
-                            </li>
-                          </ul>
+                      </div>
+                      <div className="product-content">
+                        <h3>
+                          <Link to={`/product/${item?.id}`}>{item?.name}</Link>
+                        </h3>
+                        <div className="product-btm">
+                          <div className="product-price">
+                            <ul>
+                              <li>${item?.unit_price}</li>
+                              {/* <li>$98.00</li> */}
+                            </ul>
+                          </div>
+                          <div className="product-ratting">
+                            <ul>
+                              {item?.average_rating &&
+                                [...Array(5)].map((_, index) => (
+                                  <li key={index}>
+                                    <i
+                                      className={`fa ${
+                                        index < item?.average_rating
+                                          ? "fa-star"
+                                          : "fa-star-o"
+                                      }`}
+                                      aria-hidden="true"
+                                    ></i>
+                                  </li>
+                                ))}
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
@@ -158,94 +162,127 @@ const ShopProductView = () => {
         >
           <div className="product-wrap">
             <div className="row align-items-center">
-              {Array.from({ length: 5 }).map((item, index) => (
-                <div key={index} className="col-xl-12 col-12">
-                  <div className="product-item">
-                    <div className="product-img">
-                      <img src="/assets/images/product/5.png" alt="" />
-                      <ul>
-                        <li>
-                          <a
-                            data-bs-toggle="tooltip"
-                            data-bs-html="true"
-                            title="Add to Cart"
-                            href="cart.html"
-                          >
-                            <i className="fi flaticon-shopping-cart"></i>
-                          </a>
-                        </li>
-                        <li
-                          data-bs-toggle="modal"
-                          data-bs-target="#popup-quickview"
+              {products?.length > 0 &&
+                products?.map((item, index) => (
+                  <div key={index} className="col-xl-12 col-12">
+                    <div className="product-item">
+                      <div
+                        className="product-img"
+                        style={{ minHeight: "100%" }}
+                      >
+                        <div
+                          className=""
+                          style={{
+                            height: "100%",
+                            objectFit: "cover",
+                            width: "200px",
+                          }}
                         >
-                          <button
-                            data-bs-toggle="tooltip"
-                            data-bs-html="true"
-                            title="Quick View"
-                          >
-                            <i className="fi ti-eye"></i>
-                          </button>
-                        </li>
-                        <li>
-                          <a
-                            data-bs-toggle="tooltip"
-                            data-bs-html="true"
-                            title="Add to Wishlist"
-                            href="wishlist.html"
-                          >
-                            <i className="fi flaticon-like"></i>
-                          </a>
-                        </li>
-                      </ul>
-                      <div className="offer-thumb">
-                        <span>-28%</span>
-                      </div>
-                    </div>
-                    <div className="product-content">
-                      <h3>
-                        <a href="product-single.html">Manuka Honey</a>
-                      </h3>
-                      <div className="product-btm">
-                        <div className="product-price">
-                          <ul>
-                            <li>$85.00</li>
-                            <li>$98.00</li>
-                          </ul>
+                          <img
+                            src={item?.images?.[0]?.image}
+                            alt="Product Image"
+                          />
                         </div>
-                        <div className="product-ratting">
-                          <ul>
-                            <li>
-                              <i className="fa fa-star" aria-hidden="true"></i>
-                            </li>
-                            <li>
-                              <i className="fa fa-star" aria-hidden="true"></i>
-                            </li>
-                            <li>
-                              <i className="fa fa-star" aria-hidden="true"></i>
-                            </li>
-                            <li>
-                              <i className="fa fa-star" aria-hidden="true"></i>
-                            </li>
-                            <li>
-                              <span>
-                                <i
-                                  className="fa fa-star"
-                                  aria-hidden="true"
-                                ></i>
-                              </span>
-                            </li>
-                          </ul>
+                        <ul>
+                          <li>
+                            <a
+                              data-bs-toggle="tooltip"
+                              data-bs-html="true"
+                              title="Add to Cart"
+                              href="cart.html"
+                            >
+                              <i className="fi flaticon-shopping-cart"></i>
+                            </a>
+                          </li>
+                          <li
+                            data-bs-toggle="modal"
+                            data-bs-target="#popup-quickview"
+                          >
+                            <button
+                              data-bs-toggle="tooltip"
+                              data-bs-html="true"
+                              title="Quick View"
+                            >
+                              <i className="fi ti-eye"></i>
+                            </button>
+                          </li>
+                          <li>
+                            <a
+                              data-bs-toggle="tooltip"
+                              data-bs-html="true"
+                              title="Add to Wishlist"
+                              href="wishlist.html"
+                            >
+                              <i className="fi flaticon-like"></i>
+                            </a>
+                          </li>
+                        </ul>
+                        <div className="offer-thumb">
+                          <span>-28%</span>
                         </div>
                       </div>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Aperiam consequuntur laudantium quod ratione nulla
-                        modi? Repudiandae quidem dicta quia eveniet dignissimos.
-                      </p>
+                      <div
+                        className="product-content"
+                        style={{ minHeight: "250px" }}
+                      >
+                        <h3>
+                          <Link to={`/product/${item?.id}`}>{item?.name}</Link>
+                        </h3>
+                        <div className="product-btm">
+                          <div className="product-price">
+                            <ul>
+                              <li>${item?.unit_price}</li>
+                              {/* <li>$98.00</li> */}
+                            </ul>
+                          </div>
+                          <div className="product-ratting">
+                            <ul>
+                              {item?.average_rating &&
+                                [...Array(5)].map((_, index) => (
+                                  <li key={index}>
+                                    <i
+                                      className={`fa ${
+                                        index < item?.average_rating
+                                          ? "fa-star"
+                                          : "fa-star-o"
+                                      }`}
+                                      aria-hidden="true"
+                                    ></i>
+                                  </li>
+                                ))}
+                            </ul>
+                          </div>
+                        </div>
+                        <p className="product-description">
+                          {" "}
+                          {item?.description?.length > 150
+                            ? `${item.description.slice(0, 150)}...`
+                            : item?.description}
+                        </p>
+                        <div
+                          className=""
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "end",
+                          }}
+                        >
+                          <Link
+                            to={`/product/${item?.id}`}
+                            className="btn theme-btn"
+                            tabIndex="0"
+                            style={{
+                              padding: "5px 30px",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            View
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>

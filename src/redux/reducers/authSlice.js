@@ -30,7 +30,13 @@ export const logoutUser = createAction("Reset_all");
 export const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    logout(state) {
+      state.isAuthenticated = false;
+      state.user = undefined;
+      state.accessToken = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       //Login User
@@ -39,7 +45,6 @@ export const authSlice = createSlice({
         state.user = [];
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action);
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
@@ -47,11 +52,6 @@ export const authSlice = createSlice({
         state.user = action?.payload?.data?.user;
         state.accessToken = action?.payload?.data?.access;
         state.refreshToken = action?.payload?.data?.refresh;
-        try {
-          localStorage.setItem("user-token", action.payload?.data?.access);
-        } catch (error) {
-          console.error("Error storing token in local storage:", error);
-        }
       })
       .addCase(loginUser.rejected, (state) => {
         state.isError = true;
