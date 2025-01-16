@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import PreLoader from "../../components/pre-loader";
 
-const ShopProductView = () => {
-  const { products = [], isLoading } = useSelector((state) => state.product);
+const ShopProductView = ({ products, isLoading }) => {
   if (isLoading) {
     return <PreLoader />;
   }
@@ -77,7 +77,10 @@ const ShopProductView = () => {
                     <div className="product-item">
                       <div className="product-img">
                         <img
-                          src={item?.images?.[0]?.image}
+                          src={
+                            item?.images?.[0]?.image ||
+                            "/assets/images/product/default-product.png"
+                          }
                           alt="Product Image"
                         />
                         <ul>
@@ -126,7 +129,7 @@ const ShopProductView = () => {
                           <div className="product-price">
                             <ul>
                               <li>${item?.unit_price}</li>
-                              {/* <li>$98.00</li> */}
+                              <li></li>
                             </ul>
                           </div>
                           <div className="product-ratting">
@@ -179,7 +182,10 @@ const ShopProductView = () => {
                           }}
                         >
                           <img
-                            src={item?.images?.[0]?.image}
+                            src={
+                              item?.images?.[0]?.image ||
+                              "/assets/images/product/default-product.png"
+                            }
                             alt="Product Image"
                           />
                         </div>

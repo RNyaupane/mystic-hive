@@ -1943,7 +1943,7 @@ img {
     left: 0;
     top: 180%;
     background: #fff;
-    width: 200px;
+    width: 120px;
     /* opacity: 0;
   visibility: hidden; */
     -webkit-transition: all .3s;
@@ -5030,7 +5030,7 @@ img {
 
 @media (max-width: 1440px) {
     .shop-section .shop-section-top-inner .short-by ul li select {
-        width: 100px;
+        width: 150px;
     }
 }
 
@@ -8202,3 +8202,13 @@ input[type=radio]:checked+.topcoat-radio-button:after {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+
+.owl-item {
+    width: auto !important;
+}
+
+.owl-stage {
+    display: flex !important;
+    justify-content: center !important;
+}

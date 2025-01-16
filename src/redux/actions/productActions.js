@@ -4,7 +4,6 @@ import { productApi } from "../api-service/productApi";
 const getProducts = async () => {
   try {
     const response = await productApi.getProduct();
-    console.log(response?.data);
     return response;
   } catch (error) {
     toast.error(error?.response?.data?.message?.[0]);

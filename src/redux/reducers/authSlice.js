@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { authService } from "../actions/authActions";
 
 const initialState = {
-  user: [],
+  user: {},
   isError: false,
   isAuthenticated: false,
   isSuccess: false,
@@ -25,7 +25,7 @@ export const loginUser = createAsyncThunk(
 );
 
 //Reset State
-export const logoutUser = createAction("Reset_all");
+export const logoutUser = createAction("logout");
 
 export const authSlice = createSlice({
   name: "auth",
@@ -33,7 +33,7 @@ export const authSlice = createSlice({
   reducers: {
     logout(state) {
       state.isAuthenticated = false;
-      state.user = undefined;
+      state.user = {};
       state.accessToken = null;
     },
   },
@@ -57,7 +57,7 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;
-        state.user = [];
+        state.user = {};
       })
 
       //Reset State
@@ -65,8 +65,9 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.statusCode = 0;
         state.isError = false;
-        state.user = [];
-        state.token = "";
+        state.user = {};
+        state.accessToken = "";
+        state.refreshToken = "";
         state.isAuthenticated = false;
       });
   },

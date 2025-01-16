@@ -1,3 +1,6 @@
+import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <footer className="tp-site-footer">
@@ -5,60 +8,108 @@ const Footer = () => {
         <div className="container">
           <div className="row">
             {/* About Section */}
-            <div className="col col-lg-3 col-md-6 col-sm-12 col-12">
-              <div className="widget about-widget">
+            <div className="col col-lg-5 col-md-6 col-sm-12 col-12">
+              <div className="widget about-widget d-flex gap-4 justify-content-between">
                 <div className="logo widget-title">
-                  <a href="index.html">
+                  {/* <a href="index.html">
                     <img src="/assets/images/logo.png" alt="Annahl Logo" />{" "}
-                  </a>
+                  </a> */}
+                  <Icon
+                    icon="fa-solid:shipping-fast"
+                    width="80"
+                    height="80"
+                    className="text-white"
+                  />{" "}
                 </div>
-                <p>
-                  Management consulting includes a broad range of activities,
-                  and the many firms and their members often define these
-                  practices.
-                </p>
-                <ul className="social-links">
-                  <li>
-                    <a href="#">
-                      <i className="ti-facebook"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="ti-twitter-alt"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="ti-instagram"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="ti-google"></i>
-                    </a>
-                  </li>
-                </ul>
+                <div>
+                  <p
+                    className="text-white fw-bold fs-3 mb-0"
+                    style={{ lineHeight: "3rem" }}
+                  >
+                    DISCREET SHIPPING
+                  </p>
+                  <span className="text-light ">
+                    Management consulting includes a broad range of activities,
+                    and the many firms and their members often define these
+                    practices.
+                  </span>
+                </div>
+              </div>
+              <div className="widget about-widget d-flex gap-4 mt-5">
+                <div className="logo widget-title">
+                  <Icon
+                    icon="fa6-solid:table-cells-row-lock"
+                    width="80"
+                    height="80"
+                    className="text-white"
+                  />
+                </div>
+                <div>
+                  <p
+                    className="text-white fw-bold fs-3 mb-0"
+                    style={{ lineHeight: "3rem" }}
+                  >
+                    PRIVACY GURANTEED
+                  </p>
+                  <span className="text-light font-sm">
+                    We will NOT sell or share your personal information beyond
+                    what is necessary to complete your order.
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Contact Section */}
-            <div className="col col-lg-3 col-md-6 col-sm-12 col-12">
+            <div className="col col-lg-4 col-md-6 col-sm-12 col-12">
               <div className="widget tp-service-link-widget">
                 <div className="widget-title">
-                  <h3>Contact</h3>
+                  <p
+                    className="text-white fw-bold fs-3 mb-0"
+                    style={{ lineHeight: "3rem" }}
+                  >
+                    Customer Support
+                  </p>
                 </div>
                 <div className="contact-ft">
                   <ul>
                     <li>
-                      <i className="fi flaticon-pin"></i>7 Green Lake Street
-                      Crawfordsville, IN 47933
+                      <i className="fi flaticon-pin"></i>Kathmandu, Nepal
                     </li>
                     <li>
-                      <i className="fi flaticon-call"></i>+1 800 123 456 789
+                      <i className="fi flaticon-call"></i>+150543894392 ( USA
+                      Office )
                     </li>
                     <li>
-                      <i className="fi flaticon-envelope"></i>Annahl@gmail.com
+                      <i className="fi flaticon-call"></i>+9779851198750 ( Nepal
+                      Office)
+                    </li>
+                    <li>
+                      <i className="fi flaticon-envelope"></i>
+                      support@mystichive.com
+                    </li>
+                  </ul>
+                </div>
+                <div className="widget about-widget">
+                  <ul className="social-links">
+                    <li>
+                      <a href="#">
+                        <i className="ti-facebook"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i className="ti-twitter-alt"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i className="ti-instagram"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i className="ti-google"></i>
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -69,32 +120,37 @@ const Footer = () => {
             <div className="col col-lg-3 col-md-6 col-sm-12 col-12">
               <div className="widget link-widget">
                 <div className="widget-title">
-                  <h3>My Account</h3>
+                  <p
+                    className="text-white fw-bold fs-3 mb-0"
+                    style={{ lineHeight: "3rem" }}
+                  >
+                    Explore
+                  </p>
                 </div>
                 <ul>
                   <li>
-                    <a href="project.html">Our Projects</a>
+                    <Link to="">Shpping and return policy</Link>
                   </li>
                   <li>
                     <a href="order.html">Order History</a>
                   </li>
                   <li>
-                    <a href="wishlist.html">Wishlist</a>
+                    <a href="wishlist.html">Terms and conditions</a>
                   </li>
                   <li>
-                    <a href="checkout.html">Checkout</a>
+                    <a href="checkout.html">Disclaimer</a>
                   </li>
                 </ul>
               </div>
             </div>
 
             {/* Newsletter Section */}
-            <div className="col col-lg-3 col-md-6 col-sm-12 col-12">
+            {/* <div className="col col-lg-3 col-md-6 col-sm-12 col-12">
               <div className="widget newsletter-widget">
                 <div className="widget-title">
                   <h3>Newsletter</h3>
                 </div>
-                <p>You will be notified when something new appears.</p>
+                <p>You will .</p>
                 <form>
                   <div className="input-1">
                     <input
@@ -111,7 +167,7 @@ const Footer = () => {
                   </div>
                 </form>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -122,8 +178,8 @@ const Footer = () => {
           <div className="row">
             <div className="col col-xs-12">
               <p className="copyright">
-                Copyright &copy; 2019-2025. <a href="index.html">Mystic Hive</a>
-                . All Rights Reserved.
+                Copyright &copy; 2019-2025. <Link to="/">Mystic Hive</Link>. All
+                Rights Reserved.
               </p>
             </div>
           </div>

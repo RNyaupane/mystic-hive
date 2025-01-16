@@ -1,9 +1,21 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../redux/reducers/authSlice";
 
 const Header = () => {
   const [isOpenWishlist, setIsOpenWishlist] = useState(false);
   const [isOpenCart, setIsOpenCart] = useState(false);
+  const { user, isAuthenticated, accessToken } = useSelector(
+    (state) => state.auth
+  );
+  const [boolean, setBoolean] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
   return (
     <header id="header" className="site-header header-style-1 header-style-2">
       <nav className="navigation navbar navbar-expand-lg">
@@ -22,7 +34,7 @@ const Header = () => {
                   to="/"
                   style={{ maxWidth: "120px" }}
                 >
-                  <img src="/assets/images/logo.png" alt="" />
+                  <img src="/assets/images/logo1.png" alt="" />
                 </Link>
               </div>
             </div>
@@ -203,20 +215,45 @@ const Header = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="view-btn">
-                  <Link
-                    className="theme-btn"
-                    to="/auth/login"
-                    style={{
-                      padding: "6px 20px",
-                      borderRadius: "22px",
-                      textTransform: "capitalize",
-                    }}
-                  >
-                    Sign Up
-                  </Link>
-                </div>
+                {isAuthenticated && accessToken && user ? (
+                  <div className="header-profile-form-wrapper">
+                    <button
+                      className="profile-toggle-btn"
+                      onClick={() => setBoolean(!boolean)}
+                    >
+                      <i className="fi flaticon-user"></i>
+                    </button>
+                    {boolean && (
+                      <div className="header-profile-content ">
+                        <ul>
+                          <li>
+                            <Link to="/profile">Profile</Link>
+                          </li>
+                          <li>
+                            <Link>Settings</Link>
+                          </li>
+                          <li>
+                            <Link onClick={handleLogout}>Logout</Link>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="view-btn ">
+                    <Link
+                      className="theme-btn"
+                      to="/auth/login"
+                      style={{
+                        padding: "6px 20px",
+                        borderRadius: "22px",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      Sign Up
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -2062,7 +2062,7 @@ img {
   left: 0;
   top: 180%;
   background: #fff;
-  width: 200px;
+  width: 100px;
   /* opacity: 0;
   visibility: hidden; */
   -webkit-transition: all .3s;
@@ -5143,7 +5143,7 @@ img {
 
 @media (max-width: 1440px) {
   .shop-section .shop-section-top-inner .short-by ul li select {
-    width: 100px;
+    width: 150px;
   }
 }
 

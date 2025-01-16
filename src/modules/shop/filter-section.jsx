@@ -42,7 +42,7 @@ const ColorList = ({ colors }) => (
   </div>
 );
 
-const FilterSection = () => {
+const FilterSection = ({ searchValue, onSearchChange }) => {
   const priceOptions = [
     { label: "All prices" },
     { label: "$50 – $100 (1)" },
@@ -79,6 +79,8 @@ const FilterSection = () => {
                   type="text"
                   className="form-control"
                   placeholder="Search"
+                  value={searchValue}
+                  onChange={onSearchChange}
                 />
                 <button type="submit">
                   <i className="ti-search"></i>
@@ -102,7 +104,7 @@ const FilterSection = () => {
           </div>
         </FilterItem> */}
 
-        <FilterItem title="Brand">
+        <FilterItem title="Category">
           <RadioList items={brandOptions} name="topcoat3" />
         </FilterItem>
       </div>

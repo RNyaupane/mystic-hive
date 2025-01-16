@@ -2,33 +2,27 @@
 import OwlCarousel from "react-owl-carousel";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "../../hooks/use-params";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getProductDetail } from "../../redux/reducers/product/productDetailSlice";
 import PreLoader from "../../components/pre-loader";
-
-const mainCarouselOptions = {
-  items: 1,
-  loop: true,
-  nav: true,
-  dots: false,
-  autoplay: true,
-  autoplayTimeout: 3000,
-  autoplayHoverPause: true,
-};
+import Description from "../../modules/productDetail/description";
+import Rating from "../../modules/productDetail/rating";
+import AdditionalInformation from "../../modules/productDetail/additional-info";
 
 const thumbnailCarouselOptions = {
-  loop: true,
+  loop: false,
   margin: 10,
   nav: true,
   dots: false,
 
-  autoplay: true,
+  autoplay: false,
   autoplayTimeout: 3000,
   autoplayHoverPause: true,
 };
 const ProductDetailsPage = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const [currentImage, setCurrentImage] = useState("");
 
   const { details, isLoading } = useSelector((state) => state.productDetails);
 
@@ -52,34 +46,59 @@ const ProductDetailsPage = () => {
     <div className="product-single-section section-padding mt-5">
       <div className="container">
         <div className="product-details">
-          <div className="row align-items-center">
+          <div className="row align-items-start">
             <div className="col-lg-5">
-              <div className="product-single-img">
-                {/* Main Carousel */}
-                <OwlCarousel
-                  className="product-active"
-                  {...mainCarouselOptions}
+              <div className="product-single-img ">
+                <div
+                  className="d-flex justify-content-center"
+                  style={{
+                    width: "350px",
+                    height: "350px",
+                    margin: "auto",
+                  }}
                 >
-                  {details?.images?.length > 0 &&
-                    details?.images?.map((item, index) => (
-                      <div className="item" key={index}>
-                        <img src={item?.image} alt={item?.alt_text} />
-                      </div>
-                    ))}
-                </OwlCarousel>
+                  <img
+                    src={currentImage || details?.images?.[0]?.image}
+                    alt="Product Image"
+                    style={{
+                      objectFit: "cover",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                </div>
 
                 {/* Thumbnail Carousel */}
                 <OwlCarousel
-                  className="product-thumbnil-active"
+                  className="product-thumbnail-active mt-3"
                   {...thumbnailCarouselOptions}
-                  items={details?.images.length}
+                  items={details?.images?.length}
                 >
-                  {details?.images?.length > 0 &&
-                    details?.images?.map((item, index) => (
-                      <div className="item" key={index}>
-                        <img src={item?.image} alt={item?.alt_text} />
-                      </div>
-                    ))}
+                  {details?.images?.map((item, index) => (
+                    <div
+                      className={`item ${
+                        currentImage === item?.image ? "active" : ""
+                      }`} // Highlight active thumbnail
+                      key={index}
+                      onClick={() => setCurrentImage(item?.image)}
+                    >
+                      <img
+                        src={item?.image}
+                        alt={`Thumbnail ${index + 1}`}
+                        style={{
+                          height: "100px",
+                          width: "100px",
+                          objectFit: "cover",
+                          cursor: "pointer",
+                          border:
+                            currentImage === item?.image
+                              ? "2px solidrgb(201, 171, 0)"
+                              : "1px solid #ddd",
+                          borderRadius: "5px",
+                        }}
+                      />
+                    </div>
+                  ))}
                 </OwlCarousel>
               </div>
             </div>
@@ -163,36 +182,6 @@ const ProductDetailsPage = () => {
                     Add to cart
                   </a>
                 </div>
-                {/* <div className="social-share">
-                  <span>Share with : </span>
-                  <ul className="socialLinks">
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-facebook"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-linkedin"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-twitter"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-instagram"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-youtube-play"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div> */}
               </div>
             </div>
           </div>
@@ -249,85 +238,7 @@ const ProductDetailsPage = () => {
               role="tabpanel"
               aria-labelledby="descripton-tab"
             >
-              <div className="container">
-                <div className="row">
-                  <div className="col-lg-12">
-                    <div className="Descriptions-item">
-                      <p>{details?.description}</p>
-                      <div className="Description-table">
-                        <h4>Find Your Category :</h4>
-                        <form
-                          action="https://themepresss.com/tf/html/annahl-live/cart"
-                          className="table-responsive"
-                        >
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>Size</th>
-                                <th>Weight</th>
-                                <th>Queen</th>
-                                <th>Sunflower</th>
-                                <th>Hill</th>
-                                <th>Forest</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>S</td>
-                                <td>250ML</td>
-                                <td>60</td>
-                                <td>10 - 12</td>
-                                <td>20</td>
-                                <td>22</td>
-                              </tr>
-                              <tr>
-                                <td>M</td>
-                                <td>500ML</td>
-                                <td>62</td>
-                                <td>12 - 14</td>
-                                <td>21</td>
-                                <td>23</td>
-                              </tr>
-                              <tr>
-                                <td>L</td>
-                                <td>1L</td>
-                                <td>64</td>
-                                <td>14 - 18</td>
-                                <td>23</td>
-                                <td>24</td>
-                              </tr>
-                              <tr>
-                                <td>Xl</td>
-                                <td>2L</td>
-                                <td>66</td>
-                                <td>18 - 20</td>
-                                <td>24</td>
-                                <td>25</td>
-                              </tr>
-                              <tr>
-                                <td>2Xl</td>
-                                <td>3L</td>
-                                <td>68</td>
-                                <td>20 - 22</td>
-                                <td>25</td>
-                                <td>26</td>
-                              </tr>
-                              <tr>
-                                <td>3Xl</td>
-                                <td>5L</td>
-                                <td>76</td>
-                                <td>22 - 24</td>
-                                <td>27</td>
-                                <td>28</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Description details={details} />
             </div>
             <div
               className="tab-pane fade"
@@ -335,566 +246,10 @@ const ProductDetailsPage = () => {
               role="tabpanel"
               aria-labelledby="Ratings-tab"
             >
-              <div className="container">
-                <div className="rating-section">
-                  <div className="row">
-                    <div className="col-lg-10 offset-lg-2">
-                      <div className="rating-top">
-                        <div className="row">
-                          <div className="col-lg-4">
-                            <div className="rating-sub">
-                              <ul>
-                                <li>
-                                  <i
-                                    className="fa fa-star"
-                                    aria-hidden="true"
-                                  ></i>
-                                </li>
-                                <li>
-                                  <i
-                                    className="fa fa-star"
-                                    aria-hidden="true"
-                                  ></i>
-                                </li>
-                                <li>
-                                  <i
-                                    className="fa fa-star"
-                                    aria-hidden="true"
-                                  ></i>
-                                </li>
-                                <li>
-                                  <i
-                                    className="fa fa-star"
-                                    aria-hidden="true"
-                                  ></i>
-                                </li>
-                                <li>
-                                  <i
-                                    className="fa fa-star"
-                                    aria-hidden="true"
-                                  ></i>
-                                </li>
-                              </ul>
-                              <span>( Based on 45.86K reviews)</span>
-                            </div>
-                          </div>
-                          <div className="col-lg-8">
-                            <div className="rating-right">
-                              <div className="rating-right-item">
-                                <ul>
-                                  <li>
-                                    <ul>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                    </ul>
-                                  </li>
-                                  <li>
-                                    <div className="progress">
-                                      <div
-                                        className="bar"
-                                        style={{ width: "70%" }}
-                                      ></div>
-                                    </div>
-                                  </li>
-                                  <li>70% ( 32.10k)</li>
-                                </ul>
-                              </div>
-                              <div className="rating-right-item">
-                                <ul>
-                                  <li>
-                                    <ul>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star-o"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                    </ul>
-                                  </li>
-                                  <li>
-                                    <div className="progress">
-                                      <div
-                                        className="bar"
-                                        style={{ width: "60%" }}
-                                      ></div>
-                                    </div>
-                                  </li>
-                                  <li>15% ( 6.88k)</li>
-                                </ul>
-                              </div>
-                              <div className="rating-right-item">
-                                <ul>
-                                  <li>
-                                    <ul>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star-o"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star-o"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                    </ul>
-                                  </li>
-                                  <li>
-                                    <div className="progress">
-                                      <div
-                                        className="bar"
-                                        style={{ width: "40%" }}
-                                      ></div>
-                                    </div>
-                                  </li>
-                                  <li>10% ( 4.55k)</li>
-                                </ul>
-                              </div>
-                              <div className="rating-right-item">
-                                <ul>
-                                  <li>
-                                    <ul>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star-o"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star-o"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star-o"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                    </ul>
-                                  </li>
-                                  <li>
-                                    <div className="progress">
-                                      <div
-                                        className="bar"
-                                        style={{ width: "20%" }}
-                                      ></div>
-                                    </div>
-                                  </li>
-                                  <li>5% ( 2.29k)</li>
-                                </ul>
-                              </div>
-                              <div className="rating-right-item">
-                                <ul>
-                                  <li>
-                                    <ul>
-                                      <li>
-                                        <i
-                                          className="fa fa-star"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star-o"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star-o"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star-o"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                      <li>
-                                        <i
-                                          className="fa fa-star-o"
-                                          aria-hidden="true"
-                                        ></i>
-                                      </li>
-                                    </ul>
-                                  </li>
-                                  <li>
-                                    <div className="progress">
-                                      <div
-                                        className="bar"
-                                        style={{ width: "0" }}
-                                      ></div>
-                                    </div>
-                                  </li>
-                                  <li>0% ( 0.00)</li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-12 col-12">
-                      <div className="rating-bottom">
-                        <div className="write-review-btn">
-                          <button className="theme-btn">Write A Review</button>
-                        </div>
-
-                        <div className="rating-give-section-items">
-                          <div className="review-btn-btn">
-                            <button className="theme-btn s2">
-                              Cancel Review
-                            </button>
-                          </div>
-
-                          <div className="rating-give-section">
-                            <div className="rating-give-section-wrap">
-                              <form>
-                                <span>Give A Review</span>
-                                <div className="give-rating">
-                                  <label>
-                                    <input
-                                      type="radio"
-                                      readOnly
-                                      name="stars"
-                                      value="1"
-                                    />
-                                    <span className="icon">★</span>
-                                  </label>
-                                  <label>
-                                    <input
-                                      type="radio"
-                                      readOnly
-                                      name="stars"
-                                      value="2"
-                                    />
-                                    <span className="icon">★</span>
-                                    <span className="icon">★</span>
-                                  </label>
-                                  <label>
-                                    <input
-                                      readOnly
-                                      type="radio"
-                                      name="stars"
-                                      value="3"
-                                    />
-                                    <span className="icon">★</span>
-                                    <span className="icon">★</span>
-                                    <span className="icon">★</span>
-                                  </label>
-                                  <label>
-                                    <input
-                                      type="radio"
-                                      readOnly
-                                      name="stars"
-                                      value="4"
-                                    />
-                                    <span className="icon">★</span>
-                                    <span className="icon">★</span>
-                                    <span className="icon">★</span>
-                                    <span className="icon">★</span>
-                                  </label>
-                                  <label>
-                                    <input
-                                      readOnly
-                                      type="radio"
-                                      name="stars"
-                                      value="5"
-                                    />
-                                    <span className="icon">★</span>
-                                    <span className="icon">★</span>
-                                    <span className="icon">★</span>
-                                    <span className="icon">★</span>
-                                    <span className="icon">★</span>
-                                  </label>
-                                </div>
-
-                                <div className="form-group">
-                                  <input
-                                    type="text"
-                                    placeholder="Your Name..."
-                                  />
-                                </div>
-                                <div className="form-group">
-                                  <input
-                                    type="text"
-                                    placeholder="Your Email..."
-                                  />
-                                </div>
-                                <div className="form-group">
-                                  <textarea
-                                    name="rv"
-                                    id="rv"
-                                    cols="30"
-                                    rows="10"
-                                    placeholder="Your Review..."
-                                  ></textarea>
-                                </div>
-                                <div className="form-group">
-                                  <button type="button" className="theme-btn">
-                                    Submit Review
-                                  </button>
-                                </div>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="review-rating-wrap">
-                          <div className="rating-review">
-                            <div className="rating-review-author">
-                              <div className="rating-review-author-img">
-                                <img
-                                  src="/assets/images/product-details/author.png"
-                                  alt=""
-                                />
-                              </div>
-                              <div className="rating-review-author-text">
-                                <div className="rating-review-author-text-inner">
-                                  <ul className="ratting">
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star-o"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                  </ul>
-                                  <span>06/18/21</span>
-                                </div>
-                                <p>Ema Aliana</p>
-                              </div>
-                            </div>
-                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Aliquam hendrerit sem porta dolor congue
-                              sagittis Lorem ipsum dolor sit amet consectetur.
-                            </p>
-                          </div>
-                          <div className="rating-review">
-                            <div className="rating-review-author">
-                              <div className="rating-review-author-img">
-                                <img
-                                  src="/assets/images/product-details/author2.png"
-                                  alt=""
-                                />
-                              </div>
-                              <div className="rating-review-author-text">
-                                <div className="rating-review-author-text-inner">
-                                  <ul className="ratting">
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star-o"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                  </ul>
-                                  <span>06/18/21</span>
-                                </div>
-                                <p>John Clyne</p>
-                              </div>
-                            </div>
-                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Aliquam hendrerit sem porta dolor congue
-                              sagittis Lorem ipsum dolor sit amet consectetur.
-                            </p>
-                          </div>
-                          <div className="rating-review">
-                            <div className="rating-review-author">
-                              <div className="rating-review-author-img">
-                                <img
-                                  src="/assets/images/product-details/author3.png"
-                                  alt=""
-                                />
-                              </div>
-                              <div className="rating-review-author-text">
-                                <div className="rating-review-author-text-inner">
-                                  <ul className="ratting">
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                    <li>
-                                      <i
-                                        className="fa fa-star-o"
-                                        aria-hidden="true"
-                                      ></i>
-                                    </li>
-                                  </ul>
-                                  <span>06/18/21</span>
-                                </div>
-                                <p>Lily Jameson</p>
-                              </div>
-                            </div>
-                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Aliquam hendrerit sem porta dolor congue
-                              sagittis Lorem ipsum dolor sit amet consectetur.
-                            </p>
-                          </div>
-                          <div className="rating-review">
-                            <a href="#">Load More</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Rating
+                rating={details?.reviews}
+                averageRating={details?.average_rating}
+              />
             </div>
             <div
               className="tab-pane fade"
@@ -902,71 +257,7 @@ const ProductDetailsPage = () => {
               role="tabpanel"
               aria-labelledby="Information-tab"
             >
-              <div className="container">
-                <div className="Additional-wrap">
-                  <div className="row">
-                    <div className="col-12">
-                      <table className="table-responsive">
-                        <tbody>
-                          <tr>
-                            <td>Ratings</td>
-                            <td className="ratting">
-                              <ul>
-                                <li>
-                                  <i
-                                    className="fa fa-star"
-                                    aria-hidden="true"
-                                  ></i>
-                                </li>
-                                <li>
-                                  <i
-                                    className="fa fa-star"
-                                    aria-hidden="true"
-                                  ></i>
-                                </li>
-                                <li>
-                                  <i
-                                    className="fa fa-star"
-                                    aria-hidden="true"
-                                  ></i>
-                                </li>
-                                <li>
-                                  <i
-                                    className="fa fa-star-half-o"
-                                    aria-hidden="true"
-                                  ></i>
-                                </li>
-                                <li>
-                                  <i
-                                    className="fa fa-star-o"
-                                    aria-hidden="true"
-                                  ></i>
-                                </li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Material Type</td>
-                            <td>Hill Honey</td>
-                          </tr>
-                          <tr>
-                            <td>weight</td>
-                            <td>250 gm</td>
-                          </tr>
-                          <tr>
-                            <td>Seller</td>
-                            <td>Annahl</td>
-                          </tr>
-                          <tr>
-                            <td>Size</td>
-                            <td>Small Jar</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <AdditionalInformation details={details} />
             </div>
           </div>
         </div>
