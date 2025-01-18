@@ -21,7 +21,39 @@ const getProductDetail = async ({ payload }) => {
   }
 };
 
+const createCart = async () => {
+  try {
+    const response = await productApi.createCart();
+    return response;
+  } catch (error) {
+    toast.error(error?.response?.data?.message?.[0]);
+    throw error;
+  }
+};
+const addItemToCart = async ({ payload }) => {
+  try {
+    const response = await productApi.addItemToCart(payload);
+    return response;
+  } catch (error) {
+    toast.error(error?.response?.data?.message?.[0]);
+    throw error;
+  }
+};
+
+const getCartItems = async (id) => {
+  try {
+    const response = await productApi.getCartItem(id);
+    return response;
+  } catch (error) {
+    toast.error(error?.response?.data?.message?.[0]);
+    throw error;
+  }
+};
+
 export const productService = {
   getProducts,
   getProductDetail,
+  createCart,
+  addItemToCart,
+  getCartItems,
 };

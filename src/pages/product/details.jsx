@@ -40,8 +40,6 @@ const ProductDetailsPage = () => {
   if (isLoading) {
     return <PreLoader />;
   }
-
-  console.log(details);
   return (
     <div className="product-single-section section-padding mt-5">
       <div className="container">
