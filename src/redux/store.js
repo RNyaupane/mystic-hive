@@ -15,7 +15,7 @@ import persistReducer from "redux-persist/es/persistReducer";
 const persistConfig = {
   key: "root",
   storage,
-  whiteList: ["auth"],
+  whiteList: ["auth", "cart"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

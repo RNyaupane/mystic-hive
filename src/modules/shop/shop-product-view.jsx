@@ -1,10 +1,45 @@
+/* eslint-disable no-extra-boolean-cast */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import PreLoader from "../../components/pre-loader";
+import { productApi } from "../../redux/api-service/productApi";
+import { toast } from "react-toastify";
+import { createCart, getCartItem } from "../../redux/reducers/cartSlice";
 
-const ShopProductView = ({ products, isLoading }) => {
+const ShopProductView = ({ products, isLoading, onSortChange }) => {
+  const dispatch = useDispatch();
+  const { id } = useSelector((state) => state.cart);
+
+  const handleAddToCart = async (productId) => {
+    if (!!id) {
+      try {
+        const res = await productApi.addItemToCart(
+          {
+            product_id: productId,
+            quantity: 1,
+          },
+          id
+        );
+        if (res?.status === 201 || res?.status === 200) {
+          toast.success("Added Item to cart");
+          dispatch(getCartItem(id));
+        }
+        console.log(res);
+      } catch (err) {
+        toast.error("Add to cart Failed");
+        console.error(err);
+      }
+    } else {
+      dispatch(
+        createCart({
+          product_id: productId,
+          quantity: 1,
+        })
+      );
+    }
+  };
   if (isLoading) {
     return <PreLoader />;
   }
@@ -50,10 +85,10 @@ const ShopProductView = ({ products, isLoading }) => {
           <ul>
             <li>Sort By :</li>
             <li>
-              <select name="show">
-                <option value="">Date posted</option>
-                <option value="">Price high-low</option>
-                <option value="">Price low-high</option>
+              <select name="sort" onChange={onSortChange}>
+                <option value="date-posted">Date posted</option>
+                <option value="price-high-low">Price high-low</option>
+                <option value="price-low-high">Price low-high</option>
               </select>
             </li>
           </ul>
@@ -86,10 +121,11 @@ const ShopProductView = ({ products, isLoading }) => {
                         <ul>
                           <li>
                             <a
+                              style={{ cursor: "pointer" }}
                               data-bs-toggle="tooltip"
                               data-bs-html="true"
                               title="Add to Cart"
-                              href="cart.html"
+                              onClick={() => handleAddToCart(item?.id)}
                             >
                               <i className="fi flaticon-shopping-cart"></i>
                             </a>
@@ -194,8 +230,9 @@ const ShopProductView = ({ products, isLoading }) => {
                             <a
                               data-bs-toggle="tooltip"
                               data-bs-html="true"
+                              style={{ cursor: "pointer" }}
                               title="Add to Cart"
-                              href="cart.html"
+                              onClick={() => handleAddToCart(item?.id)}
                             >
                               <i className="fi flaticon-shopping-cart"></i>
                             </a>

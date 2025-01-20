@@ -8,17 +8,29 @@ import { getProducts } from "../../redux/reducers/product/productSlice";
 const ShopView = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("");
 
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
   const { products = [], isLoading } = useSelector((state) => state.product);
-
-  // Filter products based on search query
   const filteredProducts = products?.filter((product) =>
     product?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())
   );
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sortOption) {
+      case "date-posted":
+        return new Date(b.created_at) - new Date(a.created_at);
+      case "price-high-low":
+        return parseFloat(b.unit_price) - parseFloat(a.unit_price);
+      case "price-low-high":
+        return parseFloat(a.unit_price) - parseFloat(b.unit_price);
+      default:
+        return 0;
+    }
+  });
   return (
     <div className="shop-section">
       <div className="container">
@@ -28,7 +40,11 @@ const ShopView = () => {
             onSearchChange={(e) => setSearchQuery(e.target.value)}
           />
 
-          <ShopProductView products={filteredProducts} isLoading={isLoading} />
+          <ShopProductView
+            products={sortedProducts}
+            isLoading={isLoading}
+            onSortChange={(e) => setSortOption(e.target.value)}
+          />
         </div>
       </div>
     </div>

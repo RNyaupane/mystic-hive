@@ -9,6 +9,7 @@ const Header = () => {
   const { user, isAuthenticated, accessToken } = useSelector(
     (state) => state.auth
   );
+  const { items } = useSelector((state) => state.cart);
   const [boolean, setBoolean] = useState(false);
 
   const dispatch = useDispatch();
@@ -74,7 +75,7 @@ const Header = () => {
                     onClick={() => setIsOpenCart(!isOpenCart)}
                   >
                     <i className="fi flaticon-bag"></i>
-                    <span className="cart-count">2</span>
+                    <span className="cart-count">{items?.length || 0}</span>
                   </button>
                   <div
                     className="mini-cart-content"
@@ -91,36 +92,30 @@ const Header = () => {
                       <i className="ti-close"></i>
                     </button>
                     <div className="mini-cart-items">
-                      <div className="mini-cart-item clearfix">
-                        <div className="mini-cart-item-image">
-                          <a href="product-single.html">
-                            <img
-                              src="/assets/images/shop/mini-cart/img-1.jpg"
-                              alt=""
-                            />
-                          </a>
-                        </div>
-                        <div className="mini-cart-item-des">
-                          <a href="product-single.html">Wildflower Honey</a>
-                          <span className="mini-cart-item-price">$20.15</span>
-                          <span className="mini-cart-item-quantity">x 1</span>
-                        </div>
-                      </div>
-                      <div className="mini-cart-item clearfix">
-                        <div className="mini-cart-item-image">
-                          <a href="product-single.html">
-                            <img
-                              src="/assets/images/shop/mini-cart/img-2.jpg"
-                              alt=""
-                            />
-                          </a>
-                        </div>
-                        <div className="mini-cart-item-des">
-                          <a href="product-single.html">Queen Bee Honey</a>
-                          <span className="mini-cart-item-price">$13.25</span>
-                          <span className="mini-cart-item-quantity">x 2</span>
-                        </div>
-                      </div>
+                      {items &&
+                        items?.map((item, index) => (
+                          <div className="mini-cart-item clearfix" key={index}>
+                            <div className="mini-cart-item-image">
+                              <a href="product-single.html">
+                                <img
+                                  src="/assets/images/shop/mini-cart/img-1.jpg"
+                                  alt=""
+                                />
+                              </a>
+                            </div>
+                            <div className="mini-cart-item-des">
+                              <a href="product-single.html">
+                                {item?.product?.name}
+                              </a>
+                              <span className="mini-cart-item-price">
+                                {item?.product?.name}
+                              </span>
+                              <span className="mini-cart-item-quantity">
+                                {item?.quantity}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
                     </div>
                     <div className="mini-cart-action clearfix">
                       <span className="mini-checkout-price">

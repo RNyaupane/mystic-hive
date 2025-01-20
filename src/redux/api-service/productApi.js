@@ -10,5 +10,5 @@ export const productApi = {
       {},
       { headers: { Authorization: "" } }
     ),
-  addItemToCart: (cartId) => requests.post(`shop/carts/${cartId}/items/`),
+  addItemToCart: (data, id) => requests.post(`shop/carts/${id}/items/`, data),
 };

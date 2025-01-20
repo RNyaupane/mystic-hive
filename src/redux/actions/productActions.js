@@ -21,18 +21,11 @@ const getProductDetail = async ({ payload }) => {
   }
 };
 
-const createCart = async () => {
+const createCart = async (payload) => {
+  console.log("CREAT CARt Oayload", payload);
   try {
     const response = await productApi.createCart();
-    return response;
-  } catch (error) {
-    toast.error(error?.response?.data?.message?.[0]);
-    throw error;
-  }
-};
-const addItemToCart = async ({ payload }) => {
-  try {
-    const response = await productApi.addItemToCart(payload);
+    console.log(response);
     return response;
   } catch (error) {
     toast.error(error?.response?.data?.message?.[0]);
@@ -54,6 +47,5 @@ export const productService = {
   getProducts,
   getProductDetail,
   createCart,
-  addItemToCart,
   getCartItems,
 };
