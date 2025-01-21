@@ -29,6 +29,7 @@ export default function AppContainer() {
   return (
     <>
       <ToastContainer
+        stacked
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}

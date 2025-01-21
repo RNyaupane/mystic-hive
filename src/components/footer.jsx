@@ -26,7 +26,7 @@ const Footer = () => {
                     className="text-white fw-bold fs-3 mb-0"
                     style={{ lineHeight: "3rem" }}
                   >
-                    DISCREET SHIPPING
+                    Discreet Shippping
                   </p>
                   <span className="text-light ">
                     Management consulting includes a broad range of activities,
@@ -49,7 +49,7 @@ const Footer = () => {
                     className="text-white fw-bold fs-3 mb-0"
                     style={{ lineHeight: "3rem" }}
                   >
-                    PRIVACY GURANTEED
+                    Privacy Guranteed
                   </p>
                   <span className="text-light font-sm">
                     We will NOT sell or share your personal information beyond

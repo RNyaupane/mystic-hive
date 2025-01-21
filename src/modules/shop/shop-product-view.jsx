@@ -134,13 +134,14 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
                             data-bs-toggle="modal"
                             data-bs-target="#popup-quickview"
                           >
-                            <button
+                            <Link
+                              to={`/product/${item?.id}`}
                               data-bs-toggle="tooltip"
                               data-bs-html="true"
                               title="Quick View"
                             >
                               <i className="fi ti-eye"></i>
-                            </button>
+                            </Link>
                           </li>
                           <li>
                             <a
@@ -241,13 +242,14 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
                             data-bs-toggle="modal"
                             data-bs-target="#popup-quickview"
                           >
-                            <button
+                            <Link
+                              to={`/product/${item?.id}`}
                               data-bs-toggle="tooltip"
                               data-bs-html="true"
                               title="Quick View"
                             >
                               <i className="fi ti-eye"></i>
-                            </button>
+                            </Link>
                           </li>
                           <li>
                             <a

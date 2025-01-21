@@ -17,6 +17,11 @@ const Header = () => {
   const handleLogout = () => {
     dispatch(logoutUser());
   };
+  const total = items?.reduce(
+    (sum, item) => sum + parseFloat(item?.sub_total),
+    0
+  );
+
   return (
     <header id="header" className="site-header header-style-1 header-style-2">
       <nav className="navigation navbar navbar-expand-lg">
@@ -119,7 +124,7 @@ const Header = () => {
                     </div>
                     <div className="mini-cart-action clearfix">
                       <span className="mini-checkout-price">
-                        Total: $215.14
+                        Total: ${total}
                       </span>
                       <div className="mini-btn">
                         <Link to="/checkout" className="view-cart-btn s1">

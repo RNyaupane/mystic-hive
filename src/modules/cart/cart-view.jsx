@@ -1,4 +1,20 @@
+import { useSelector } from "react-redux";
+import Spinner from "../../components/spinner";
+
 const CartView = () => {
+  const { items, isLoading } = useSelector((state) => state.cart);
+
+  // Calculate total items and total price dynamically
+  const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
+  const subTotal = items.reduce(
+    (sum, item) => sum + parseFloat(item.sub_total),
+    0
+  );
+  const vat = subTotal * 0.02; // Example VAT calculation (2%)
+  const ecoTax = 100; // Fixed eco tax
+  const deliveryCharge = 100; // Fixed delivery charge
+  const totalPrice = subTotal + vat + ecoTax + deliveryCharge;
+
   return (
     <div className="cart-area section-padding">
       <div className="container">
@@ -6,7 +22,7 @@ const CartView = () => {
           <div className="cart-wrapper">
             <div className="row">
               <div className="col-12">
-                <form action="https://themepresss.com/tf/html/annahl-live/cart">
+                <form action="#">
                   <table className="table-responsive cart-wrap">
                     <thead>
                       <tr>
@@ -18,43 +34,72 @@ const CartView = () => {
                         <th className="remove remove-b">Action</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td className="images">
-                          <img src="assets/images/cart/img-1.png" alt="" />
-                        </td>
-                        <td className="product">
-                          <ul>
-                            <li className="first-cart ">Mango Flower Honey</li>
-                            <li>Brand : Thoney</li>
-                            <li>Size : Small jar</li>
-                          </ul>
-                        </td>
-                        <td className="stock">
-                          <ul className="input-style">
-                            <li className="quantity cart-plus-minus">
-                              <input type="text" defaultValue="1" />
-                            </li>
-                          </ul>
-                        </td>
-                        <td className="ptice">$ 250</td>
-                        <td className="stock">$ 250</td>
-                        <td className="action">
-                          <ul>
-                            <li className="w-btn">
-                              <a
-                                data-bs-toggle="tooltip"
-                                data-bs-html="true"
-                                title="Remove from Cart"
-                                href="#"
-                              >
-                                <i className="fi flaticon-delete"></i>
-                              </a>
-                            </li>
-                          </ul>
-                        </td>
-                      </tr>
-                    </tbody>
+                    {isLoading ? (
+                      <tbody>
+                        <tr>
+                          <td colSpan={6}>
+                            <Spinner title="Loading Cart Items" />
+                          </td>
+                        </tr>
+                      </tbody>
+                    ) : (
+                      <tbody>
+                        {items.map((item) => (
+                          <tr key={item.id}>
+                            <td className="images">
+                              <img
+                                src={
+                                  item.product.images.find(
+                                    (img) => img.is_primary
+                                  )?.image || "assets/images/cart/default.png"
+                                }
+                                alt={item.product.name}
+                                style={{ maxWidth: "100px" }}
+                              />
+                            </td>
+                            <td className="product">
+                              <ul>
+                                <li className="first-cart">
+                                  {item.product.name}
+                                </li>
+                                <li>Brand: {item.product.brand || "N/A"}</li>
+                              </ul>
+                            </td>
+                            <td className="stock">
+                              <ul className="input-style">
+                                <li className="quantity cart-plus-minus">
+                                  <input
+                                    type="text"
+                                    defaultValue={item.quantity}
+                                    readOnly
+                                  />
+                                </li>
+                              </ul>
+                            </td>
+                            <td className="ptice">
+                              ${parseFloat(item.product.unit_price).toFixed(2)}
+                            </td>
+                            <td className="stock">
+                              ${parseFloat(item.sub_total).toFixed(2)}
+                            </td>
+                            <td className="action">
+                              <ul>
+                                <li className="w-btn">
+                                  <a
+                                    data-bs-toggle="tooltip"
+                                    data-bs-html="true"
+                                    title="Remove from Cart"
+                                    href="#"
+                                  >
+                                    <i className="fi flaticon-delete"></i>
+                                  </a>
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    )}
                   </table>
                 </form>
                 <div className="submit-btn-area">
@@ -73,26 +118,25 @@ const CartView = () => {
                 <div className="cart-product-list">
                   <ul>
                     <li>
-                      Total product<span>( 05 )</span>
+                      Total product<span>({totalQuantity})</span>
                     </li>
                     <li>
-                      Sub Price<span>$2250</span>
+                      Sub Price<span>${subTotal.toFixed(2)}</span>
                     </li>
                     <li>
-                      Vat<span>$50</span>
+                      Vat<span>${vat.toFixed(2)}</span>
                     </li>
                     <li>
-                      Eco Tax<span>$100</span>
+                      Eco Tax<span>${ecoTax.toFixed(2)}</span>
                     </li>
                     <li>
-                      Delivery Charge<span>$100</span>
+                      Delivery Charge<span>${deliveryCharge.toFixed(2)}</span>
                     </li>
                     <li className="cart-b">
-                      Total Price<span>$2500</span>
+                      Total Price<span>${totalPrice.toFixed(2)}</span>
                     </li>
                   </ul>
                 </div>
-
                 <div className="submit-btn-area">
                   <ul>
                     <li>

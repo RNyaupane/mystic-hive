@@ -8,6 +8,9 @@ import PreLoader from "../../components/pre-loader";
 import Description from "../../modules/productDetail/description";
 import Rating from "../../modules/productDetail/rating";
 import AdditionalInformation from "../../modules/productDetail/additional-info";
+import { productApi } from "../../redux/api-service/productApi";
+import { createCart, getCartItem } from "../../redux/reducers/cartSlice";
+import { toast } from "react-toastify";
 
 const thumbnailCarouselOptions = {
   loop: false,
@@ -23,8 +26,43 @@ const ProductDetailsPage = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const [currentImage, setCurrentImage] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   const { details, isLoading } = useSelector((state) => state.productDetails);
+  const { id } = useSelector((state) => state.cart);
+
+  const handleAddToCart = async (productId) => {
+    if (quantity < 1) {
+      toast.warning("Quantity must be greater than 1");
+      return;
+    }
+    if (!!id) {
+      try {
+        const res = await productApi.addItemToCart(
+          {
+            product_id: productId,
+            quantity: quantity,
+          },
+          id
+        );
+        if (res?.status === 201 || res?.status === 200) {
+          toast.success("Added Item to cart");
+          dispatch(getCartItem(id));
+        }
+        console.log(res);
+      } catch (err) {
+        toast.error("Add to cart Failed");
+        console.error(err);
+      }
+    } else {
+      dispatch(
+        createCart({
+          product_id: productId,
+          quantity: 1,
+        })
+      );
+    }
+  };
 
   useEffect(() => {
     if (!!params?.id) {
@@ -174,9 +212,17 @@ const ProductDetailsPage = () => {
                 </div>
                 <div className="pro-single-btn">
                   <div className="quantity cart-plus-minus">
-                    <input type="number" defaultValue={1} />
+                    <input
+                      type="number"
+                      value={quantity}
+                      onChange={(e) => setQuantity(e.target.value)}
+                      // min={1}
+                    />
                   </div>
-                  <a href="#" className="theme-btn ">
+                  <a
+                    className="theme-btn cursor-pointer"
+                    onClick={() => handleAddToCart(details?.id)}
+                  >
                     Add to cart
                   </a>
                 </div>
