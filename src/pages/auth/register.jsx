@@ -36,14 +36,18 @@ const Register = () => {
   });
 
   // Form submission handler
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const payload = {
       email: data.email,
       password: data.password,
       first_name: data.first_name,
       last_name: data.last_name,
     };
-    dispatch(authService.register(payload));
+    try {
+      await dispatch(authService.register(payload));
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
   return (
@@ -229,32 +233,22 @@ const Register = () => {
                   </div>
                 </div>
 
-                {/* <h4 className="or">
+                <h4 className="or">
                   <span>OR</span>
                 </h4>
                 <ul className="tp-socialLoginBtn">
                   <li>
-                    <button className="facebook" type="button">
+                    <button
+                      className=" w-auto px-3 btn btn-secondary"
+                      type="button"
+                    >
                       <span>
-                        <i className="fa fa-facebook"></i>
+                        <i className="fa fa-google"></i> &ensp; Sign up with
+                        Google
                       </span>
                     </button>
                   </li>
-                  <li>
-                    <button className="twitter" type="button">
-                      <span>
-                        <i className="fa fa-twitter"></i>
-                      </span>
-                    </button>
-                  </li>
-                  <li>
-                    <button className="linkedin" type="button">
-                      <span>
-                        <i className="fa fa-linkedin"></i>
-                      </span>
-                    </button>
-                  </li>
-                </ul> */}
+                </ul>
                 <p className="subText">
                   I have an account <Link to="/auth/login">Login account</Link>
                 </p>

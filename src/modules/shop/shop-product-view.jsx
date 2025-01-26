@@ -7,11 +7,12 @@ import PreLoader from "../../components/pre-loader";
 import { productApi } from "../../redux/api-service/productApi";
 import { toast } from "react-toastify";
 import { createCart, getCartItem } from "../../redux/reducers/cartSlice";
+import { addItemToWishList } from "../../redux/reducers/wishlistSlice";
 
 const ShopProductView = ({ products, isLoading, onSortChange }) => {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.cart);
-
+  const { items } = useSelector((state) => state?.wishlist);
   const handleAddToCart = async (productId) => {
     if (!!id) {
       try {
@@ -40,6 +41,14 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
       );
     }
   };
+  const handleAddToWishlist = (productId) => {
+    const item = { id: productId };
+    dispatch(addItemToWishList(item));
+    setTimeout(() => {
+      toast.success("Added To Wishlist");
+    }, 400);
+  };
+
   if (isLoading) {
     return <PreLoader />;
   }
@@ -147,10 +156,18 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
                             <a
                               data-bs-toggle="tooltip"
                               data-bs-html="true"
+                              className="cursor-pointer"
                               title="Add to Wishlist"
-                              href="wishlist.html"
+                              onClick={() => handleAddToWishlist(item?.id)}
                             >
-                              <i className="fi flaticon-like"></i>
+                              <i
+                                className="fi flaticon-like"
+                                style={{
+                                  color: items?.some((i) => i.id === item?.id)
+                                    ? "#910000"
+                                    : "",
+                                }}
+                              ></i>
                             </a>
                           </li>
                         </ul>

@@ -3,6 +3,7 @@ import { useRoutes } from "react-router-dom";
 import PreLoader from "../components/pre-loader";
 import Register from "../pages/auth/register.jsx";
 import ProtectedRoute from "./PrivateRoutes.jsx";
+import Profile from "../pages/auth/profile.jsx";
 
 const MainLayout = lazy(() => import("../layout/main-layout"));
 const AboutPage = lazy(() => import("../pages/about/about-page.jsx"));
@@ -74,6 +75,10 @@ const AppRouter = () => {
         {
           path: "faq",
           element: <FaqPage />,
+        },
+        {
+          path: "profile",
+          element: <Profile />,
         },
       ],
     },

@@ -26,9 +26,12 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  // Form submission handler
-  const onSubmit = (data) => {
-    dispatch(loginUser(data));
+  const onSubmit = async (data) => {
+    try {
+      await dispatch(loginUser(data)); // Ensure this is an async action
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
   return (
@@ -144,13 +147,37 @@ const Login = () => {
                       className="tp-accountBtn"
                       disabled={isSubmitting}
                     >
+                      {isSubmitting && (
+                        <span
+                          className="spinner-border spinner-border-sm mx-2"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                      )}
                       {isSubmitting ? "Logging in..." : "Login"}
                     </button>
                   </div>
                 </div>
+                <h4 className="or">
+                  <span>OR</span>
+                </h4>
+
+                <ul className="tp-socialLoginBtn">
+                  <li>
+                    <button
+                      className=" w-auto px-3 btn btn-secondary"
+                      type="button"
+                    >
+                      <span>
+                        <i className="fa fa-google"></i> &ensp; Login with
+                        Google
+                      </span>
+                    </button>
+                  </li>
+                </ul>
 
                 {/* Footer */}
-                <p className="subText">
+                <p className="subText mt-1">
                   Don&apos;t have an account?{" "}
                   <Link to="/auth/register">Create free account</Link>
                 </p>

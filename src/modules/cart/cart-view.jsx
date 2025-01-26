@@ -1,18 +1,49 @@
-import { useSelector } from "react-redux";
+/* eslint-disable no-unused-vars */
+import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../../components/spinner";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { productApi } from "../../redux/api-service/productApi";
+import { toast } from "react-toastify";
+import { getCartItem } from "../../redux/reducers/cartSlice";
 
 const CartView = () => {
-  const { items, isLoading } = useSelector((state) => state.cart);
+  const { items, isLoading, id } = useSelector((state) => state.cart);
+  const [cartItems, setCartItems] = useState(items || []);
 
-  // Calculate total items and total price dynamically
-  const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
-  const subTotal = items.reduce(
-    (sum, item) => sum + parseFloat(item.sub_total),
+  const dispatch = useDispatch(); // Assuming an action for updating cart items exists
+
+  const handleQuantityChange = (id, newQuantity) => {
+    setCartItems((prevCartItems) =>
+      prevCartItems.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+  console.log(cartItems);
+  const updateCart = async () => {
+    for (const item of cartItems) {
+      try {
+        const res = await productApi.addItemToCart(
+          { product_id: item?.product?.id, quantity: item?.quantity },
+          id
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    dispatch(getCartItem(id));
+  };
+
+  const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const subTotal = cartItems.reduce(
+    (sum, item) => sum + parseFloat(item.product.unit_price) * item.quantity,
     0
   );
-  const vat = subTotal * 0.02; // Example VAT calculation (2%)
-  const ecoTax = 100; // Fixed eco tax
-  const deliveryCharge = 100; // Fixed delivery charge
+  const vat = subTotal * 0.02;
+  const ecoTax = 100;
+  const deliveryCharge = 100;
   const totalPrice = subTotal + vat + ecoTax + deliveryCharge;
 
   return (
@@ -44,14 +75,15 @@ const CartView = () => {
                       </tbody>
                     ) : (
                       <tbody>
-                        {items.map((item) => (
+                        {cartItems?.map((item) => (
                           <tr key={item.id}>
                             <td className="images">
                               <img
                                 src={
                                   item.product.images.find(
                                     (img) => img.is_primary
-                                  )?.image || "assets/images/cart/default.png"
+                                  )?.image ||
+                                  "/assets/images/product/default-product.png"
                                 }
                                 alt={item.product.name}
                                 style={{ maxWidth: "100px" }}
@@ -69,9 +101,15 @@ const CartView = () => {
                               <ul className="input-style">
                                 <li className="quantity cart-plus-minus">
                                   <input
-                                    type="text"
-                                    defaultValue={item.quantity}
-                                    readOnly
+                                    type="number"
+                                    value={item.quantity}
+                                    onChange={(e) =>
+                                      handleQuantityChange(
+                                        item.id,
+                                        parseInt(e.target.value) || 1
+                                      )
+                                    }
+                                    min="1"
                                   />
                                 </li>
                               </ul>
@@ -80,7 +118,11 @@ const CartView = () => {
                               ${parseFloat(item.product.unit_price).toFixed(2)}
                             </td>
                             <td className="stock">
-                              ${parseFloat(item.sub_total).toFixed(2)}
+                              $
+                              {(
+                                parseFloat(item.product.unit_price) *
+                                item.quantity
+                              ).toFixed(2)}
                             </td>
                             <td className="action">
                               <ul>
@@ -105,13 +147,15 @@ const CartView = () => {
                 <div className="submit-btn-area">
                   <ul>
                     <li>
-                      <a className="theme-btn" href="shop.html">
+                      <Link className="theme-btn" to="/shop">
                         Continue Shopping{" "}
                         <i className="fa fa-angle-double-right"></i>
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <button type="submit">Update Cart</button>
+                      <button type="button" onClick={updateCart}>
+                        Update Cart
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -140,10 +184,10 @@ const CartView = () => {
                 <div className="submit-btn-area">
                   <ul>
                     <li>
-                      <a className="theme-btn" href="checkout.html">
+                      <Link className="theme-btn" to="/checkout">
                         Proceed to Checkout{" "}
                         <i className="fa fa-angle-double-right"></i>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
