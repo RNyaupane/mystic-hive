@@ -44,8 +44,9 @@ p {
 
 h1,
 h2,
-h3 {
-    font-family: "Conv_Now-Bold";
+h3,
+body {
+    font-family: "Conv_Now-Bold" !important;
     color: var(--headingDark);
 }
 
@@ -446,7 +447,6 @@ img {
 
 .form select {
     font-style: italic;
-    background: url(../images/select-icon.html) no-repeat right center;
     display: inline-block;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -528,7 +528,7 @@ img {
 }
 
 .tp-breadcumb-area {
-    background: url(/assets/images/page-title.jpg) no-repeat center top/cover;
+    background: url(/assets/img/page-title.jpg) no-repeat center top/cover;
     min-height: 400px;
     position: relative;
     display: -webkit-box;
@@ -2138,6 +2138,7 @@ img {
 
 .hero .slide .slider-bg {
     display: none;
+    position: relative;
 }
 
 .hero .slide:hover .slick-next {
@@ -2296,7 +2297,7 @@ img {
 
 .hero-style-1 .slide-caption .slide-title h2,
 .hero-style-2 .slide-caption .slide-title h2 {
-    font-size: 130px;
+    font-size: 100px;
     line-height: 125px;
     text-transform: uppercase;
     font-weight: 600;
@@ -2308,7 +2309,7 @@ img {
 
     .hero-style-1 .slide-caption .slide-title h2,
     .hero-style-2 .slide-caption .slide-title h2 {
-        font-size: 95px;
+        font-size: 75px;
         line-height: 100px;
     }
 }
@@ -6370,7 +6371,7 @@ input[type=radio]:checked+.topcoat-radio-button:after {
 }
 
 .checkout-area .create-account {
-    display: none;
+    /* display: none; */
     padding: 20px;
 }
 
@@ -6437,7 +6438,7 @@ input[type=radio]:checked+.topcoat-radio-button:after {
     color: #0F0F0F;
     cursor: pointer;
     padding: 20px 20px;
-    border-left: 4px solid var(--primaryBg);
+    /* border-left: 4px solid var(--primaryBg); */
     -webkit-transition: all .3s;
     transition: all .3s;
     width: 100%;
@@ -6469,17 +6470,14 @@ input[type=radio]:checked+.topcoat-radio-button:after {
 }
 
 .checkout-area .s2 .coupon-3 {
-    border-top: 4px solid var(--primaryBg);
+    /* border-top: 4px solid var(--primaryBg); */
 }
 
 .checkout-area .s2.coupon-2 .coupon-3 {
     border-top: 0;
 }
 
-.checkout-area .s2 .coupon-3 label {
-    border-left: 0;
-    border-bottom: 1px solid #ffe5dc;
-}
+
 
 .checkout-area .s2.coupon-2 .coupon-3 label {
     border-left: 4px solid var(--primaryBg);
@@ -6514,6 +6512,22 @@ input[type=radio]:checked+.topcoat-radio-button:after {
     padding-left: 10px;
     border: 1px solid #eeeeee;
     background: #fafafa;
+}
+
+.accordian-border-left-remove {
+    border-left: 0;
+}
+
+.accordian-border-top-remove {
+    border-top: 0;
+}
+
+.accordian-border-left {
+    border-left: 4px solid var(--primaryBg);
+}
+
+.accordian-border-top {
+    border-top: 4px solid var(--primaryBg);
 }
 
 .checkout-area .note-area textarea:focus {
@@ -6553,10 +6567,10 @@ input[type=radio]:checked+.topcoat-radio-button:after {
 }
 
 .checkout-area .payment-name ul li {
-    width: 100px;
+    width: 150px;
     height: 60px;
     text-align: center;
-    line-height: 60px;
+    line-height: 80px;
 }
 
 .checkout-area .payment-name ul li input {
@@ -6579,7 +6593,7 @@ input[type=radio]:checked+.topcoat-radio-button:after {
 }
 
 .checkout-area .payment-select {
-    padding: 40px 0;
+    padding: 5px 0 40px 0;
 }
 
 .checkout-area .payment-select ul {
@@ -7690,6 +7704,30 @@ input[type=radio]:checked+.topcoat-radio-button:after {
     }
 }
 
+.blog-single-section .comment-respond .form-inputs>input:nth-child(4) {
+    width: 49%;
+    float: left;
+}
+
+@media (max-width: 767px) {
+    .blog-single-section .comment-respond .form-inputs>input:nth-child(4) {
+        width: 100%;
+        float: none;
+    }
+}
+
+.blog-single-section .comment-respond .form-inputs>input:nth-child(5) {
+    width: 49%;
+    float: right;
+}
+
+@media (max-width: 767px) {
+    .blog-single-section .comment-respond .form-inputs>input:nth-child(5) {
+        width: 100%;
+        float: none;
+    }
+}
+
 .blog-single-section .comment-respond .form-submit input {
     max-width: 180px;
     background-color: var(--primaryBg);
@@ -7751,7 +7789,7 @@ input[type=radio]:checked+.topcoat-radio-button:after {
 
 .tp-login-area .tp-accountInfo {
     width: 50%;
-    /* background: url(/assets/images/slider/bg.jpg) no-repeat right center; */
+    /* background: url(/assets/img/slider/bg.jpg) no-repeat right center; */
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

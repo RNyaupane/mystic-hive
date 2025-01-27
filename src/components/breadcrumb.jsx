@@ -22,10 +22,10 @@ const Breadcrumb = ({ title = "" }) => {
         </div>
       </div>
       <div className="hero-shape-img-1">
-        <img src="/assets/images/slider/img-2.png" alt="" />
+        <img src="/assets/img/slider/img-2.png" alt="" />
       </div>
       <div className="hero-shape-img-2">
-        <img src="/assets/images/slider/img-3.png" alt="" />
+        <img src="/assets/img/slider/img-3.png" alt="" />
       </div>
     </div>
   );

@@ -22,7 +22,9 @@ const axiosInstance = axios.create({
 });
 
 export const updateToken = (token) => {
-  axiosInstance.defaults.headers.common.Authorization = `${token}`;
+  axiosInstance.defaults.headers.common.Authorization = !!!token
+    ? ""
+    : `JWT ${token}`;
 };
 
 // !refresh token implementation hold for some time
@@ -49,18 +51,18 @@ axiosInstance.interceptors.response.use(
 
   async (error) => {
     const originalRequest = error.config;
+    console.log(error);
 
-    if (
-      !error.response?.status ||
-      (!!!store?.getState()?.login?.token &&
-        !!!Public_Paths?.includes(pathname))
-    ) {
-      // history.push('auth/login')
+    // if (
+    //   !error.response?.status ||
+    //   (!!!store?.getState()?.auth?.accessToken &&
+    //     !!!Public_Paths?.includes(pathname))
+    // ) {
+    //   // history.push('auth/login')
 
-      // store.dispatch(loginActions.logout())
-      return Promise.reject(error);
-    }
-
+    //   // store.dispatch(loginActions.logout())
+    //   return Promise.reject(error);
+    // }
     if (
       error.response?.status === 401 &&
       !!!originalRequest._retry &&
@@ -69,9 +71,10 @@ axiosInstance.interceptors.response.use(
       // &&
       // !publicRoutes.includes(Router.router?.route ?? '')
     ) {
-      if (!!!store?.getState()?.login?.token) {
-        return store.dispatch(authReducer.logout());
-      }
+      // if (!!!store?.getState()?.auth?.accessToken) {
+      toast.error("Unauthorized");
+      store.dispatch(authReducer.logout());
+      // }
 
       if (isRefreshing) {
         return new Promise((resolve, reject) => {

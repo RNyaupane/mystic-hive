@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const getProductDetail = createAsyncThunk(
-  "auth/product_detail",
+  "product_detail",
   async (payload, thunkAPI) => {
     try {
       return await productService.getProductDetail({ payload });

@@ -123,7 +123,7 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
                         <img
                           src={
                             item?.images?.[0]?.image ||
-                            "/assets/images/product/default-product.png"
+                            "/assets/img/product/default-product.png"
                           }
                           alt="Product Image"
                         />
@@ -238,7 +238,7 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
                           <img
                             src={
                               item?.images?.[0]?.image ||
-                              "/assets/images/product/default-product.png"
+                              "/assets/img/product/default-product.png"
                             }
                             alt="Product Image"
                           />
@@ -273,7 +273,7 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
                               data-bs-toggle="tooltip"
                               data-bs-html="true"
                               title="Add to Wishlist"
-                              href="wishlist.html"
+                              onClick={() => handleAddToWishlist(item?.id)}
                             >
                               <i className="fi flaticon-like"></i>
                             </a>

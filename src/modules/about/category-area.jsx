@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const CategoryArea = () => {
   return (
     <section className="category-area-s2 style-2 section-padding">
@@ -7,11 +9,11 @@ const CategoryArea = () => {
             <div className="col-xl-4 col-lg-6 col-12">
               <div className="category-item">
                 <div className="category-icon">
-                  <img src="/assets/images/category/icon-1.png" alt="" />
+                  <img src="/assets/img/category/icon-1.png" alt="" />
                 </div>
                 <div className="category-content">
                   <h2>
-                    <a href="product.html">Queen Bee Honey</a>
+                    <Link to="/shop">Queen Bee Honey</Link>
                   </h2>
                   <p>
                     Lorem Ipsum is simply dummy text of the printing industry
@@ -24,11 +26,11 @@ const CategoryArea = () => {
             <div className="col-xl-4 col-lg-6 col-12">
               <div className="category-item">
                 <div className="category-icon">
-                  <img src="/assets/images/category/icon-2.png" alt="" />
+                  <img src="/assets/img/category/icon-2.png" alt="" />
                 </div>
                 <div className="category-content">
                   <h2>
-                    <a href="product.html">Sunflower Honey</a>
+                    <Link to="/shop">Sunflower Honey</Link>
                   </h2>
                   <p>
                     Lorem Ipsum is simply dummy text of the printing industry
@@ -41,11 +43,11 @@ const CategoryArea = () => {
             <div className="col-xl-4 col-lg-6 col-12">
               <div className="category-item">
                 <div className="category-icon">
-                  <img src="/assets/images/category/icon-3.png" alt="" />
+                  <img src="/assets/img/category/icon-3.png" alt="" />
                 </div>
                 <div className="category-content">
                   <h2>
-                    <a href="product.html">Manuka Honey</a>
+                    <Link to="/shop">Manuka Honey</Link>
                   </h2>
                   <p>
                     Lorem Ipsum is simply dummy text of the printing industry

@@ -46,14 +46,14 @@ const Login = () => {
               <div className="tp-accountInfo">
                 <div className="tp-accountInfoHeader">
                   <Link to="/">
-                    <img src="/assets/images/logo.png" alt="" />
+                    <img src="/assets/img/logo.png" alt="" />
                   </Link>
                   {/* <Link className="tp-accountBtn" to="/auth/register">
                     <span>Create Account</span>
                   </Link> */}
                 </div>
                 <div className="image">
-                  {/* <img src="/assets/images/login.png" alt="" width={300} /> */}
+                  {/* <img src="/assets/img/login.png" alt="" width={300} /> */}
                 </div>
                 <div className="back-home">
                   <Link className="tp-accountBtn" to="/">

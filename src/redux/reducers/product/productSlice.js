@@ -10,27 +10,13 @@ const initialState = {
   message: null,
 };
 
-export const getProducts = createAsyncThunk(
-  "auth/product_get",
-  async (thunkAPI) => {
-    try {
-      return await productService.getProducts();
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
+export const getProducts = createAsyncThunk("product/get", async (thunkAPI) => {
+  try {
+    return await productService.getProducts();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
   }
-);
-
-export const getProductDetail = createAsyncThunk(
-  "auth/product_detail",
-  async (payload, thunkAPI) => {
-    try {
-      return await productService.getProductDetail(payload);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
+});
 
 export const productSlice = createSlice({
   name: "product",

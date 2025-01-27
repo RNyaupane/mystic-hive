@@ -34,7 +34,7 @@ const AppRouter = () => {
         },
         {
           path: "about",
-          element: <ProtectedRoute element={AboutPage} />,
+          element: <AboutPage />,
         },
         {
           path: "shop",
@@ -54,19 +54,19 @@ const AppRouter = () => {
         },
         {
           path: "wishlist",
-          element: <WishlistPage />,
+          element: <ProtectedRoute element={WishlistPage} />,
         },
         {
           path: "cart",
-          element: <CartPage />,
+          element: <ProtectedRoute element={CartPage} />,
         },
         {
           path: "checkout",
-          element: <CheckoutPage />,
+          element: <ProtectedRoute element={CheckoutPage} />,
         },
         {
           path: "order",
-          element: <OrderHistoryPage />,
+          element: <ProtectedRoute element={OrderHistoryPage} />,
         },
         {
           path: "contact",
@@ -78,7 +78,7 @@ const AppRouter = () => {
         },
         {
           path: "profile",
-          element: <Profile />,
+          element: <ProtectedRoute element={Profile} />,
         },
       ],
     },

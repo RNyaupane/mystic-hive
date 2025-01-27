@@ -11,9 +11,6 @@ const Footer = () => {
             <div className="col col-lg-5 col-md-6 col-sm-12 col-12">
               <div className="widget about-widget d-flex gap-4 justify-content-between">
                 <div className="logo widget-title">
-                  {/* <a href="index.html">
-                    <img src="/assets/images/logo.png" alt="Annahl Logo" />{" "}
-                  </a> */}
                   <Icon
                     icon="fa-solid:shipping-fast"
                     width="80"

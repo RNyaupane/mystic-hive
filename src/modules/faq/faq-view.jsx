@@ -105,7 +105,7 @@ const FaqView = () => {
           </div>
           {/* <div className="col-lg-4">
             <div className="category-img">
-              <img src="/assets/images/login.png" alt="Honey Category" />
+              <img src="/assets/img/login.png" alt="Honey Category" />
             </div>
           </div> */}
         </div>

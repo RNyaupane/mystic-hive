@@ -13,7 +13,7 @@ const Page404 = () => {
             <div className="col col-xs-12">
               <div className="content clearfix">
                 <div className="error">
-                  <img src="/assets/images/error-404.png" alt="" />
+                  <img src="/assets/img/error-404.png" alt="" />
                 </div>
                 <div className="error-message">
                   <h3>Oops! Page Not Found!</h3>

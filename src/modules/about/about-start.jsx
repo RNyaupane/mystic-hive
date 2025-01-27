@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const AboutStart = () => {
   return (
     <section className="about-section section-padding p-t-0">
@@ -5,7 +7,7 @@ const AboutStart = () => {
         <div className="row align-items-center">
           <div className="col col-lg-5 col-12">
             <div className="video-area">
-              <img src="/assets/images/abou2.jpg" alt />
+              <img src="/assets/img/abou2.jpg" alt />
               <div className="video-holder">
                 <a
                   href="https://www.youtube.com/embed/Z54bL6kjyOI"
@@ -36,9 +38,9 @@ const AboutStart = () => {
                   hic, totam deleniti magni nam, ex perferendis, excepturi
                   impedit voluptates ipsam.
                 </p>
-                <a href="about.html" className="btn theme-btn" tabIndex="0">
+                <Link to="/about" className="btn theme-btn" tabIndex="0">
                   More About<i className="fa fa-angle-double-right"></i>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

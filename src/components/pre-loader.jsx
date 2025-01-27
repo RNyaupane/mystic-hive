@@ -4,7 +4,7 @@ const PreLoader = () => {
       <div className="inner">
         <span className="icon">
           <i>
-            <img src="/assets/images/bee.png" alt="" />
+            <img src="/assets/img/bee.png" alt="" />
           </i>
         </span>
       </div>

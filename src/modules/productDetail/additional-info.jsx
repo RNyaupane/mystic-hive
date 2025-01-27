@@ -1,4 +1,5 @@
 const AdditionalInformation = ({ details }) => {
+  console.log(details);
   return (
     <div className="container">
       <div className="Additional-wrap">
@@ -38,7 +39,7 @@ const AdditionalInformation = ({ details }) => {
                 </tr>
                 <tr>
                   <td>Seller</td>
-                  <td>Annahl</td>
+                  <td>MysticHive</td>
                 </tr>
                 <tr>
                   <td>Size</td>

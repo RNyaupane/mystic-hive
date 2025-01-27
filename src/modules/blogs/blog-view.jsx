@@ -8,12 +8,12 @@ const BlogView = () => {
               {Array.from({ length: 3 }).map((item, index) => (
                 <div className="post" key={index}>
                   <div className="entry-media">
-                    <img src="/assets/images/blog/img-7.jpg" alt="" />
+                    <img src="/assets/img/blog/img-7.jpg" alt="" />
                   </div>
                   <div className="details">
                     <ul className="entry-meta">
                       <li>
-                        <img src="/assets/images/blog/author.jpg" alt="" />
+                        <img src="/assets/img/blog/author.jpg" alt="" />
                         &nbsp; By <a href="#">Lily Anne</a>
                       </li>
                       <li>January 12,2021</li>
@@ -120,7 +120,7 @@ const BlogView = () => {
                 <div className="posts">
                   <div className="post">
                     <div className="img-holder">
-                      <img src="/assets/images/recent-posts/img-1.jpg" alt="" />
+                      <img src="/assets/img/recent-posts/img-1.jpg" alt="" />
                     </div>
                     <div className="details">
                       <h4>
@@ -132,7 +132,7 @@ const BlogView = () => {
                   </div>
                   <div className="post">
                     <div className="img-holder">
-                      <img src="/assets/images/recent-posts/img-2.jpg" alt="" />
+                      <img src="/assets/img/recent-posts/img-2.jpg" alt="" />
                     </div>
                     <div className="details">
                       <h4>
@@ -144,7 +144,7 @@ const BlogView = () => {
                   </div>
                   <div className="post">
                     <div className="img-holder">
-                      <img src="/assets/images/recent-posts/img-3.jpg" alt="" />
+                      <img src="/assets/img/recent-posts/img-3.jpg" alt="" />
                     </div>
                     <div className="details">
                       <h4>

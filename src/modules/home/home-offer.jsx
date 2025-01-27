@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const HomeOffer = () => {
   return (
     <section className="offer-area section-padding">
@@ -5,7 +7,7 @@ const HomeOffer = () => {
         <div className="row align-items-center">
           <div className="col-lg-7">
             <div className="offer-img">
-              <img src="/assets/images/honey.png" alt="Fresh Sunflower Honey" />
+              <img src="/assets/img/honey.png" alt="Fresh Sunflower Honey" />
             </div>
           </div>
           <div className="col-lg-5">
@@ -23,9 +25,9 @@ const HomeOffer = () => {
                 deleniti inventore blanditiis lorem in orci sed vestibulum
                 tempus.
               </p>
-              <a href="shop.html" className="btn theme-btn" tabIndex="0">
+              <Link to="/shop" className="btn theme-btn" tabIndex="0">
                 Shop Now <i className="fa fa-angle-double-right"></i>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -52,7 +52,7 @@ const WishlistPage = () => {
           <div className="cart-wrapper">
             <div className="row">
               <div className="col-12">
-                <form action="https://themepresss.com/tf/html/annahl-live/cart">
+                <form>
                   <table className="table-responsive cart-wrap">
                     <thead>
                       <tr>
@@ -71,7 +71,7 @@ const WishlistPage = () => {
                               <img
                                 src={
                                   item?.images?.[0]?.image ||
-                                  "/assets/images/product/default-product.png"
+                                  "/assets/img/product/default-product.png"
                                 }
                                 alt={item?.name}
                               />

@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const NavWishlist = () => {
   const { items } = useSelector((state) => state.wishlist);
@@ -14,18 +15,18 @@ const NavWishlist = () => {
         wishlistProducts?.map((item, index) => (
           <div className="mini-cart-item clearfix" key={index}>
             <div className="mini-cart-item-image">
-              <a href="product-single.html">
+              <Link to={`/product/${item?.id}`}>
                 <img
                   src={
                     item?.images?.[0]?.image ||
-                    "/assets/images/product/default-product.png"
+                    "/assets/img/product/default-product.png"
                   }
                   alt={item?.name}
                 />
-              </a>
+              </Link>
             </div>
             <div className="mini-cart-item-des">
-              <a href="product-single.html">{item?.name}</a>
+              <Link to={`/product/${item?.id}`}>{item?.name}</Link>
               <span className="mini-cart-item-price">${item?.unit_price}</span>
               <span className="mini-cart-item-quantity">x 1</span>
             </div>

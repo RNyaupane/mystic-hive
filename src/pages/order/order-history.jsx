@@ -6,7 +6,7 @@ const OrderHistoryPage = () => {
           <div className="cart-wrapper">
             <div className="row">
               <div className="col-12">
-                <form action="https://themepresss.com/tf/html/annahl-live/cart">
+                <form>
                   <table className="table-responsive cart-wrap">
                     <thead>
                       <tr>

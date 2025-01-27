@@ -1,283 +1,283 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { requests } from "../../redux/restApi";
+import { toast } from "react-toastify";
+import Spinner from "../../components/spinner";
+import { logoutUser } from "../../redux/reducers/authSlice";
+import { useDispatch } from "react-redux";
+
+const ProfilePicture = ({ src, onEdit, onLogout }) => (
+  <div className="comment-theme col-12 col-lg-3 position-static">
+    <div className="comment-image">
+      <img
+        style={{ height: "90%", width: "90%" }}
+        src={
+          src ||
+          "https://www.shutterstock.com/image-vector/avatar-gender-neutral-silhouette-vector-600nw-2470054311.jpg"
+        }
+        alt="Profile"
+      />
+    </div>
+    <div className="my-5 d-flex gap-3 px-3">
+      <button className="cursor-pointer btn btn-light w-100" onClick={onEdit}>
+        Edit
+      </button>
+      <button
+        className="cursor-pointer btn btn-danger w-100"
+        onClick={onLogout}
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+);
+
+const AddressForm = ({ onCancel, onSave }) => {
+  const [formData, setFormData] = useState({
+    city: "",
+    state: "",
+    postalCode: "",
+    country: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = () => onSave(formData);
+
+  return (
+    <form
+      id="commentform"
+      style={{ background: "#ebebeb" }}
+      className="comment-form border px-4 py-4 mb-4"
+    >
+      <div className="form-inputs">
+        <input type="text" style={{ display: "none" }} />
+        {["city", "state", "postalCode", "country"].map((field) => (
+          <input
+            key={field}
+            name={field}
+            value={formData[field]}
+            onChange={handleChange}
+            placeholder={`Enter ${
+              field.charAt(0).toUpperCase() + field.slice(1)
+            }...`}
+            type="text"
+            className="form-control mb-2"
+          />
+        ))}
+      </div>
+      <div className="form-submit d-flex">
+        <div className="ms-auto d-flex gap-3 mt-2">
+          <button
+            type="button"
+            className="btn bg-light text-dark"
+            onClick={onCancel}
+          >
+            Cancel
+          </button>
+          <button type="button" className="btn btn-dark" onClick={handleSubmit}>
+            Add Address
+          </button>
+        </div>
+      </div>
+    </form>
+  );
+};
+
+const AddressList = ({ addresses }) => (
+  <div className="row">
+    {addresses.map((address, index) => (
+      <div className="address-container col-12 col-lg-6" key={index}>
+        <div className="comments-meta bg-light rounded-3 py-3 px-4 mb-3">
+          <h5>
+            City &ensp; : &ensp; <span>{address.city}</span>
+          </h5>
+          <h5>
+            State &ensp; : &ensp; <span>{address.state}</span>
+          </h5>
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
+const OrderList = ({ orders }) => (
+  <div className="cart-wrapper">
+    <table className="table-responsive cart-wrap">
+      <thead>
+        <tr>
+          {[
+            "Order ID",
+            "Date",
+            "Quantity",
+            "Ship To",
+            "Total Price",
+            "Status",
+            "Action",
+          ].map((heading, idx) => (
+            <th key={idx} className={heading.toLowerCase().replace(" ", "-")}>
+              {heading}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {orders.map((order, idx) => (
+          <tr key={idx}>
+            <td className="images">{order.id}</td>
+            <td className="product">{order.date}</td>
+            <td className="ptice">{order.quantity}</td>
+            <td className="name">{order.shipTo}</td>
+            <td className="ptice">${order.totalPrice}</td>
+            <td className={order.status.toLowerCase()}>
+              <span>{order.status}</span>
+            </td>
+            <td className="action">
+              <ul>
+                <li className="w-btn-view">
+                  <a href="#" title="View">
+                    <i className="fi ti-eye"></i>
+                  </a>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
 
 const Profile = () => {
+  const [userProfile, setUserProfile] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [openForm, setOpenForm] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleAddAddress = () => {
-    console.log("object");
+  useEffect(() => {
+    const fetchProfile = async () => {
+      setIsLoading(true);
+      try {
+        const res = await requests.get("auth/profile/me/");
+        setUserProfile(res?.data || {});
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  const handleAddAddress = async (data) => {
+    try {
+      await requests.post("auth/address/", {
+        ...data,
+        address_line1: data.state,
+      });
+      toast.success("Address added successfully");
+      setOpenForm(false);
+      setUserProfile((prev) => ({
+        ...prev,
+        addresses: [...(prev.addresses || []), data],
+      }));
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to add address");
+    }
   };
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    toast.success("Logged out successfully");
+  };
+
   return (
     <div className="cart-area section-padding">
       <div className="container blog-single-section">
-        <div className="comments-area">
-          <div className="comments-section">
-            <h3 className="comments-title mb-4">My Profile</h3>
-            <ol className="comments cart-wrapper ">
-              <li className="comment even thread-even depth-1" id="comment-1">
-                <div id="div-comment-1" className="bg-transparent row">
-                  <div className="comment-theme col-12 col-lg-3 position-static">
-                    <div className="comment-image">
-                      <img
-                        style={{ height: "90%", width: "90%" }}
-                        src="/assets/images/blog-details/comments-author/img-1.jpg"
-                        alt
-                      />
-                    </div>
-                    <div className=" mt-5 d-flex gap-3 px-3">
-                      <button className="cursor-pointer btn btn-light w-100 ">
-                        Edit
-                      </button>
-                      <button className="cursor-pointer btn btn-danger w-100 ">
-                        Logout
-                      </button>
-                    </div>
-                  </div>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <>
+            <div className="comments-area">
+              <h3 className="comments-title mb-4">My Profile</h3>
+              <div className="comments-section cart-wrapper py-4 px-3">
+                <div className="row">
+                  <ProfilePicture
+                    src={userProfile.profile_picture}
+                    onEdit={() => alert("Edit profile")}
+                    onLogout={handleLogout}
+                  />
                   <div className="comment-main-area col-12 col-lg-8 ps-1">
-                    <div className="comment-wrapper">
-                      <div className="comments-meta">
-                        <h4>
-                          John Abraham{" "}
-                          <span className="comments-date">user@gmail.com</span>
-                        </h4>
-                      </div>
-                      <div className="comment-area">
-                        <p>
-                          I will give you a complete account of the system, and
-                          expound the actual teachings of the great explorer of
-                          the truth,{" "}
-                        </p>
-                      </div>
+                    <div className="comments-meta">
+                      <h4>
+                        {`${userProfile.first_name || ""} ${
+                          userProfile.last_name || ""
+                        }`}
+                        <span className="comments-date">
+                          {userProfile.email}
+                        </span>
+                      </h4>
                     </div>
-
-                    <div className="comment-respond  mt-5">
+                    <div className="comment-area">
+                      <p>{userProfile.additional_info || ""}</p>
+                    </div>
+                    <div className="comment-respond mt-5">
                       <div className="d-flex justify-content-between">
                         <h3 className="comment-reply-title">Addresses List</h3>
-                        <div className="">
-                          <div className="d-flex gap-2">
-                            {!openForm && (
-                              <a
-                                className=" cursor-pointer btn btn-dark "
-                                onClick={() => setOpenForm(true)}
-                              >
-                                + Add New
-                              </a>
-                            )}
-                            {openForm && (
-                              <a
-                                className=" cursor-pointer btn btn-danger"
-                                onClick={() => setOpenForm(false)}
-                              >
-                                Cancel
-                              </a>
-                            )}
+                        {!openForm && (
+                          <div className="">
+                            <button
+                              className="btn btn-dark"
+                              onClick={() => setOpenForm(true)}
+                            >
+                              + Add New
+                            </button>
                           </div>
-                        </div>
+                        )}
+                        {openForm && (
+                          <div className="">
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => setOpenForm(false)}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        )}
                       </div>
                       {openForm && (
-                        <form
-                          id="commentform"
-                          className="comment-form border border px-4 py-4 mb-4"
-                        >
-                          <div className="form-inputs">
-                            <input
-                              placeholder=""
-                              type="url"
-                              style={{ display: "none" }}
-                            />
-                            <input placeholder="Enter City..." type="text" />
-                            <input placeholder="Enter State..." type="text" />
-                          </div>
-                          <div className="form-submit d-flex">
-                            <div className="ms-auto d-flex gap-3 mt-2">
-                              <input
-                                value="Cancel"
-                                className="bg-light text-dark cursor-pointer text-center"
-                                onClick={() => setOpenForm(false)}
-                              />
-                              <input
-                                value="Add Address"
-                                className="cursor-pointer text-center"
-                                onClick={handleAddAddress}
-                              />
-                            </div>
-                          </div>
-                        </form>
+                        <AddressForm
+                          onCancel={() => setOpenForm(false)}
+                          onSave={handleAddAddress}
+                        />
                       )}
-                      <div className="row ">
-                        {Array.from({ length: 3 }).map((item, index) => (
-                          <div
-                            className="address-container col col-lg-6"
-                            key={index}
-                          >
-                            <div className="comments-meta bg-light  py-3 px-4 mb-3 cursor-pointer">
-                              <h5>
-                                City &ensp; : &ensp;
-                                <span>Kathmandu {index}</span>
-                              </h5>
-                              <h5>
-                                State &ensp; : &ensp;<span>Kathmandu</span>
-                              </h5>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                      <AddressList addresses={userProfile.addresses || []} />
                     </div>
                   </div>
                 </div>
-              </li>
-            </ol>
-          </div>
-        </div>
-
-        {/* Order List */}
-        <div className="form">
-          <h3 className="comments-title mt-5 mb-4" style={{ fontSize: "2rem" }}>
-            All Orders
-          </h3>
-          <div className="cart-wrapper">
-            <div className="row">
-              <div className="col-12">
-                <form action="">
-                  <table className="table-responsive cart-wrap">
-                    <thead>
-                      <tr>
-                        <th className="images images-b">Order ID</th>
-                        <th className="product">Date</th>
-                        <th className="ptice">Quantity</th>
-                        <th className="ptice">Ship To</th>
-                        <th className="">Total Price</th>
-                        <th className="remove">Status</th>
-                        <th className="action remove-b">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="images"># 8976A</td>
-                        <td className="product">05 : 08 : 2019</td>
-                        <td className="ptice">06</td>
-                        <td className="name">Alex Genderia</td>
-                        <td className="">$ 450</td>
-                        <td className="Del">
-                          <span>Delivered</span>
-                        </td>
-                        <td className="action">
-                          <ul>
-                            <li className="w-btn-view">
-                              <a
-                                data-bs-toggle="tooltip"
-                                data-bs-html="true"
-                                title="View"
-                                href="#"
-                              >
-                                <i className="fi ti-eye"></i>
-                              </a>
-                            </li>
-                          </ul>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="images"># 8976A</td>
-                        <td className="product">05 : 08 : 2019</td>
-                        <td className="ptice">06</td>
-                        <td className="name">Alex Genderia</td>
-                        <td className="">$ 450</td>
-                        <td className="stock">
-                          <span>Pending</span>
-                        </td>
-                        <td className="action">
-                          <ul>
-                            <li className="w-btn-view">
-                              <a
-                                data-bs-toggle="tooltip"
-                                data-bs-html="true"
-                                title="View"
-                                href="#"
-                              >
-                                <i className="fi ti-eye"></i>
-                              </a>
-                            </li>
-                          </ul>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="images"># 8976A</td>
-                        <td className="product">05 : 08 : 2019</td>
-                        <td className="ptice">06</td>
-                        <td className="name">Alex Genderia</td>
-                        <td className="">$ 450</td>
-                        <td className="stocks">
-                          <span>Pending</span>
-                        </td>
-                        <td className="action">
-                          <ul>
-                            <li className="w-btn-view">
-                              <a
-                                data-bs-toggle="tooltip"
-                                data-bs-html="true"
-                                title="View"
-                                href="#"
-                              >
-                                <i className="fi ti-eye"></i>
-                              </a>
-                            </li>
-                          </ul>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="images"># 8976A</td>
-                        <td className="product">05 : 08 : 2019</td>
-                        <td className="ptice">06</td>
-                        <td className="name">Alex Genderia</td>
-                        <td className="">$ 450</td>
-                        <td className="can">
-                          <span>Canceled</span>
-                        </td>
-                        <td className="action">
-                          <ul>
-                            <li className="w-btn-view">
-                              <a
-                                data-bs-toggle="tooltip"
-                                data-bs-html="true"
-                                title="View"
-                                href="#"
-                              >
-                                <i className="fi ti-eye"></i>
-                              </a>
-                            </li>
-                          </ul>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="images"># 8976A</td>
-                        <td className="product">05 : 08 : 2019</td>
-                        <td className="ptice">06</td>
-                        <td className="name">Alex Genderia</td>
-                        <td className="">$ 450</td>
-                        <td className="pro">
-                          <span>Processing</span>
-                        </td>
-                        <td className="action">
-                          <ul>
-                            <li className="w-btn-view">
-                              <a
-                                data-bs-toggle="tooltip"
-                                data-bs-html="true"
-                                title="View"
-                                href="#"
-                              >
-                                <i className="fi ti-eye"></i>
-                              </a>
-                            </li>
-                          </ul>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </form>
               </div>
             </div>
-          </div>
-        </div>
+            <div className="form">
+              <h3 className="comments-title mt-5 mb-4">All Orders</h3>
+              <OrderList
+                orders={[
+                  {
+                    id: "8976A",
+                    date: "05 : 08 : 2019",
+                    quantity: 6,
+                    shipTo: "Alex Genderia",
+                    totalPrice: 450,
+                    status: "Delivered",
+                  },
+                  // Add more order objects here...
+                ]}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

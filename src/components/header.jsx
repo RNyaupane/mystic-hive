@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { logoutUser } from "../redux/reducers/authSlice";
 import NavWishlist from "../pages/wishlist/nav-wishlist";
-import { toast } from "react-toastify";
 
 const Header = () => {
   const [isOpenWishlist, setIsOpenWishlist] = useState(false);
@@ -11,19 +9,11 @@ const Header = () => {
   const { user, isAuthenticated, accessToken } = useSelector(
     (state) => state.auth
   );
+  const wishListItem = useSelector((state) => state.wishlist?.items);
   const { items } = useSelector((state) => state.cart);
 
   const [boolean, setBoolean] = useState(false);
 
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    dispatch(logoutUser()).then(() => {
-      setTimeout(() => {
-        toast.success("Logout Successfully");
-      }, 500);
-    });
-  };
   const total = items?.reduce(
     (sum, item) => sum + parseFloat(item?.sub_total),
     0
@@ -54,7 +44,7 @@ const Header = () => {
                     to="/"
                     style={{ maxWidth: "120px" }}
                   >
-                    <img src="/assets/images/logo1.png" alt="" />
+                    <img src="/assets/img/logo1.png" alt="" />
                   </Link>
                 </div>
               </div>
@@ -89,151 +79,152 @@ const Header = () => {
               <div className="col-lg-2">
                 <div className="header-right d-flex">
                   {isAuthenticated && accessToken && user && (
-                    <div className="header-profile-form-wrapper">
-                      <button
-                        className="profile-toggle-btn"
-                        onClick={() => setBoolean(!boolean)}
-                      >
-                        <i className="fi flaticon-user"></i>
-                      </button>
-                      {boolean && (
-                        <div className="header-profile-content ">
-                          <ul>
-                            <li>
-                              <Link to="/profile">Profile</Link>
-                            </li>
-                            <li>
-                              <Link>Settings</Link>
-                            </li>
-                            <li>
-                              <Link>Order History</Link>
-                            </li>
-                            <li>
-                              <Link onClick={handleLogout}>Logout</Link>
-                            </li>
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  <div className="mini-cart">
-                    <button
-                      className="cart-toggle-btn"
-                      onClick={() => setIsOpenCart(!isOpenCart)}
-                    >
-                      <i className="fi flaticon-bag"></i>
-                      <span className="cart-count">{items?.length || 0}</span>
-                    </button>
-                    <div
-                      className="mini-cart-content"
-                      style={{
-                        opacity: isOpenCart ? 1 : 0,
-                        visibility: isOpenCart ? "inherit" : "hidden",
-                        right: isOpenCart ? 0 : 1,
-                      }}
-                    >
-                      <button
-                        className="mini-cart-close"
-                        onClick={() => setIsOpenCart(!isOpenCart)}
-                      >
-                        <i className="ti-close text-white"></i>
-                      </button>
-                      <div className="mini-cart-items">
-                        {items &&
-                          items?.map((item, index) => (
-                            <div
-                              className="mini-cart-item clearfix"
-                              key={index}
-                            >
-                              <div className="mini-cart-item-image">
-                                <a href="product-single.html">
-                                  <img
-                                    src={
-                                      item?.product?.images?.[0]?.image ||
-                                      "/assets/images/product/default-product.png"
-                                    }
-                                    alt={item?.product?.name}
-                                  />
-                                </a>
-                              </div>
-                              <div className="mini-cart-item-des">
-                                <a href="product-single.html">
-                                  {item?.product?.name}
-                                </a>
-                                <span className="mini-cart-item-price">
-                                  {item?.product?.name}
-                                </span>
-                                <span className="mini-cart-item-quantity">
-                                  {item?.quantity}
-                                </span>
-                              </div>
-                            </div>
-                          ))}
+                    <>
+                      <div className="header-profile-form-wrapper">
+                        <Link to="/profile">
+                          <button className="profile-toggle-btn">
+                            <i className="fi flaticon-user"></i>
+                          </button>
+                        </Link>
+                        {/* {boolean && (
+                          <div className="header-profile-content ">
+                            <ul>
+                              <li>
+                                <Link to="/profile">Profile</Link>
+                              </li>
+                              <li>
+                                <Link>Settings</Link>
+                              </li>
+                              <li>
+                                <Link>Order History</Link>
+                              </li>
+                              <li>
+                                <Link onClick={handleLogout}>Logout</Link>
+                              </li>
+                            </ul>
+                          </div>
+                        )} */}
                       </div>
-                      <div className="mini-cart-action clearfix">
-                        <span className="mini-checkout-price">
-                          Total: ${total}
-                        </span>
-                        <div
-                          className="mini-btn"
+                      <div className="mini-cart">
+                        <button
+                          className="cart-toggle-btn"
                           onClick={() => setIsOpenCart(!isOpenCart)}
                         >
-                          <Link to="/checkout" className="view-cart-btn s1">
-                            Checkout
-                          </Link>
-                          <Link to="/cart" className="view-cart-btn">
-                            View Cart
-                          </Link>
+                          <i className="fi flaticon-bag"></i>
+                          <span className="cart-count">
+                            {items?.length || 0}
+                          </span>
+                        </button>
+                        <div
+                          className="mini-cart-content"
+                          style={{
+                            opacity: isOpenCart ? 1 : 0,
+                            visibility: isOpenCart ? "inherit" : "hidden",
+                            right: isOpenCart ? 0 : 1,
+                          }}
+                        >
+                          <button
+                            className="mini-cart-close"
+                            onClick={() => setIsOpenCart(!isOpenCart)}
+                          >
+                            <i className="ti-close text-white"></i>
+                          </button>
+                          <div className="mini-cart-items">
+                            {items &&
+                              items?.map((item, index) => (
+                                <div
+                                  className="mini-cart-item clearfix"
+                                  key={index}
+                                >
+                                  <div className="mini-cart-item-image">
+                                    <Link to={`/product/${item?.id}`}>
+                                      <img
+                                        src={
+                                          item?.product?.images?.[0]?.image ||
+                                          "/assets/img/product/default-product.png"
+                                        }
+                                        alt={item?.product?.name}
+                                      />
+                                    </Link>
+                                  </div>
+                                  <div className="mini-cart-item-des">
+                                    <Link to={`/product/${item?.id}`}>
+                                      {item?.product?.name}
+                                    </Link>
+                                    <span className="mini-cart-item-price">
+                                      {item?.product?.name}
+                                    </span>
+                                    <span className="mini-cart-item-quantity">
+                                      {item?.quantity}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                          <div className="mini-cart-action clearfix">
+                            <span className="mini-checkout-price">
+                              Total: ${total}
+                            </span>
+                            <div
+                              className="mini-btn"
+                              onClick={() => setIsOpenCart(!isOpenCart)}
+                            >
+                              <Link to="/checkout" className="view-cart-btn s1">
+                                Checkout
+                              </Link>
+                              <Link to="/cart" className="view-cart-btn">
+                                View Cart
+                              </Link>
+                            </div>
+                          </div>
+                          <div className="visible-icon">
+                            <img
+                              src="/assets/img/shop/mini-cart/bee2.png"
+                              alt=""
+                            />
+                          </div>
                         </div>
                       </div>
-                      <div className="visible-icon">
-                        <img
-                          src="/assets/images/shop/mini-cart/bee2.png"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="header-wishlist-form-wrapper">
-                    <button
-                      className="wishlist-toggle-btn"
-                      onClick={() => setIsOpenWishlist(!isOpenWishlist)}
-                    >
-                      <i className="fi flaticon-heart"></i>
-                      <span className="cart-count">
-                        {useSelector(
-                          (state) => state.wishlist?.items?.length || 0
-                        )}
-                      </span>
-                    </button>
-                    <div
-                      className="mini-wislist-content"
-                      style={{
-                        opacity: isOpenWishlist ? 1 : 0,
-                        visibility: isOpenWishlist ? "inherit" : "hidden",
-                        right: isOpenWishlist ? 0 : 1,
-                      }}
-                    >
-                      <button
-                        className="mini-cart-close"
-                        onClick={() => setIsOpenWishlist(!isOpenWishlist)}
-                      >
-                        <i className="ti-close text-white"></i>
-                      </button>
-                      <NavWishlist />
-                      <div className="mini-cart-action clearfix">
-                        <div
-                          className="mini-btn"
+                      <div className="header-wishlist-form-wrapper">
+                        <button
+                          className="wishlist-toggle-btn"
                           onClick={() => setIsOpenWishlist(!isOpenWishlist)}
                         >
-                          <Link to="/wishlist" className="view-cart-btn">
-                            View Wishlist
-                          </Link>
+                          <i className="fi flaticon-heart"></i>
+                          <span className="cart-count">
+                            {wishListItem?.length || 0}
+                          </span>
+                        </button>
+                        <div
+                          className="mini-wislist-content"
+                          style={{
+                            opacity: isOpenWishlist ? 1 : 0,
+                            visibility: isOpenWishlist ? "inherit" : "hidden",
+                            right: isOpenWishlist ? 0 : 1,
+                          }}
+                        >
+                          <button
+                            className="mini-cart-close"
+                            onClick={() => setIsOpenWishlist(!isOpenWishlist)}
+                          >
+                            <i className="ti-close text-white"></i>
+                          </button>
+                          <NavWishlist />
+                          <div className="mini-cart-action clearfix">
+                            <div
+                              className="mini-btn"
+                              onClick={() => setIsOpenWishlist(!isOpenWishlist)}
+                            >
+                              <Link to="/wishlist" className="view-cart-btn">
+                                View Wishlist
+                              </Link>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    </>
+                  )}
+
                   {!isAuthenticated && !accessToken && (
                     <div className="view-btn ">
                       <Link

@@ -5,21 +5,21 @@ import "slick-carousel/slick/slick-theme.css";
 const HomeTestimonials = () => {
   const testimonials = [
     {
-      img: "/assets/images/testimonial/1.png",
+      img: "/assets/img/testimonial/1.png",
       quote:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry has been the industry's standard dummy text ever since the 1500s unknown printer took a galley of type and scrambled it to make a type specimen book has survived not has been the industry's standard consectetur adipisicing elit only five centuries the industry's standard consectetur.",
       name: "Rachel Matthews",
       position: "CEO, Deixfes",
     },
     {
-      img: "/assets/images/testimonial/3.png",
+      img: "/assets/img/testimonial/1.png",
       quote:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry has been the industry's standard dummy text ever since the 1500s unknown printer took a galley of type and scrambled it to make a type specimen book has survived not has been the industry's standard consectetur adipisicing elit only five centuries the industry's standard consectetur.",
       name: "David Warner",
       position: "CEO, TBR",
     },
     {
-      img: "/assets/images/testimonial/2.png",
+      img: "/assets/img/testimonial/1.png",
       quote:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry has been the industry's standard dummy text ever since the 1500s unknown printer took a galley of type and scrambled it to make a type specimen book has survived not has been the industry's standard consectetur adipisicing elit only five centuries the industry's standard consectetur.",
       name: "Ken Williamson",

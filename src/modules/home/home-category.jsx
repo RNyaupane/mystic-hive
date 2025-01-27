@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const HomeCategory = () => {
   return (
     <section className="category-area section-padding">
@@ -16,13 +18,13 @@ const HomeCategory = () => {
               <div className="category-item">
                 <div className="category-icon">
                   <img
-                    src="/assets/images/category/icon-1.png"
+                    src="/assets/img/category/icon-1.png"
                     alt="Queen Bee Honey Icon"
                   />
                 </div>
                 <div className="category-content">
                   <h2>
-                    <a href="product.html">Queen Bee Honey</a>
+                    <Link to="/shop">Queen Bee Honey</Link>
                   </h2>
                   <p>
                     Lorem Ipsum is simply dummy text of the printing industry
@@ -34,13 +36,13 @@ const HomeCategory = () => {
               <div className="category-item">
                 <div className="category-icon">
                   <img
-                    src="/assets/images/category/icon-2.png"
+                    src="/assets/img/category/icon-2.png"
                     alt="Sunflower Honey Icon"
                   />
                 </div>
                 <div className="category-content">
                   <h2>
-                    <a href="product.html">Sunflower Honey</a>
+                    <Link to="/shop">Sunflower Honey</Link>
                   </h2>
                   <p>
                     Lorem Ipsum is simply dummy text of the printing industry
@@ -52,13 +54,13 @@ const HomeCategory = () => {
               <div className="category-item">
                 <div className="category-icon">
                   <img
-                    src="/assets/images/category/icon-3.png"
+                    src="/assets/img/category/icon-3.png"
                     alt="Manuka Honey Icon"
                   />
                 </div>
                 <div className="category-content">
                   <h2>
-                    <a href="product.html">Manuka Honey</a>
+                    <Link to="/shop">Manuka Honey</Link>
                   </h2>
                   <p>
                     Lorem Ipsum is simply dummy text of the printing industry
@@ -72,12 +74,12 @@ const HomeCategory = () => {
           <div className="col-lg-6">
             <div className="category-img">
               <img
-                src="/assets/images/category/category.jpg"
+                src="/assets/img/category/category.jpg"
                 alt="Honey Category"
               />
               <div className="ct-img">
                 <img
-                  src="/assets/images/category/icon-4.png"
+                  src="/assets/img/category/icon-4.png"
                   alt="Decoration Icon"
                 />
               </div>

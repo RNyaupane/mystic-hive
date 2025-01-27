@@ -20,7 +20,7 @@ const HomeFlashSale = () => {
           <div className="row align-items-center">
             {[
               {
-                img: "/assets/images/product/1.png",
+                img: "/assets/img/product/1.png",
                 discount: "28% OFF",
                 name: "Manuka Honey",
                 price: "$85.00",
@@ -28,7 +28,7 @@ const HomeFlashSale = () => {
                 rating: 4.5,
               },
               {
-                img: "/assets/images/product/8.png",
+                img: "/assets/img/product/1.png",
                 discount: "45% OFF",
                 name: "Mustard Flower Honey",
                 price: "$95.00",
@@ -36,7 +36,7 @@ const HomeFlashSale = () => {
                 rating: 5,
               },
               {
-                img: "/assets/images/product/6.png",
+                img: "/assets/img/product/1.png",
                 discount: "30% OFF",
                 name: "Pure Hill Honey",
                 price: "$75.00",
@@ -44,7 +44,7 @@ const HomeFlashSale = () => {
                 rating: 4.3,
               },
               {
-                img: "/assets/images/product/5.png",
+                img: "/assets/img/product/1.png",
                 discount: "50% OFF",
                 name: "Mango Flower Honey",
                 price: "$155.00",
@@ -65,7 +65,6 @@ const HomeFlashSale = () => {
                           data-bs-toggle="tooltip"
                           data-bs-html="true"
                           title="Add to Cart"
-                          href="cart.html"
                         >
                           <i className="fi flaticon-shopping-cart"></i>
                         </a>
@@ -87,7 +86,6 @@ const HomeFlashSale = () => {
                           data-bs-toggle="tooltip"
                           data-bs-html="true"
                           title="Add to Wishlist"
-                          href="wishlist.html"
                         >
                           <i className="fi flaticon-like"></i>
                         </a>
@@ -99,7 +97,7 @@ const HomeFlashSale = () => {
                   </div>
                   <div className="product-content">
                     <h3>
-                      <a href="product-single.html">{product.name}</a>
+                      <a href="#">{product.name}</a>
                     </h3>
                     <div className="product-btm">
                       <div className="product-price">

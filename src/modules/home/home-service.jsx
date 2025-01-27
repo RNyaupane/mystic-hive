@@ -1,17 +1,17 @@
 const HomeService = () => {
   const services = [
     {
-      img: "/assets/images/support/1.png",
+      img: "/assets/img/support/1.png",
       title: "Free Shipping",
       description: "Order Over $560",
     },
     {
-      img: "/assets/images/support/2.png",
+      img: "/assets/img/support/2.png",
       title: "Easy Payment",
       description: "100% Secure Payment",
     },
     {
-      img: "/assets/images/support/3.png",
+      img: "/assets/img/support/3.png",
       title: "24/7 Support",
       description: "Any time Support",
     },

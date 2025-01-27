@@ -62,14 +62,14 @@ const Register = () => {
               <div className="tp-accountInfo">
                 <div className="tp-accountInfoHeader">
                   <Link to="/">
-                    <img src="/assets/images/logo.png" alt="" /> Annahl
+                    <img src="/assets/img/logo.png" alt="" />
                   </Link>
                   <Link className="tp-accountBtn" to="/auth/login">
                     <span>Log in</span>
                   </Link>
                 </div>
                 <div className="image">
-                  <img src="/assets/images/login.png" alt="" />
+                  <img src="/assets/img/login.png" alt="" />
                 </div>
                 <div className="back-home">
                   <Link className="tp-accountBtn" to="/">
