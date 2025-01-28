@@ -50,7 +50,7 @@ const ContactView = () => {
             <div className="contact-map">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28256.547177897402!2d85.34425599999999!3d27.7151744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19a000ac6259%3A0x9d9f16732861e650!2sMaitidevi%20Temple!5e0!3m2!1sen!2snp!4v1737478805337!5m2!1sen!2snp"
-                allowfullscreen
+                allowFullScreen
               ></iframe>
             </div>
           </div>

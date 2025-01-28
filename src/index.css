@@ -7789,7 +7789,7 @@ input[type=radio]:checked+.topcoat-radio-button:after {
 
 .tp-login-area .tp-accountInfo {
     width: 50%;
-    /* background: url(/assets/img/slider/bg.jpg) no-repeat right center; */
+    background: url(/assets/img/slider/bg_gray.jpg) no-repeat right center;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -7813,8 +7813,12 @@ input[type=radio]:checked+.topcoat-radio-button:after {
     top: 0;
     width: 100%;
     height: 100%;
-    background: -webkit-gradient(linear, left bottom, left top, color-stop(24%, var(--primaryBg)), to(var(--primaryBg)));
-    background: linear-gradient(0deg, var(--primaryLightBg) 24%, var(--primaryBg));
+    /* background: -webkit-gradient(linear, left bottom, left top, color-stop(24%, var(--primaryBg)), to(var(--primaryBg)));
+    background: linear-gradient(0deg, var(--primaryLightBg) 24%, var(--primaryBg)); */
+    /* background-image: linear-gradient(to right, #434343 0%, black 100%); */
+    /* background-image: radial-gradient(circle farthest-side, #fceabb, #f8b500); */
+    background-image: linear-gradient(to right, #ffefba, #ffffff);
+    /* background-image: linear-gradient(to right, #d3cce3, #e9e4f0); */
     content: "";
     opacity: .85;
     z-index: -1;
@@ -7822,7 +7826,7 @@ input[type=radio]:checked+.topcoat-radio-button:after {
 
 .tp-login-area .tp-accountForm {
     width: 50%;
-    padding: 55px 85px;
+    padding: 45px 85px;
     min-height: 600px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -7849,6 +7853,7 @@ input[type=radio]:checked+.topcoat-radio-button:after {
     margin-bottom: 40px;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
+    margin: auto;
 }
 
 .tp-login-area .tp-accountInfoHeader a {

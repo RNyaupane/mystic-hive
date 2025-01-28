@@ -17,10 +17,6 @@ const schema = yup.object().shape({
     .string()
     .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required("Confirm Password is required"),
 });
 
 const Register = () => {
@@ -64,14 +60,8 @@ const Register = () => {
                   <Link to="/">
                     <img src="/assets/img/logo.png" alt="" />
                   </Link>
-                  <Link className="tp-accountBtn" to="/auth/login">
-                    <span>Log in</span>
-                  </Link>
                 </div>
-                <div className="image">
-                  <img src="/assets/img/login.png" alt="" />
-                </div>
-                <div className="back-home">
+                <div className="back-home d-flex gap-2">
                   <Link className="tp-accountBtn" to="/">
                     <span>Back To Home</span>
                   </Link>
@@ -187,33 +177,6 @@ const Register = () => {
                           {errors.password && (
                             <div className="invalid-feedback">
                               {errors.password.message}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    />
-                  </div>
-
-                  {/* Confirm Password */}
-                  <div className="col-lg-12 col-md-12 col-12">
-                    <Controller
-                      name="confirmPassword"
-                      control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <div className="form-group mb-4">
-                          <label>Confirm Password</label>
-                          <input
-                            type="password"
-                            placeholder="Confirm your password here.."
-                            {...field}
-                            className={`form-control ${
-                              errors.confirmPassword ? "is-invalid" : ""
-                            }`}
-                          />
-                          {errors.confirmPassword && (
-                            <div className="invalid-feedback">
-                              {errors.confirmPassword.message}
                             </div>
                           )}
                         </div>

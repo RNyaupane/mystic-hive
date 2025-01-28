@@ -39,7 +39,7 @@ export default function AppContainer() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme="light"
         transition={Zoom}
       />
       {/*  */}

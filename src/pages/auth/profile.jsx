@@ -49,8 +49,8 @@ const AddressForm = ({ onCancel, onSave }) => {
   return (
     <form
       id="commentform"
-      style={{ background: "#ebebeb" }}
-      className="comment-form border px-4 py-4 mb-4"
+      // style={{ background: "#dfdfdf" }}
+      className="comment-form px-4 py-4 mb-5 accordian-border-top bg-light cart-wrapper"
     >
       <div className="form-inputs">
         <input type="text" style={{ display: "none" }} />
@@ -64,7 +64,7 @@ const AddressForm = ({ onCancel, onSave }) => {
               field.charAt(0).toUpperCase() + field.slice(1)
             }...`}
             type="text"
-            className="form-control mb-2"
+            className="form-control bg-white mb-3 "
           />
         ))}
       </div>
@@ -72,7 +72,7 @@ const AddressForm = ({ onCancel, onSave }) => {
         <div className="ms-auto d-flex gap-3 mt-2">
           <button
             type="button"
-            className="btn bg-light text-dark"
+            className="btn bg-secondary text-white"
             onClick={onCancel}
           >
             Cancel
@@ -227,26 +227,15 @@ const Profile = () => {
                     <div className="comment-respond mt-5">
                       <div className="d-flex justify-content-between">
                         <h3 className="comment-reply-title">Addresses List</h3>
-                        {!openForm && (
-                          <div className="">
-                            <button
-                              className="btn btn-dark"
-                              onClick={() => setOpenForm(true)}
-                            >
-                              + Add New
-                            </button>
-                          </div>
-                        )}
-                        {openForm && (
-                          <div className="">
-                            <button
-                              className="btn btn-danger"
-                              onClick={() => setOpenForm(false)}
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        )}
+
+                        <div className="">
+                          <button
+                            className="btn btn-dark"
+                            onClick={() => setOpenForm(true)}
+                          >
+                            + Add New
+                          </button>
+                        </div>
                       </div>
                       {openForm && (
                         <AddressForm

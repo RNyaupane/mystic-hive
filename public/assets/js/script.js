@@ -115,32 +115,6 @@
 
   // tooltips
 
-  var tooltipTriggerList = [].slice.call(
-    document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  );
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-  });
-
-  // Parallax background
-  function bgParallax() {
-    if ($(".parallax").length) {
-      $(".parallax").each(function () {
-        var height = $(this).position().top;
-        var resize = height - $(window).scrollTop();
-        var doParallax = -(resize / 5);
-        var positionValue = doParallax + "px";
-        var img = $(this).data("bg-image");
-
-        $(this).css({
-          backgroundImage: "url(" + img + ")",
-          backgroundPosition: "50%" + positionValue,
-          backgroundSize: "cover",
-        });
-      });
-    }
-  }
-
   // Hero slider background setting
   function sliderBgSetting() {
     if ($(".hero-slider .slide").length) {
@@ -209,107 +183,6 @@
       wrapCSS: "project-fancybox-title-style",
     });
   }
-
-  /*------------------------------------------
-        = POPUP VIDEO
-    -------------------------------------------*/
-  if ($(".video-btn").length) {
-    $(".video-btn").on("click", function () {
-      $.fancybox({
-        href: this.href,
-        type: $(this).data("type"),
-        title: this.title,
-        helpers: {
-          title: { type: "inside" },
-          media: {},
-        },
-
-        beforeShow: function () {
-          $(".fancybox-wrap").addClass("gallery-fancybox");
-        },
-      });
-      return false;
-    });
-  }
-
-  /*------------------------------------------
-        = ACTIVE GALLERY POPUP IMAGE
-    -------------------------------------------*/
-  if ($(".popup-gallery").length) {
-    $(".popup-gallery").magnificPopup({
-      delegate: "a",
-      type: "image",
-
-      gallery: {
-        enabled: true,
-      },
-
-      zoom: {
-        enabled: true,
-
-        duration: 300,
-        easing: "ease-in-out",
-        opener: function (openerElement) {
-          return openerElement.is("img")
-            ? openerElement
-            : openerElement.find("img");
-        },
-      },
-    });
-  }
-
-  /*------------------------------------------
-        = FUNCTION FORM SORTING GALLERY
-    -------------------------------------------*/
-  function sortingGallery() {
-    if ($(".sortable-gallery .gallery-filters").length) {
-      var $container = $(".gallery-container");
-      $container.isotope({
-        filter: "*",
-        animationOptions: {
-          duration: 750,
-          easing: "linear",
-          queue: false,
-        },
-      });
-
-      $(".gallery-filters li a").on("click", function () {
-        $(".gallery-filters li .current").removeClass("current");
-        $(this).addClass("current");
-        var selector = $(this).attr("data-filter");
-        $container.isotope({
-          filter: selector,
-          animationOptions: {
-            duration: 750,
-            easing: "linear",
-            queue: false,
-          },
-        });
-        return false;
-      });
-    }
-  }
-
-  sortingGallery();
-
-  /*------------------------------------------
-        = MASONRY GALLERY SETTING
-    -------------------------------------------*/
-  function masonryGridSetting() {
-    if ($(".masonry-gallery").length) {
-      var $grid = $(".masonry-gallery").masonry({
-        itemSelector: ".grid-item",
-        columnWidth: ".grid-item",
-        percentPosition: true,
-      });
-
-      $grid.imagesLoaded().progress(function () {
-        $grid.masonry("layout");
-      });
-    }
-  }
-
-  // masonryGridSetting();
 
   /*------------------------------------------
         = STICKY HEADER
@@ -712,13 +585,6 @@
       });
     });
   }
-
-  /*------------------------------------------
-        = BACK TO TOP BTN SETTING
-    -------------------------------------------*/
-  $("body").append(
-    "<a href='#' class='back-to-top'><i class='ti-arrow-up'></i></a>"
-  );
 
   function toggleBackToTopBtn() {
     var amountScrolled = 1000;
