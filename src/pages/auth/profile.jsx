@@ -87,19 +87,44 @@ const AddressForm = ({ onCancel, onSave }) => {
 };
 
 const AddressList = ({ addresses }) => (
-  <div className="row">
-    {addresses.map((address, index) => (
-      <div className="address-container col-12 col-lg-6" key={index}>
-        <div className="comments-meta bg-light rounded-3 py-3 px-4 mb-3">
-          <h5>
-            City &ensp; : &ensp; <span>{address.city}</span>
-          </h5>
-          <h5>
-            State &ensp; : &ensp; <span>{address.state}</span>
-          </h5>
-        </div>
-      </div>
-    ))}
+  <div className="row bg-light">
+    <div className=" p-0">
+      <table className="table-responsive cart-wrap ">
+        <thead>
+          <tr>
+            <th className="py-0">#</th>
+            <th className="py-0">City</th>
+            <th className="py-0">State</th>
+            <th className="py-0">Country</th>
+            <th className="py-0">Postal Code</th>
+            <th className="py-0">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {addresses.map((address, index) => (
+            <tr key={index} className="cursor-pointer">
+              <td>{index + 1}</td>
+              <td>{address?.city}</td>
+              <td>{address?.state}</td>
+              <td>{address?.country}</td>
+              <td>{address?.postal_code}</td>
+              <td className="actions">
+                <ul>
+                  <li className="w-btn-view d-flex justify-content-center gap-2 ">
+                    <a title="View" className="">
+                      <i className="fi ti-trash text-danger"></i>
+                    </a>
+                    {/* <a title="View" className="">
+                      <i className="fi ti-pencil text-warning"></i>
+                    </a> */}
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   </div>
 );
 
@@ -226,7 +251,7 @@ const Profile = () => {
                     </div>
                     <div className="comment-respond mt-5">
                       <div className="d-flex justify-content-between">
-                        <h3 className="comment-reply-title">Addresses List</h3>
+                        <h4 className="">Addresses List</h4>
 
                         <div className="">
                           <button

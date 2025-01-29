@@ -5,7 +5,7 @@
 import axios from "axios";
 
 import { store } from "./store";
-import authReducer from "./reducers/authSlice";
+import authReducer, { authSlice } from "./reducers/authSlice";
 import { toast } from "react-toastify";
 import { Public_Paths, API_BASE_URL } from "../config/config-global";
 
@@ -73,7 +73,7 @@ axiosInstance.interceptors.response.use(
     ) {
       // if (!!!store?.getState()?.auth?.accessToken) {
       toast.error("Unauthorized");
-      store.dispatch(authReducer.logout());
+      store.dispatch(authSlice.actions.logout());
       // }
 
       if (isRefreshing) {

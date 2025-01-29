@@ -1,14 +1,31 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import authReducer from "./authSlice";
+import authReducer, {
+  logoutUser,
+  initialState as authInitialState,
+} from "./authSlice";
 import productReducer from "./product/productSlice";
 import productDetailReducer from "./product/productDetailSlice";
-import cartReducer from "./cartSlice";
-import wishlistReducer from "./wishlistSlice";
+import cartReducer, { initialState as cartInitialState } from "./cartSlice";
+import wishlistReducer, {
+  initialState as wishlistInitialState,
+} from "./wishlistSlice";
 
-export const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth: authReducer,
   product: productReducer,
   productDetails: productDetailReducer,
   cart: cartReducer,
   wishlist: wishlistReducer,
 });
+
+export const rootReducer = (state, action) => {
+  if (action.type === logoutUser.type || action.type === "auth/logout") {
+    return {
+      ...state,
+      auth: authInitialState,
+      cart: cartInitialState,
+      wishlist: wishlistInitialState,
+    };
+  }
+  return appReducer(state, action);
+};

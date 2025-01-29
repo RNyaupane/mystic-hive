@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { productService } from "../actions/productActions";
 
-const initialState = {
+export const initialState = {
   items: [],
   id: "",
   total: null,

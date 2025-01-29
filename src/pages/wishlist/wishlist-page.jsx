@@ -88,11 +88,15 @@ const WishlistPage = () => {
                             <td className="ptice">
                               $ {item?.unit_price || "N/A"}
                             </td>
-                            {item?.inventory <= 0 ? (
-                              <td className="stock">In Stock</td>
+                            {item?.inventory >= 0 ? (
+                              <td className="stock">
+                                <span className="badge rounded-pill bg-success text-white lh-lg border-0 m-auto">
+                                  In Stock
+                                </span>
+                              </td>
                             ) : (
                               <td className="stock">
-                                <span className="badge rounded-pill bg-danger text-white lh-lg border-0">
+                                <span className="badge rounded-pill bg-danger text-white lh-lg border-0 m-auto">
                                   Out of Stock
                                 </span>
                               </td>

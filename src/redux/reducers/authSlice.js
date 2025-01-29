@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { authService } from "../actions/authActions";
 
-const initialState = {
+export const initialState = {
   user: {},
   isError: false,
   isAuthenticated: false,
@@ -62,9 +62,6 @@ export const authSlice = createSlice({
 
       //Reset State
       .addCase(logoutUser, (state) => {
-        state.isSuccess = false;
-        state.statusCode = 0;
-        state.isError = false;
         state.user = {};
         state.accessToken = "";
         state.refreshToken = "";
