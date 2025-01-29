@@ -79,7 +79,7 @@ const ProductDetailsPage = () => {
     return <PreLoader />;
   }
   return (
-    <div className="product-single-section section-padding mt-5">
+    <div className="product-single-section section-padding ">
       <div className="container">
         <div className="product-details">
           <div className="row align-items-start">
@@ -165,28 +165,8 @@ const ProductDetailsPage = () => {
 
                 <div className="product-filter-item color filter-size">
                   <div className="color-name">
-                    <span>Weight :</span>
+                    <span>Size :</span>
                     <ul>
-                      <li className="color">
-                        <input
-                          id="wa1"
-                          type="radio"
-                          name="size"
-                          value="30"
-                          readOnly
-                        />
-                        <label htmlFor="wa1">4L</label>
-                      </li>
-                      <li className="color">
-                        <input
-                          id="wa2"
-                          type="radio"
-                          name="size"
-                          value="30"
-                          readOnly
-                        />
-                        <label htmlFor="wa2">2L</label>
-                      </li>
                       <li className="color">
                         <input
                           id="wa3"
@@ -195,7 +175,7 @@ const ProductDetailsPage = () => {
                           value="30"
                           readOnly
                         />
-                        <label htmlFor="wa3">500ML</label>
+                        <label htmlFor="wa3">500 ML</label>
                       </li>
                       <li className="color">
                         <input
@@ -205,7 +185,7 @@ const ProductDetailsPage = () => {
                           value="30"
                           readOnly
                         />
-                        <label htmlFor="wa4">200ML</label>
+                        <label htmlFor="wa4">1000 ML</label>
                       </li>
                     </ul>
                   </div>

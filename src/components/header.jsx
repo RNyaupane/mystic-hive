@@ -6,6 +6,8 @@ import NavWishlist from "../pages/wishlist/nav-wishlist";
 const Header = () => {
   const [isOpenWishlist, setIsOpenWishlist] = useState(false);
   const [isOpenCart, setIsOpenCart] = useState(false);
+  // const [isScrolled, setIsScrolled] = useState(false);
+
   const { user, isAuthenticated, accessToken } = useSelector(
     (state) => state.auth
   );
@@ -19,11 +21,25 @@ const Header = () => {
     0
   );
 
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.scrollY > 200) {
+  //       setIsScrolled(true);
+  //     } else {
+  //       setIsScrolled(false);
+  //     }
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
+
   return (
     <>
       <header
         id="header"
-        className="site-header header-style-1 header-style-2"
+        style={{ minHeight: "50px" }}
+        className={`site-header header-style-1 header-style-2 relative`}
         onClick={() => {
           if (boolean) setBoolean(false);
         }}

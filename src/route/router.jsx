@@ -15,7 +15,9 @@ const ContactPage = lazy(() => import("../pages/contact/contact-page.jsx"));
 const ProductDetailsPage = lazy(() => import("../pages/product/details.jsx"));
 const WishlistPage = lazy(() => import("../pages/wishlist/wishlist-page.jsx"));
 const CartPage = lazy(() => import("../pages/cart/cart.jsx"));
-const CheckoutPage = lazy(() => import("../pages/checkout/checkout-page.jsx"));
+const CheckoutPageNew = lazy(() =>
+  import("../pages/checkout/checkout-page-new.jsx")
+);
 const OrderHistoryPage = lazy(() => import("../pages/order/order-history.jsx"));
 const BlogPage = lazy(() => import("../pages/blogs/blog-page.jsx"));
 const Page404 = lazy(() => import("../components/page-404.jsx"));
@@ -62,7 +64,7 @@ const AppRouter = () => {
         },
         {
           path: "checkout",
-          element: <ProtectedRoute element={CheckoutPage} />,
+          element: <ProtectedRoute element={CheckoutPageNew} />,
         },
         {
           path: "order",

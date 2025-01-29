@@ -4,6 +4,9 @@ import { profileApi } from "../../redux/api-service/profileApi";
 import AddressList from "./address-list";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { Elements } from "@stripe/react-stripe-js";
+import StripeCheckoutForm from "./stripe-checkout";
+import { loadStripe } from "@stripe/stripe-js";
 
 const CheckoutPage = () => {
   const [activeAccordion, setActiveAccordion] = useState({
@@ -12,7 +15,7 @@ const CheckoutPage = () => {
   });
 
   const cartId = useSelector((state) => state.cart.id);
-
+  const stripePromise = loadStripe("your-publishable-key-here");
   const [address, setAddress] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState();
   const [addLoad, setAddLoad] = useState(false);
@@ -41,14 +44,14 @@ const CheckoutPage = () => {
     fetchAddress();
   }, []);
 
-  const handlePlaceOrder = (e) => {
-    e.preventDefault();
-    if (!selectedAddress) {
-      toast.warn("Please select an address");
-    } else {
-      console.log({ cart_id: cartId, address_id: selectedAddress });
-    }
-  };
+  // const handlePlaceOrder = (e) => {
+  //   e.preventDefault();
+  //   if (!selectedAddress) {
+  //     toast.warn("Please select an address");
+  //   } else {
+  //     console.log({ cart_id: cartId, address_id: selectedAddress });
+  //   }
+  // };
 
   return (
     <div className="checkout-area section-padding">
@@ -116,17 +119,14 @@ const CheckoutPage = () => {
                             </div>
                             <div id="open5" className="payment-name active">
                               {paymentMethod === "stripe" && (
-                                <ul>
-                                  <li className="visa  ">
-                                    <img
-                                      src="assets/img/stripe.png"
-                                      alt=""
-                                      style={{ maxWidth: "120px" }}
-                                    />
-                                  </li>
-                                </ul>
+                                <Elements stripe={stripePromise}>
+                                  <StripeCheckoutForm
+                                    selectedAddress={selectedAddress}
+                                    cartId={cartId}
+                                  />
+                                </Elements>
                               )}
-                              <div className="contact-form form-style">
+                              {/* <div className="contact-form form-style">
                                 <div className="row">
                                   <div className="col-lg-12 col-md-12 col-12">
                                     <div className="submit-btn-area text-center">
@@ -140,7 +140,7 @@ const CheckoutPage = () => {
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         )}

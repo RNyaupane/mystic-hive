@@ -220,7 +220,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="cart-area section-padding">
+    <div className="cart-area section-padding pt-0">
       <div className="container blog-single-section">
         {isLoading ? (
           <Spinner />

@@ -80,70 +80,71 @@ const AddressList = ({
                 Ship to a different address?
               </label>
               {isNewAdd && (
-                <div className="billing-adress">
-                  <div className="contact-form form-style">
-                    <div className="row">
-                      <div className="col-lg-6 col-md-12 col-12">
-                        <label htmlFor="Country">Country</label>
-                        <select
-                          name="address"
-                          id="Country"
-                          className="form-control"
-                        >
-                          <option disabled="">United State</option>
-                          <option>Bangladesh</option>
-                          <option>India</option>
-                          <option>Srilanka</option>
-                          <option>Pakisthan</option>
-                          <option>Afgansthan</option>
-                        </select>
-                      </div>
-                      <div className="col-lg-6 col-md-12 col-12">
-                        <label htmlFor="district">Dristrict</label>
-                        <input
-                          type="text"
-                          placeholder=""
-                          id="district"
-                          name="district"
-                        />
-                      </div>
+                <>
+                  <div className="billing-adress">
+                    <div className="contact-form form-style">
+                      <div className="row">
+                        <div className="col-lg-6 col-md-12 col-12">
+                          <label htmlFor="Country">Country</label>
+                          <select
+                            name="address"
+                            id="Country"
+                            className="form-control"
+                          >
+                            <option disabled="">United State</option>
+                            <option>Bangladesh</option>
+                            <option>India</option>
+                            <option>Srilanka</option>
+                            <option>Pakisthan</option>
+                            <option>Afgansthan</option>
+                          </select>
+                        </div>
+                        <div className="col-lg-6 col-md-12 col-12">
+                          <label htmlFor="district">Dristrict</label>
+                          <input
+                            type="text"
+                            placeholder=""
+                            id="district"
+                            name="district"
+                          />
+                        </div>
 
-                      <div className="col-lg-6 col-md-12 col-12">
-                        <label htmlFor="postalCode">Post Code</label>
-                        <input
-                          type="text"
-                          placeholder=""
-                          id="postalCode"
-                          name="postalCode"
-                        />
-                      </div>
-                      <div className="col-lg-6 col-md-12 col-12">
-                        <label htmlFor="city">City</label>
-                        <input
-                          type="text"
-                          placeholder=""
-                          id="city"
-                          name="city"
-                        />
+                        <div className="col-lg-6 col-md-12 col-12">
+                          <label htmlFor="postalCode">Post Code</label>
+                          <input
+                            type="text"
+                            placeholder=""
+                            id="postalCode"
+                            name="postalCode"
+                          />
+                        </div>
+                        <div className="col-lg-6 col-md-12 col-12">
+                          <label htmlFor="city">City</label>
+                          <input
+                            type="text"
+                            placeholder=""
+                            id="city"
+                            name="city"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                  <div className="submit-btn-area">
+                    <ul>
+                      <li>
+                        <button
+                          className="btn btn-dark rounded-0"
+                          type="button"
+                          onClick={() => toggleAccordion("payment")}
+                        >
+                          Save & continue
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </>
               )}
-
-              <div className="submit-btn-area">
-                <ul>
-                  <li>
-                    <button
-                      className="theme-btn"
-                      type="button"
-                      onClick={() => toggleAccordion("payment")}
-                    >
-                      Save & continue
-                    </button>
-                  </li>
-                </ul>
-              </div>
             </div>
           </div>
         )}

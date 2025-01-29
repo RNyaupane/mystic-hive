@@ -100,7 +100,7 @@ img {
 }
 
 .section-padding {
-    padding: 125px 0 120px;
+    padding: 75px 0 120px;
 }
 
 @media (max-width: 767px) {
@@ -529,7 +529,7 @@ img {
 
 .tp-breadcumb-area {
     background: url(/assets/img/page-title.jpg) no-repeat center top/cover;
-    min-height: 400px;
+    min-height: 250px;
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -588,7 +588,7 @@ img {
 
 .tp-breadcumb-area .tp-breadcumb-wrap {
     text-align: center;
-    margin-top: 80px;
+    margin-top: 25px;
 }
 
 .tp-breadcumb-area .tp-breadcumb-wrap h2 {
@@ -2042,6 +2042,59 @@ img {
     }
 }
 
+/* Header initially sticky */
+.header-style-1 {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+    background: transparent;
+    transition: all 0.5s ease-in-out;
+}
+
+/* When scrolled, make it fixed and animate */
+.header-style-1.scrolled {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    /* transform: translateY(-10px); */
+    animation: slideDown 0.5s ease-in-out forwards;
+}
+
+/* Slide-in animation */
+@keyframes slideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Navigation remains the same */
+.header-style-1 .navigation {
+    background: var(--whiteBg);
+    left: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+@media (max-width: 991px) {
+    .header-style-1 .navigation .navbar-header {
+        margin-top: 0;
+    }
+
+    .header-style-1 .navigation .container {
+        border-bottom: 0;
+    }
+}
+
+
 @media (max-width: 991px) {
     .header-style-2 .navigation .navbar-header {
         margin-top: 0;
@@ -2276,6 +2329,7 @@ img {
 .hero-style-1,
 .hero-style-2 {
     position: relative;
+    background-color: #fdf5ee;
     overflow: hidden;
     z-index: 1;
 }
@@ -2380,7 +2434,7 @@ img {
     position: absolute;
     right: -100px;
     top: -40px;
-    width: 975px;
+    width: 875px;
     height: 905px;
     background: url(../images/slider/bg.jpg) no-repeat right center;
     border-radius: 50%;
@@ -2392,7 +2446,7 @@ img {
 
     .hero-style-1 .slide .right-image,
     .hero-style-2 .slide .right-image {
-        width: 760px;
+        width: 700px;
     }
 }
 
@@ -2400,7 +2454,7 @@ img {
 
     .hero-style-1 .slide .right-image,
     .hero-style-2 .slide .right-image {
-        width: 700px;
+        width: 600px;
     }
 }
 
@@ -2467,7 +2521,7 @@ img {
 .hero-style-1 .slide .right-image .simg-2,
 .hero-style-2 .slide .right-image .simg-2 {
     position: absolute;
-    top: 25%;
+    top: 10%;
     right: 20%;
 }
 
@@ -2475,7 +2529,7 @@ img {
 
     .hero-style-1 .slide .right-image .simg-2,
     .hero-style-2 .slide .right-image .simg-2 {
-        top: 18%;
+        top: 6%;
         right: 10%;
     }
 }
@@ -2492,7 +2546,7 @@ img {
 .hero-style-2 .slide .hero-shape-img {
     position: absolute;
     left: 0;
-    top: 120px;
+    top: 50px;
     z-index: -1;
 }
 

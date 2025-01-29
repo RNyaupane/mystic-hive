@@ -2,7 +2,7 @@ import ShopView from "../../modules/shop/shop-view";
 
 const ShopPage = () => {
   return (
-    <div style={{ marginTop: "100px" }}>
+    <div>
       <ShopView />
     </div>
   );

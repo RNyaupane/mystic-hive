@@ -294,7 +294,7 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
                           <div className="product-price">
                             <ul>
                               <li>${item?.unit_price}</li>
-                              {/* <li>$98.00</li> */}
+                              <li></li>
                             </ul>
                           </div>
                           <div className="product-ratting">
