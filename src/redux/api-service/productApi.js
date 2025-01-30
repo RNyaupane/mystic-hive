@@ -11,6 +11,8 @@ export const productApi = {
       { headers: { Authorization: "" } }
     ),
   addItemToCart: (data, id) => requests.post(`shop/carts/${id}/items/`, data),
+  updateItemToCart: (data, cartId, prodId) =>
+    requests.post(`shop/carts/${cartId}/items/${prodId}`, data),
   orderPlace: (data) => requests.post(`shop/orders/`, data),
   processPayment: (data) => requests.post(`payment/`, data),
 };

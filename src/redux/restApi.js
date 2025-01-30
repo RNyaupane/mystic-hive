@@ -158,6 +158,8 @@ export const requests = {
   },
   post: (url, body, config = {}) =>
     axiosInstance.post(url, body, config).then(responseBody),
+  patch: (url, body, config = {}) =>
+    axiosInstance.patch(url, body, config).then(responseBody),
   put: (url, body) => axiosInstance.put(url, body).then(responseBody),
   delete: (url, config = {}) =>
     axiosInstance.delete(url, config).then(responseBody),

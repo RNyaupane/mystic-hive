@@ -12,8 +12,7 @@ const CartView = () => {
   const { items, isLoading, id } = useSelector((state) => state.cart);
   const [cartItems, setCartItems] = useState(items || []);
 
-  const dispatch = useDispatch(); // Assuming an action for updating cart items exists
-
+  const dispatch = useDispatch();
   const handleQuantityChange = (id, newQuantity) => {
     setCartItems((prevCartItems) =>
       prevCartItems.map((item) =>
@@ -25,9 +24,10 @@ const CartView = () => {
   const updateCart = async () => {
     for (const item of cartItems) {
       try {
-        const res = await productApi.addItemToCart(
-          { product_id: item?.product?.id, quantity: item?.quantity },
-          id
+        const res = await productApi.updateItemToCart(
+          { quantity: item?.quantity },
+          id,
+          item?.product?.id
         );
       } catch (err) {
         console.error(err);
