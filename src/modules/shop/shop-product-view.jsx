@@ -8,6 +8,7 @@ import { productApi } from "../../redux/api-service/productApi";
 import { toast } from "react-toastify";
 import { createCart, getCartItem } from "../../redux/reducers/cartSlice";
 import { addItemToWishList } from "../../redux/reducers/wishlistSlice";
+import EmptyContent from "../../components/empty-content";
 
 const ShopProductView = ({ products, isLoading, onSortChange }) => {
   const dispatch = useDispatch();
@@ -27,7 +28,6 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
           toast.success("Added Item to cart");
           dispatch(getCartItem(id));
         }
-        console.log(res);
       } catch (err) {
         toast.error("Add to cart Failed");
         console.error(err);
@@ -112,7 +112,7 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
         >
           <div className="product-wrap">
             <div className="row align-items-center">
-              {products?.length > 0 &&
+              {products?.length > 0 ? (
                 products?.map((item, index) => (
                   <div
                     key={index}
@@ -207,7 +207,10 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
                       </div>
                     </div>
                   </div>
-                ))}
+                ))
+              ) : (
+                <EmptyContent />
+              )}
             </div>
           </div>
         </div>

@@ -1193,8 +1193,14 @@ img {
     }
 }
 
+@media (max-width: 768px) {
+    .site-header .navigation {
+        padding: 5px 0;
+    }
+}
+
 .site-header .navigation .navbar-header {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .site-header .navigation .navbar-header .navbar-brand {
@@ -1626,8 +1632,9 @@ img {
     position: absolute;
     right: 20px;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
-    padding-left: 15px;
+    padding-right: 15px;
     top: 35px;
+
 }
 
 @media (max-width: 991px) {
@@ -1635,24 +1642,28 @@ img {
         right: 90px;
         top: 0;
         padding-top: 12px;
+        gap: 10px
     }
 }
 
 @media (max-width: 767px) {
     .site-header .header-right {
         right: 70px;
+        gap: 10px
     }
 }
 
 @media (max-width: 550px) {
     .site-header .header-right {
         right: 80px;
+        gap: 10px
     }
 }
 
 @media (max-width: 450px) {
     .site-header .header-right {
         right: 60px;
+        gap: 10px
     }
 }
 

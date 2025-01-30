@@ -1,42 +1,34 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useState } from "react";
+import { useEffect } from "react";
+import { profileApi } from "../../redux/api-service/profileApi";
 
 const HomeTestimonials = () => {
-  const testimonials = [
-    {
-      img: "/assets/img/testimonial/1.png",
-      quote:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry has been the industry's standard dummy text ever since the 1500s unknown printer took a galley of type and scrambled it to make a type specimen book has survived not has been the industry's standard consectetur adipisicing elit only five centuries the industry's standard consectetur.",
-      name: "Rachel Matthews",
-      position: "CEO, Deixfes",
-    },
-    {
-      img: "/assets/img/testimonial/1.png",
-      quote:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry has been the industry's standard dummy text ever since the 1500s unknown printer took a galley of type and scrambled it to make a type specimen book has survived not has been the industry's standard consectetur adipisicing elit only five centuries the industry's standard consectetur.",
-      name: "David Warner",
-      position: "CEO, TBR",
-    },
-    {
-      img: "/assets/img/testimonial/1.png",
-      quote:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry has been the industry's standard dummy text ever since the 1500s unknown printer took a galley of type and scrambled it to make a type specimen book has survived not has been the industry's standard consectetur adipisicing elit only five centuries the industry's standard consectetur.",
-      name: "Ken Williamson",
-      position: "CEO, Bexim",
-    },
-  ];
+  const [testimonial, setTestimonial] = useState([]);
+  const fetchTestimonials = async () => {
+    try {
+      const res = await profileApi.getTestimonials();
+      setTestimonial(res?.data);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
 
   // Slider settings
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 4000,
-    arrows: false, // Optional: Add navigation buttons if required
+    arrows: false,
   };
 
   return (
@@ -58,26 +50,27 @@ const HomeTestimonials = () => {
         </div>
         <div className="testimonial-wrap">
           <Slider {...settings}>
-            {testimonials.map((testimonial, index) => (
-              <div className="testimonial-item" key={index}>
-                <div className="testimonial-img">
-                  <img src={testimonial.img} alt={testimonial.name} />
-                  <div className="t-quote">
-                    <i className="fi flaticon-left-quote"></i>
+            {testimonial &&
+              testimonial?.map((item, index) => (
+                <div className="testimonial-item" key={index}>
+                  <div className="testimonial-img">
+                    <img src={item?.author_photo} alt={item.author_name} />
+                    <div className="t-quote">
+                      <i className="fi flaticon-left-quote"></i>
+                    </div>
+                  </div>
+                  <div className="testimonial-content">
+                    <p>{item?.message}</p>
+                    <div className="testimonial-author">
+                      <h3>{item?.author_name}</h3>
+                      <span>{item.author_position}</span>
+                    </div>
+                    <div className="t-content-quote">
+                      <i className="fi flaticon-left-quote"></i>
+                    </div>
                   </div>
                 </div>
-                <div className="testimonial-content">
-                  <p>{testimonial.quote}</p>
-                  <div className="testimonial-author">
-                    <h3>{testimonial.name}</h3>
-                    <span>{testimonial.position}</span>
-                  </div>
-                  <div className="t-content-quote">
-                    <i className="fi flaticon-left-quote"></i>
-                  </div>
-                </div>
-              </div>
-            ))}
+              ))}
           </Slider>
         </div>
       </div>

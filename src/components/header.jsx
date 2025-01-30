@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import NavWishlist from "../pages/wishlist/nav-wishlist";
+import EmptyContent from "./empty-content";
 
 const Header = () => {
   const [isOpenWishlist, setIsOpenWishlist] = useState(false);
@@ -60,7 +61,18 @@ const Header = () => {
                     to="/"
                     style={{ maxWidth: "120px" }}
                   >
-                    <img src="/assets/img/logo1.png" alt="" />
+                    <img
+                      src="/assets/img/logo1.png"
+                      alt=""
+                      className="d-none d-md-block"
+                    />
+
+                    <img
+                      src="/assets/img/logo-mobile.png"
+                      className="d-md-none"
+                      alt=""
+                      width={50}
+                    />
                   </Link>
                 </div>
               </div>
@@ -146,7 +158,7 @@ const Header = () => {
                             <i className="ti-close text-white"></i>
                           </button>
                           <div className="mini-cart-items">
-                            {items &&
+                            {items?.length > 0 ? (
                               items?.map((item, index) => (
                                 <div
                                   className="mini-cart-item clearfix"
@@ -175,7 +187,10 @@ const Header = () => {
                                     </span>
                                   </div>
                                 </div>
-                              ))}
+                              ))
+                            ) : (
+                              <EmptyContent title="No Items in Cart " />
+                            )}
                           </div>
                           <div className="mini-cart-action clearfix">
                             <span className="mini-checkout-price">

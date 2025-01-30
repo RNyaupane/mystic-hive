@@ -6,6 +6,7 @@ import { useState } from "react";
 import { productApi } from "../../redux/api-service/productApi";
 import { toast } from "react-toastify";
 import { getCartItem } from "../../redux/reducers/cartSlice";
+import EmptyContent from "../../components/empty-content";
 
 const CartView = () => {
   const { items, isLoading, id } = useSelector((state) => state.cart);
@@ -20,7 +21,7 @@ const CartView = () => {
       )
     );
   };
-  console.log(cartItems);
+
   const updateCart = async () => {
     for (const item of cartItems) {
       try {
@@ -75,71 +76,80 @@ const CartView = () => {
                       </tbody>
                     ) : (
                       <tbody>
-                        {cartItems?.map((item) => (
-                          <tr key={item.id}>
-                            <td className="images">
-                              <img
-                                src={
-                                  item.product.images.find(
-                                    (img) => img.is_primary
-                                  )?.image ||
-                                  "/assets/img/product/default-product.png"
-                                }
-                                alt={item.product.name}
-                                style={{ maxWidth: "100px" }}
-                              />
-                            </td>
-                            <td className="product">
-                              <ul>
-                                <li className="first-cart">
-                                  {item.product.name}
-                                </li>
-                                <li>Brand: {item.product.brand || "N/A"}</li>
-                              </ul>
-                            </td>
-                            <td className="stock">
-                              <ul className="input-style">
-                                <li className="quantity cart-plus-minus">
-                                  <input
-                                    type="number"
-                                    value={item.quantity}
-                                    onChange={(e) =>
-                                      handleQuantityChange(
-                                        item.id,
-                                        parseInt(e.target.value) || 1
-                                      )
-                                    }
-                                    min="1"
-                                  />
-                                </li>
-                              </ul>
-                            </td>
-                            <td className="ptice">
-                              ${parseFloat(item.product.unit_price).toFixed(2)}
-                            </td>
-                            <td className="stock">
-                              $
-                              {(
-                                parseFloat(item.product.unit_price) *
-                                item.quantity
-                              ).toFixed(2)}
-                            </td>
-                            <td className="action">
-                              <ul>
-                                <li className="w-btn">
-                                  <a
-                                    data-bs-toggle="tooltip"
-                                    data-bs-html="true"
-                                    title="Remove from Cart"
-                                    href="#"
-                                  >
-                                    <i className="fi flaticon-delete"></i>
-                                  </a>
-                                </li>
-                              </ul>
+                        {cartItems?.length > 0 ? (
+                          cartItems?.map((item) => (
+                            <tr key={item.id}>
+                              <td className="images">
+                                <img
+                                  src={
+                                    item.product.images.find(
+                                      (img) => img.is_primary
+                                    )?.image ||
+                                    "/assets/img/product/default-product.png"
+                                  }
+                                  alt={item.product.name}
+                                  style={{ maxWidth: "100px" }}
+                                />
+                              </td>
+                              <td className="product">
+                                <ul>
+                                  <li className="first-cart">
+                                    {item.product.name}
+                                  </li>
+                                  <li>Brand: {item.product.brand || "N/A"}</li>
+                                </ul>
+                              </td>
+                              <td className="stock">
+                                <ul className="input-style">
+                                  <li className="quantity cart-plus-minus">
+                                    <input
+                                      type="number"
+                                      value={item.quantity}
+                                      onChange={(e) =>
+                                        handleQuantityChange(
+                                          item.id,
+                                          parseInt(e.target.value) || 1
+                                        )
+                                      }
+                                      min="1"
+                                    />
+                                  </li>
+                                </ul>
+                              </td>
+                              <td className="ptice">
+                                $
+                                {parseFloat(item.product.unit_price).toFixed(2)}
+                              </td>
+                              <td className="stock">
+                                $
+                                {(
+                                  parseFloat(item.product.unit_price) *
+                                  item.quantity
+                                ).toFixed(2)}
+                              </td>
+                              <td className="action">
+                                <ul>
+                                  <li className="w-btn">
+                                    <a
+                                      data-bs-toggle="tooltip"
+                                      data-bs-html="true"
+                                      title="Remove from Cart"
+                                      href="#"
+                                    >
+                                      <i className="fi flaticon-delete"></i>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={6}>
+                              <EmptyContent title="No items in Cart" />
                             </td>
                           </tr>
-                        ))}
+                        )}
                       </tbody>
                     )}
                   </table>

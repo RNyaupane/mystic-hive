@@ -4,6 +4,7 @@ import { productApi } from "../../redux/api-service/productApi";
 import { toast } from "react-toastify";
 import { createCart, getCartItem } from "../../redux/reducers/cartSlice";
 import { removeItemToWishList } from "../../redux/reducers/wishlistSlice";
+import EmptyContent from "../../components/empty-content";
 
 const WishlistPage = () => {
   const { items } = useSelector((state) => state.wishlist);
@@ -28,7 +29,6 @@ const WishlistPage = () => {
           toast.success("Added Item to cart");
           dispatch(getCartItem(id));
         }
-        console.log(res);
       } catch (err) {
         toast.error("Add to cart Failed");
         console.error(err);
@@ -64,7 +64,7 @@ const WishlistPage = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {wishlistProducts &&
+                      {wishlistProducts?.length > 0 ? (
                         wishlistProducts?.map((item, index) => (
                           <tr key={index}>
                             <td className="images">
@@ -130,7 +130,14 @@ const WishlistPage = () => {
                               </ul>
                             </td>
                           </tr>
-                        ))}
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={5}>
+                            <EmptyContent title="No items in wishlist" />
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </form>

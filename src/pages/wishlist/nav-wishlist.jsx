@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import EmptyContent from "../../components/empty-content";
 
 const NavWishlist = () => {
   const { items } = useSelector((state) => state.wishlist);
@@ -11,7 +12,7 @@ const NavWishlist = () => {
 
   return (
     <div className="mini-cart-items">
-      {wishlistProducts &&
+      {wishlistProducts?.length > 0 ? (
         wishlistProducts?.map((item, index) => (
           <div className="mini-cart-item clearfix" key={index}>
             <div className="mini-cart-item-image">
@@ -31,7 +32,10 @@ const NavWishlist = () => {
               <span className="mini-cart-item-quantity">x 1</span>
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <EmptyContent title="No items in wishlist" />
+      )}
     </div>
   );
 };

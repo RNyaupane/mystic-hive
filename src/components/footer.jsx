@@ -129,7 +129,7 @@ const Footer = () => {
                     <Link to="">Shpping and return policy</Link>
                   </li>
                   <li>
-                    <Link to="/orders">Order History</Link>
+                    <Link to="/profile">Order History</Link>
                   </li>
                   <li>
                     <Link to="/wishlist">Terms and conditions</Link>

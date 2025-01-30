@@ -49,7 +49,6 @@ const ProductDetailsPage = () => {
           toast.success("Added Item to cart");
           dispatch(getCartItem(id));
         }
-        console.log(res);
       } catch (err) {
         toast.error("Add to cart Failed");
         console.error(err);

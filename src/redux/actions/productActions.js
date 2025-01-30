@@ -22,10 +22,8 @@ const getProductDetail = async ({ payload }) => {
 };
 
 const createCart = async (payload) => {
-  console.log("CREAT CARt Oayload", payload);
   try {
     const response = await productApi.createCart();
-    console.log(response);
     return response;
   } catch (error) {
     toast.error(error?.response?.data?.message?.[0]);

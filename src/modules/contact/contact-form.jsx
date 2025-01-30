@@ -46,7 +46,6 @@ const ContactForm = () => {
         toast.success(res?.message);
         reset();
       }
-      console.log(res);
     } catch (err) {
       toast.error("Network Error !!!");
       console.warn(err);
