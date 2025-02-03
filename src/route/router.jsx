@@ -18,6 +18,7 @@ const CartPage = lazy(() => import("../pages/cart/cart.jsx"));
 const CheckoutPageNew = lazy(() =>
   import("../pages/checkout/checkout-page-new.jsx")
 );
+// const CheckoutPage = lazy(() => import("../pages/checkout/checkout-page.jsx"));
 const OrderHistoryPage = lazy(() => import("../pages/order/order-history.jsx"));
 const BlogPage = lazy(() => import("../pages/blogs/blog-page.jsx"));
 const Page404 = lazy(() => import("../components/page-404.jsx"));

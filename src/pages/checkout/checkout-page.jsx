@@ -3,7 +3,6 @@ import OrderListCheckout from "./order-list-checkout";
 import { profileApi } from "../../redux/api-service/profileApi";
 import AddressList from "./address-list";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import { Elements } from "@stripe/react-stripe-js";
 import StripeCheckoutForm from "./stripe-checkout";
 import { loadStripe } from "@stripe/stripe-js";
@@ -15,7 +14,9 @@ const CheckoutPage = () => {
   });
 
   const cartId = useSelector((state) => state.cart.id);
-  const stripePromise = loadStripe("your-publishable-key-here");
+  const stripePromise = loadStripe(
+    "pk_test_51PGk1E08B7UPR9midVhC2PlwAYdcEowjTvHEgJS12GRRiZIFq2D9rCzcKKa0xntvKTDDIt6DxtQP6Qyles7FKXQJ00WJYc7wA7"
+  );
   const [address, setAddress] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState();
   const [addLoad, setAddLoad] = useState(false);

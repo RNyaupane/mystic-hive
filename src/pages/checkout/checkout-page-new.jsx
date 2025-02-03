@@ -4,9 +4,11 @@ import { Elements } from "@stripe/react-stripe-js";
 import AddressList from "./address-list";
 import OrderListCheckout from "./order-list-checkout";
 import StripeCheckoutForm from "./stripe-checkout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { profileApi } from "../../redux/api-service/profileApi";
 import { toast } from "react-toastify";
+import { clearCart } from "../../redux/reducers/cartSlice";
+import { productApi } from "../../redux/api-service/productApi";
 
 // Load Stripe instance
 const stripePromise = loadStripe("your-publishable-key-here");
@@ -22,6 +24,7 @@ const CheckoutPageNew = () => {
   const [addLoad, setAddLoad] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("stripe");
   const [isNewAdd, setIsNewAdd] = useState(false);
+  const dispatch = useDispatch();
 
   const toggleAccordion = (key) => {
     setActiveAccordion((prev) => ({
@@ -46,12 +49,32 @@ const CheckoutPageNew = () => {
     fetchAddress();
   }, []);
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
     if (!selectedAddress) {
       toast.warn("Please select an address");
     } else {
-      console.log({ cart_id: cartId, address_id: selectedAddress });
+      try {
+        // Step 1: Place Order
+        const orderResponse = await productApi.orderPlace({
+          cart_id: cartId,
+          address_id: selectedAddress,
+        });
+        console.log(orderResponse);
+        if (!orderResponse?.data) {
+          dispatch(clearCart());
+          throw new Error("Order placement failed");
+        }
+        const orderId = orderResponse.data.id;
+
+        const paymentResponse = await productApi.processPayment({
+          order: orderId,
+          payment_method: "CASH",
+        });
+        console.log(paymentResponse);
+      } catch (err) {
+        console.warn(err);
+      }
     }
   };
 
@@ -139,7 +162,6 @@ const CheckoutPageNew = () => {
                                       <div className="submit-btn-area text-center">
                                         <button
                                           className="theme-btn px-5"
-                                          type="submit"
                                           onClick={(e) => handlePlaceOrder(e)}
                                         >
                                           Place Order
