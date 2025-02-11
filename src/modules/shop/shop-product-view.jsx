@@ -188,19 +188,18 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
                           </div>
                           <div className="product-ratting">
                             <ul>
-                              {item?.average_rating &&
-                                [...Array(5)].map((_, index) => (
-                                  <li key={index}>
-                                    <i
-                                      className={`fa ${
-                                        index < item?.average_rating
-                                          ? "fa-star"
-                                          : "fa-star-o"
-                                      }`}
-                                      aria-hidden="true"
-                                    ></i>
-                                  </li>
-                                ))}
+                              {[...Array(5)].map((_, index) => (
+                                <li key={index}>
+                                  <i
+                                    className={`fa ${
+                                      index < item?.average_rating
+                                        ? "fa-star"
+                                        : "fa-star-o"
+                                    }`}
+                                    aria-hidden="true"
+                                  ></i>
+                                </li>
+                              ))}
                             </ul>
                           </div>
                         </div>
@@ -302,19 +301,18 @@ const ShopProductView = ({ products, isLoading, onSortChange }) => {
                           </div>
                           <div className="product-ratting">
                             <ul>
-                              {item?.average_rating &&
-                                [...Array(5)].map((_, index) => (
-                                  <li key={index}>
-                                    <i
-                                      className={`fa ${
-                                        index < item?.average_rating
-                                          ? "fa-star"
-                                          : "fa-star-o"
-                                      }`}
-                                      aria-hidden="true"
-                                    ></i>
-                                  </li>
-                                ))}
+                              {[...Array(5)].map((_, index) => (
+                                <li key={index}>
+                                  <i
+                                    className={`fa ${
+                                      index < item?.average_rating
+                                        ? "fa-star"
+                                        : "fa-star-o"
+                                    }`}
+                                    aria-hidden="true"
+                                  ></i>
+                                </li>
+                              ))}
                             </ul>
                           </div>
                         </div>

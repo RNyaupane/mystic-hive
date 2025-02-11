@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { updateToken } from "./redux/restApi";
 import { useRouter } from "./hooks/use-router";
-import { clearCart } from "./redux/reducers/cartSlice";
 
 export default function AppContainer() {
   const token = useSelector((state) => state.auth?.accessToken);

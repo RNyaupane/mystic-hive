@@ -8,7 +8,7 @@ const Header = () => {
   const [isOpenWishlist, setIsOpenWishlist] = useState(false);
   const [isOpenCart, setIsOpenCart] = useState(false);
   // const [isScrolled, setIsScrolled] = useState(false);
-
+  const [openMennu, setOpenMenu] = useState(false);
   const { user, isAuthenticated, accessToken } = useSelector(
     (state) => state.auth
   );
@@ -50,7 +50,13 @@ const Header = () => {
             <div className="row">
               <div className="col-lg-3">
                 <div className="navbar-header">
-                  <button type="button" className="navbar-toggler open-btn">
+                  <button
+                    type="button"
+                    onClick={() => setOpenMenu(!openMennu)}
+                    className={`navbar-toggler open-btn ${
+                      openMennu ? "x-close" : ""
+                    } `}
+                  >
                     <span className="sr-only">Toggle navigation</span>
                     <span className="icon-bar first-angle"></span>
                     <span className="icon-bar middle-angle"></span>
@@ -79,12 +85,21 @@ const Header = () => {
               <div className="col-lg-7">
                 <div
                   id="navbar"
-                  className="collapse navbar-collapse navigation-holder"
+                  // className="collapse navbar-collapse navigation-holder"
+                  className={`collapse navbar-collapse navigation-holder ${
+                    openMennu ? "slideInn" : ""
+                  }`}
                 >
-                  <a className="menu-close" href="#">
+                  <a
+                    className="menu-close"
+                    onClick={() => setOpenMenu(!openMennu)}
+                  >
                     <i className="fi flaticon-cancel"></i>
                   </a>
                   <ul className="nav navbar-nav me-auto mb-2 mb-lg-0">
+                    <li>
+                      <Link to="/">Home</Link>
+                    </li>
                     <li>
                       <Link to="/about">About</Link>
                     </li>

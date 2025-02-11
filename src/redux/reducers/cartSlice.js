@@ -69,7 +69,9 @@ export const cartSlice = createSlice({
         state.isLoading = false;
         state.message = action?.payload?.message;
         state.statusCode = action?.payload?.status;
-        state.items = action?.payload?.data;
+        state.items = Array.isArray(action?.payload?.data)
+          ? action.payload.data
+          : [];
       })
       .addCase(getCartItem.rejected, (state) => {
         state.isLoading = false;

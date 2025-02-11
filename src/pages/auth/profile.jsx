@@ -4,12 +4,15 @@ import { toast } from "react-toastify";
 import Spinner from "../../components/spinner";
 import { logoutUser } from "../../redux/reducers/authSlice";
 import { useDispatch } from "react-redux";
+import AddressForm from "./address-form";
+import OrderList from "./profile-order";
 
 const ProfilePicture = ({ src, onEdit, onLogout }) => (
   <div className="comment-theme col-12 col-lg-3 position-static">
-    <div className="comment-image">
+    <div className="comment-image d-flex">
       <img
-        style={{ height: "90%", width: "90%" }}
+        style={{ height: "90%", width: "90%", maxWidth: "200px" }}
+        className="m-auto"
         src={
           src ||
           "https://www.shutterstock.com/image-vector/avatar-gender-neutral-silhouette-vector-600nw-2470054311.jpg"
@@ -31,64 +34,9 @@ const ProfilePicture = ({ src, onEdit, onLogout }) => (
   </div>
 );
 
-const AddressForm = ({ onCancel, onSave }) => {
-  const [formData, setFormData] = useState({
-    city: "",
-    state: "",
-    postalCode: "",
-    country: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = () => onSave(formData);
-
-  return (
-    <form
-      id="commentform"
-      // style={{ background: "#dfdfdf" }}
-      className="comment-form px-4 py-4 mb-5 accordian-border-top bg-light cart-wrapper"
-    >
-      <div className="form-inputs">
-        <input type="text" style={{ display: "none" }} />
-        {["city", "state", "postalCode", "country"].map((field) => (
-          <input
-            key={field}
-            name={field}
-            value={formData[field]}
-            onChange={handleChange}
-            placeholder={`Enter ${
-              field.charAt(0).toUpperCase() + field.slice(1)
-            }...`}
-            type="text"
-            className="form-control bg-white mb-3 "
-          />
-        ))}
-      </div>
-      <div className="form-submit d-flex">
-        <div className="ms-auto d-flex gap-3 mt-2">
-          <button
-            type="button"
-            className="btn bg-secondary text-white"
-            onClick={onCancel}
-          >
-            Cancel
-          </button>
-          <button type="button" className="btn btn-dark" onClick={handleSubmit}>
-            Add Address
-          </button>
-        </div>
-      </div>
-    </form>
-  );
-};
-
 const AddressList = ({ addresses }) => (
-  <div className="row bg-light">
-    <div className=" p-0">
+  <div className="row bg-light" style={{ width: "100%" }}>
+    <div className=" p-0" style={{ overflow: "auto" }}>
       <table className="table-responsive cart-wrap ">
         <thead>
           <tr>
@@ -125,53 +73,6 @@ const AddressList = ({ addresses }) => (
         </tbody>
       </table>
     </div>
-  </div>
-);
-
-const OrderList = ({ orders }) => (
-  <div className="cart-wrapper">
-    <table className="table-responsive cart-wrap">
-      <thead>
-        <tr>
-          {[
-            "Order ID",
-            "Date",
-            "Quantity",
-            "Ship To",
-            "Total Price",
-            "Status",
-            "Action",
-          ].map((heading, idx) => (
-            <th key={idx} className={heading.toLowerCase().replace(" ", "-")}>
-              {heading}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {orders.map((order, idx) => (
-          <tr key={idx}>
-            <td className="images">{order.id}</td>
-            <td className="product">{order.date}</td>
-            <td className="ptice">{order.quantity}</td>
-            <td className="name">{order.shipTo}</td>
-            <td className="ptice">${order.totalPrice}</td>
-            <td className={order.status.toLowerCase()}>
-              <span>{order.status}</span>
-            </td>
-            <td className="action">
-              <ul>
-                <li className="w-btn-view">
-                  <a href="#" title="View">
-                    <i className="fi ti-eye"></i>
-                  </a>
-                </li>
-              </ul>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
   </div>
 );
 
@@ -275,7 +176,7 @@ const Profile = () => {
               </div>
             </div>
             <div className="form">
-              <h3 className="comments-title mt-5 mb-4">All Orders</h3>
+              <h3 className="comments-title mt-5 mb-4">Order History</h3>
               <OrderList
                 orders={[
                   {

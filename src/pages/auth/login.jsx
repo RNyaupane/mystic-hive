@@ -3,8 +3,11 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../redux/reducers/authSlice";
-
+import { loginUser, googleLoginUser } from "../../redux/reducers/authSlice"; // Add googleLoginUser action
+import { useGoogleLogin } from "@react-oauth/google";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { Icon } from "@iconify/react";
 // Validation schema
 const schema = yup.object().shape({
   email: yup
@@ -16,7 +19,11 @@ const schema = yup.object().shape({
 
 const Login = () => {
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   // React Hook Form setup
   const {
     control,
@@ -26,9 +33,42 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (googleData) => {
+      console.log("Google Response:", googleData);
+
+      try {
+        // Fetch user info using the access_token
+        const userInfoResponse = await fetch(
+          `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${googleData.access_token}`
+        );
+        const userInfo = await userInfoResponse.json();
+
+        const response = await dispatch(
+          googleLoginUser({
+            // auth_token: googleData.access_token,
+            auth_token: parseInt(userInfo.sub),
+          })
+        ).unwrap();
+
+        toast.success(
+          response?.message?.[0] || response?.message || "Login Successful"
+        );
+      } catch (error) {
+        console.error("Google Login Error:", error);
+        toast.error(error?.message || "Google login failed");
+      }
+    },
+    onError: (error) => {
+      console.error("Google Login Error:", error);
+      toast.error("Google Login Failed");
+    },
+    scope: "openid email profile",
+  });
+
   const onSubmit = async (data) => {
     try {
-      await dispatch(loginUser(data)); // Ensure this is an async action
+      await dispatch(loginUser(data)); // Dispatch login action
     } catch (error) {
       console.error("Error during login:", error);
     }
@@ -46,29 +86,23 @@ const Login = () => {
               <div className="tp-accountInfo">
                 <div className="tp-accountInfoHeader">
                   <Link to="/">
-                    <img src="/assets/img/logo.png" alt="" />
+                    <img src="/assets/img/logo.png" alt="Logo" />
                   </Link>
-                  {/* <Link className="tp-accountBtn" to="/auth/register">
-                    <span>Create Account</span>
-                  </Link> */}
-                </div>
-                <div className="image">
-                  {/* <img src="/assets/img/login.png" alt="" width={300} /> */}
                 </div>
                 <div className="back-home">
                   <Link className="tp-accountBtn" to="/">
-                    <span>Back To Home</span>
+                    Back To Home
                   </Link>
                 </div>
               </div>
               <div className="tp-accountForm form-style">
                 <div className="fromTitle">
                   <h2>Login</h2>
-                  <p>Sign into your pages account</p>
+                  <p>Sign into your account</p>
                 </div>
                 <div className="row">
                   {/* Email Field */}
-                  <div className="col-lg-12 col-md-12 col-12">
+                  <div className="col-lg-12">
                     <Controller
                       name="email"
                       control={control}
@@ -80,7 +114,7 @@ const Login = () => {
                             type="text"
                             id="email"
                             {...field}
-                            placeholder="demo@gmail.com"
+                            placeholder="Enter email"
                             className={`form-control ${
                               errors.email ? "is-invalid" : ""
                             }`}
@@ -96,7 +130,7 @@ const Login = () => {
                   </div>
 
                   {/* Password Field */}
-                  <div className="col-lg-12 col-md-12 col-12">
+                  <div className="col-lg-12">
                     <Controller
                       name="password"
                       control={control}
@@ -104,15 +138,41 @@ const Login = () => {
                       render={({ field }) => (
                         <div className="form-group mb-4">
                           <label htmlFor="password">Password</label>
-                          <input
-                            type="password"
-                            id="password"
-                            {...field}
-                            placeholder="Enter your password"
-                            className={`form-control ${
-                              errors.password ? "is-invalid" : ""
-                            }`}
-                          />
+                          <div
+                            className="input-group align-items-center"
+                            style={{ flexWrap: "nowrap" }}
+                          >
+                            <input
+                              type={showPassword ? "text" : "password"}
+                              id="password"
+                              {...field}
+                              placeholder="Enter your password"
+                              className={`form-control ${
+                                errors.password ? "is-invalid" : ""
+                              }`}
+                            />
+                            <div
+                              className="cursor-pointer"
+                              style={{
+                                position: "absolute",
+                                right: "10px",
+                                zIndex: "99",
+                              }}
+                              onClick={togglePasswordVisibility}
+                            >
+                              {showPassword ? (
+                                <Icon
+                                  icon="fa6-regular:eye"
+                                  className="text-secondary"
+                                />
+                              ) : (
+                                <Icon
+                                  icon="fa6-regular:eye-slash"
+                                  className="text-secondary"
+                                />
+                              )}
+                            </div>
+                          </div>
                           {errors.password && (
                             <div className="invalid-feedback">
                               {errors.password.message}
@@ -124,7 +184,7 @@ const Login = () => {
                   </div>
 
                   {/* Remember Me */}
-                  <div className="col-lg-12 col-md-12 col-12">
+                  <div className="col-lg-12">
                     <div className="check-box-wrap">
                       <div className="input-box">
                         <input
@@ -141,32 +201,35 @@ const Login = () => {
                   </div>
 
                   {/* Submit Button */}
-                  <div className="col-lg-12 col-md-12 col-12">
+                  <div className="col-lg-12">
                     <button
                       type="submit"
                       className="tp-accountBtn"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting && (
+                      {isSubmitting ? (
                         <span
                           className="spinner-border spinner-border-sm mx-2"
                           role="status"
-                          aria-hidden="true"
                         ></span>
+                      ) : (
+                        "Login"
                       )}
-                      {isSubmitting ? "Logging in..." : "Login"}
                     </button>
                   </div>
                 </div>
+
                 <h4 className="or">
                   <span>OR</span>
                 </h4>
 
+                {/* Google Login Button */}
                 <ul className="tp-socialLoginBtn">
                   <li>
                     <button
-                      className=" w-auto px-3 btn btn-secondary"
+                      className="w-auto px-3 btn btn-secondary"
                       type="button"
+                      onClick={googleLogin}
                     >
                       <span>
                         <i className="fa fa-google"></i> &ensp; Login with

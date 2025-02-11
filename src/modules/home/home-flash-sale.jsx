@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const HomeFlashSale = () => {
   return (
     <section className="flash-Sale-area product-area section-padding">
@@ -97,7 +99,7 @@ const HomeFlashSale = () => {
                   </div>
                   <div className="product-content">
                     <h3>
-                      <a href="#">{product.name}</a>
+                      <Link to="/product/1">{product.name}</Link>
                     </h3>
                     <div className="product-btm">
                       <div className="product-price">

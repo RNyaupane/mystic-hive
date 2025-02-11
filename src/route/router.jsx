@@ -4,6 +4,7 @@ import PreLoader from "../components/pre-loader";
 import Register from "../pages/auth/register.jsx";
 import ProtectedRoute from "./PrivateRoutes.jsx";
 import Profile from "../pages/auth/profile.jsx";
+// import LoginNextAuth from "../pages/auth/login-next-auth.jsx";
 
 const MainLayout = lazy(() => import("../layout/main-layout"));
 const AboutPage = lazy(() => import("../pages/about/about-page.jsx"));
@@ -90,6 +91,7 @@ const AppRouter = () => {
       element: <AuthLayout />,
       children: [
         { path: "login", element: <Login /> },
+        // { path: "login-next", element: <LoginNextAuth /> },
         { path: "register", element: <Register /> },
       ],
     },

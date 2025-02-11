@@ -3,25 +3,25 @@ import {
   useStripe,
   useElements,
   CardElement,
-  // CardNumberElement,
-  // CardExpiryElement,
-  // CardCvcElement,
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
 } from "@stripe/react-stripe-js";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { productApi } from "../../redux/api-service/productApi";
 import { clearCart } from "../../redux/reducers/cartSlice";
+import { useOptions } from "../../hooks/use-options";
 
 const cardStyle = {
   style: {
     base: {
-      fontSize: "16px",
       color: "#424770",
-      "::placeholder": { color: "#aab7c4" },
-      padding: "10px",
-      border: "1px solid #ccc",
-      borderRadius: "6px",
-      backgroundColor: "#fff",
+      letterSpacing: "0.025em",
+      fontFamily: "Source Code Pro, monospace",
+      "::placeholder": {
+        color: "#aab7c4",
+      },
     },
     invalid: {
       color: "#9e2146",
@@ -35,6 +35,8 @@ const StripeCheckoutForm = ({ selectedAddress }) => {
   const cartId = useSelector((state) => state.cart.id);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const options = useOptions();
+
   const handlePayment = async (e) => {
     e.preventDefault();
 
@@ -56,13 +58,12 @@ const StripeCheckoutForm = ({ selectedAddress }) => {
         cart_id: cartId,
         address_id: selectedAddress,
       });
+      dispatch(clearCart());
 
-      console.log("Order is placed and this is orders Response", orderResponse);
-      if (!orderResponse?.data) {
-        dispatch(clearCart());
+      if (!orderResponse) {
         throw new Error("Order placement failed");
       }
-      const orderId = orderResponse.data.id;
+      const orderId = orderResponse.id;
 
       // Step 2: Process Payment (Backend creates Stripe intent)
       const paymentResponse = await productApi.processPayment({
@@ -70,20 +71,23 @@ const StripeCheckoutForm = ({ selectedAddress }) => {
         payment_method: "STRIPE",
       });
 
-      if (!paymentResponse?.data?.client_secret)
+      if (!paymentResponse?.data?.client_secret) {
         throw new Error("Payment processing failed");
+      }
 
       // Step 3: Confirm Payment on Frontend
       const { client_secret } = paymentResponse.data;
       const confirmPayment = await stripe.confirmCardPayment(client_secret, {
         payment_method: {
-          card: elements.getElement(CardElement),
+          card: elements.getElement(CardNumberElement),
         },
       });
 
       if (confirmPayment.error) throw new Error(confirmPayment.error.message);
 
-      toast.success("Payment successful!");
+      if (confirmPayment.paymentIntent.status === "succeeded") {
+        toast.success("Payment successful!");
+      }
     } catch (error) {
       toast.error(error.message);
     }
@@ -102,17 +106,22 @@ const StripeCheckoutForm = ({ selectedAddress }) => {
         />
       </div>
 
-      <div className="stripe-card-container">
+      {/* <div className="stripe-card-container">
         <CardElement options={cardStyle} className="stripe-card" />
-        {/* <label>Card Number</label>
+      </div> */}
+
+      <label>
+        Card Number
         <CardNumberElement options={cardStyle} className="stripe-card" />
-
-        <label>Expiration Date</label>
+      </label>
+      <label>
+        Expiration Date
         <CardExpiryElement options={cardStyle} className="stripe-card" />
-
-        <label>Security Code</label>
-        <CardCvcElement options={cardStyle} className="stripe-card" /> */}
-      </div>
+      </label>
+      <label>
+        Security Code
+        <CardCvcElement options={cardStyle} className="stripe-card" />
+      </label>
       <button
         onClick={handlePayment}
         disabled={!stripe || loading}

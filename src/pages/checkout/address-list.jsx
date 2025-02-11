@@ -1,3 +1,24 @@
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
+
+const countries = ["Nepal", "India", "USA"];
+const statesByCountry = {
+  Nepal: ["Bagmati", "Gandaki", "Karnali"],
+  India: ["Maharashtra", "Karnataka", "Tamil Nadu"],
+  USA: ["California", "Texas", "New York"],
+};
+const citiesByState = {
+  Bagmati: ["Kathmandu", "Lalitpur", "Bhaktapur"],
+  Gandaki: ["Pokhara", "Gorkha", "Lamjung"],
+  Karnali: ["Surkhet", "Jumla", "Dolpa"],
+  Maharashtra: ["Mumbai", "Pune", "Nagpur"],
+  Karnataka: ["Bangalore", "Mysore", "Hubli"],
+  "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
+  California: ["Los Angeles", "San Francisco", "San Diego"],
+  Texas: ["Houston", "Dallas", "Austin"],
+  "New York": ["New York City", "Buffalo", "Rochester"],
+};
+
 const AddressList = ({
   address = [],
   addLoad = false,
@@ -6,7 +27,17 @@ const AddressList = ({
   isNewAdd,
   setIsNewAdd,
   setSelectedAddress,
+  formData,
+  setFormData,
 }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  // Get states and cities based on the selected country and state
+  const states = formData.country ? statesByCountry[formData.country] : [];
+  const cities = formData.state ? citiesByState[formData.state] : [];
+
   return (
     <div className="caupon-wrap s2">
       <div className="biling-item">
@@ -41,7 +72,9 @@ const AddressList = ({
                     name="address"
                     id="address"
                     defaultValue={0}
-                    onChange={(e) => setSelectedAddress(e.target.value)}
+                    onChange={(e) => {
+                      setSelectedAddress(e.target.value), setIsNewAdd(false);
+                    }}
                     className="form-control"
                   >
                     <option disabled value={0}>
@@ -87,61 +120,63 @@ const AddressList = ({
                         <div className="col-lg-6 col-md-12 col-12">
                           <label htmlFor="Country">Country</label>
                           <select
-                            name="address"
-                            id="Country"
+                            name="country"
+                            value={formData.country}
+                            onChange={handleChange}
                             className="form-control"
                           >
-                            <option disabled="">United State</option>
-                            <option>Bangladesh</option>
-                            <option>India</option>
-                            <option>Srilanka</option>
-                            <option>Pakisthan</option>
-                            <option>Afgansthan</option>
+                            {countries.map((country) => (
+                              <option key={country} value={country}>
+                                {country}
+                              </option>
+                            ))}
                           </select>
                         </div>
                         <div className="col-lg-6 col-md-12 col-12">
-                          <label htmlFor="district">Dristrict</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            id="district"
-                            name="district"
-                          />
+                          <label htmlFor="Country">State</label>
+                          <select
+                            name="state"
+                            value={formData.state}
+                            onChange={handleChange}
+                            className="form-control"
+                            disabled={!formData.country}
+                          >
+                            {states.map((state) => (
+                              <option key={state} value={state}>
+                                {state}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-lg-6 col-md-12 col-12">
+                          <label htmlFor="Country">City</label>
+                          <select
+                            name="city"
+                            value={formData.city}
+                            onChange={handleChange}
+                            className="form-control"
+                            disabled={!formData.country}
+                          >
+                            {cities.map((city) => (
+                              <option key={city} value={city}>
+                                {city}
+                              </option>
+                            ))}
+                          </select>
                         </div>
 
                         <div className="col-lg-6 col-md-12 col-12">
                           <label htmlFor="postalCode">Post Code</label>
                           <input
-                            type="text"
-                            placeholder=""
-                            id="postalCode"
-                            name="postalCode"
-                          />
-                        </div>
-                        <div className="col-lg-6 col-md-12 col-12">
-                          <label htmlFor="city">City</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            id="city"
-                            name="city"
+                            name="postal_code"
+                            value={formData.postal_code}
+                            onChange={handleChange}
+                            placeholder="Enter Postal Code..."
+                            type="number"
                           />
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="submit-btn-area">
-                    <ul>
-                      <li>
-                        <button
-                          className="btn btn-dark rounded-0"
-                          type="button"
-                          onClick={() => toggleAccordion("payment")}
-                        >
-                          Save & continue
-                        </button>
-                      </li>
-                    </ul>
                   </div>
                 </>
               )}

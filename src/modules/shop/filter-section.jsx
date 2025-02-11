@@ -10,13 +10,17 @@ const FilterItem = ({ title, children }) => (
   </div>
 );
 
-const RadioList = ({ items, name }) => (
+const RadioList = ({ items, name, handlePriceRangeChange }) => (
   <ul>
     {items.map((item, index) => (
       <li key={index}>
         <label className="topcoat-radio-button__label">
           {item.label}
-          <input type="radio" name={name} />
+          <input
+            type="radio"
+            name={name}
+            onChange={() => handlePriceRangeChange(item.min, item.max)}
+          />
           <span className="topcoat-radio-button"></span>
         </label>
       </li>
@@ -42,14 +46,19 @@ const ColorList = ({ colors }) => (
   </div>
 );
 
-const FilterSection = ({ searchValue, onSearchChange }) => {
+const FilterSection = ({
+  searchValue,
+  onSearchChange,
+  setSelectedPriceRange,
+  selectedPriceRange,
+}) => {
   const priceOptions = [
-    { label: "All prices" },
-    { label: "$50 – $100 (1)" },
-    { label: "$100 – $200 (21)" },
-    { label: "$200 – $300 (13)" },
-    { label: "$300 – $400 (3)" },
-    { label: "$400 and more (2)" },
+    { label: "All prices", min: null, max: null },
+    { label: "$50 – $100", min: 50, max: 100 },
+    { label: "$100 – $200", min: 100, max: 200 },
+    { label: "$200 – $300", min: 200, max: 300 },
+    { label: "$300 – $400", min: 300, max: 400 },
+    { label: "$400 and more", min: 400, max: null },
   ];
 
   const sizeOptions = [
@@ -67,6 +76,10 @@ const FilterSection = ({ searchValue, onSearchChange }) => {
     { label: "Forest" },
     { label: "Queen" },
   ];
+
+  const handlePriceRangeChange = (min, max) => {
+    setSelectedPriceRange({ min, max });
+  };
 
   return (
     <div className="col-lg-4">
@@ -91,7 +104,11 @@ const FilterSection = ({ searchValue, onSearchChange }) => {
         </FilterItem>
 
         <FilterItem title="Price">
-          <RadioList items={priceOptions} name="topcoat" />
+          <RadioList
+            items={priceOptions}
+            name="topcoat"
+            handlePriceRangeChange={handlePriceRangeChange}
+          />
         </FilterItem>
 
         <FilterItem title="Size">

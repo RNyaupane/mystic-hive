@@ -9,15 +9,30 @@ const ShopView = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("");
+  const [selectedPriceRange, setSelectedPriceRange] = useState(null);
 
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
   const { products = [], isLoading } = useSelector((state) => state.product);
-  const filteredProducts = products?.filter((product) =>
-    product?.name?.toLowerCase()?.includes(searchQuery?.toLowerCase())
-  );
+  const filteredProducts = products?.filter((product) => {
+    // Filter by search query
+    const matchesSearch = product?.name
+      ?.toLowerCase()
+      ?.includes(searchQuery?.toLowerCase());
+
+    // Filter by price range
+    const matchesPriceRange =
+      !selectedPriceRange ||
+      (selectedPriceRange.min === null && selectedPriceRange.max === null) || // "All prices" selected
+      (selectedPriceRange.max === null
+        ? parseFloat(product.unit_price) >= selectedPriceRange.min // "$400 and more"
+        : parseFloat(product.unit_price) >= selectedPriceRange.min &&
+          parseFloat(product.unit_price) <= selectedPriceRange.max); // Specific range
+
+    return matchesSearch && matchesPriceRange;
+  });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     switch (sortOption) {
@@ -31,6 +46,9 @@ const ShopView = () => {
         return 0;
     }
   });
+  console.log(products);
+
+  console.log(selectedPriceRange);
   return (
     <div className="shop-section">
       <div className="container">
@@ -38,6 +56,8 @@ const ShopView = () => {
           <FilterSection
             searchValue={searchQuery}
             onSearchChange={(e) => setSearchQuery(e.target.value)}
+            selectedPriceRange={selectedPriceRange}
+            setSelectedPriceRange={setSelectedPriceRange}
           />
 
           <ShopProductView

@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
-import { productApi } from "../api-service/productApi";
+import { blogApi } from "../api-service/blgoApi";
 
 const getBlogs = async () => {
   try {
-    const response = await productApi.getProduct();
+    const response = await blogApi.getBlogs();
     return response;
   } catch (error) {
     toast.error(error?.response?.data?.message?.[0]);
@@ -13,7 +13,7 @@ const getBlogs = async () => {
 
 const getBlogDetail = async ({ payload }) => {
   try {
-    const response = await productApi.getProductDetail(payload);
+    const response = await blogApi.getBlogDetail(payload);
     return response;
   } catch (error) {
     toast.error(error?.response?.data?.message?.[0]);
@@ -21,7 +21,7 @@ const getBlogDetail = async ({ payload }) => {
   }
 };
 
-export const productService = {
+export const blogService = {
   getBlogs,
   getBlogDetail,
 };

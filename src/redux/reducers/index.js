@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { combineReducers } from "@reduxjs/toolkit";
 import authReducer, {
   logoutUser,
@@ -9,6 +10,7 @@ import cartReducer, { initialState as cartInitialState } from "./cartSlice";
 import wishlistReducer, {
   initialState as wishlistInitialState,
 } from "./wishlistSlice";
+import blogReducer from "./blogs/blogSlice";
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -16,6 +18,7 @@ const appReducer = combineReducers({
   productDetails: productDetailReducer,
   cart: cartReducer,
   wishlist: wishlistReducer,
+  blog: blogReducer,
 });
 
 export const rootReducer = (state, action) => {
@@ -23,8 +26,8 @@ export const rootReducer = (state, action) => {
     return {
       ...state,
       auth: authInitialState,
-      cart: cartInitialState,
-      wishlist: wishlistInitialState,
+      // cart: cartInitialState,
+      // wishlist: wishlistInitialState,
     };
   }
   return appReducer(state, action);

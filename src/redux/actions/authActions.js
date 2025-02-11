@@ -37,6 +37,22 @@ const login = async (data) => {
   }
 };
 
+//   Login Service
+const googleLogin = async (data) => {
+  try {
+    const response = await axios.post(`${base_url}auth/social/google/`, data);
+    if (response.status === 200) {
+      toast.success(response?.data?.message || "Login Successfully");
+    } else {
+      toast.error(response?.error?.message?.[0] || response?.error?.message);
+    }
+    return response.data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message?.[0]);
+    throw error;
+  }
+};
+
 //Logout Serive
 const logout = async () => {
   try {
@@ -53,5 +69,6 @@ const logout = async () => {
 export const authService = {
   register,
   login,
+  googleLogin,
   logout,
 };

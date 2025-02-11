@@ -15,4 +15,5 @@ export const productApi = {
     requests.put(`shop/carts/${cartId}/items/${prodId}`, data),
   orderPlace: (data) => requests.post(`shop/orders/`, data),
   processPayment: (data) => requests.post(`payment/`, data),
+  stripeWebHook: (data) => requests.post(`payment/webhook/stripe/`, data),
 };

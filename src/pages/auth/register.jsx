@@ -4,6 +4,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { authService } from "../../redux/actions/authActions"; // Replace with your actual action
+import { useGoogleLogin } from "@react-oauth/google";
+import { googleLoginUser } from "../../redux/reducers/authSlice";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { Icon } from "@iconify/react";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -21,7 +26,11 @@ const schema = yup.object().shape({
 
 const Register = () => {
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   // React Hook Form setup
   const {
     control,
@@ -46,6 +55,27 @@ const Register = () => {
     }
   };
 
+  const googleRegister = useGoogleLogin({
+    onSuccess: async (googleData) => {
+      try {
+        const userInfoResponse = await fetch(
+          `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${googleData.access_token}`
+        );
+        const userInfo = await userInfoResponse.json();
+        // Send access token to the backend for registration
+        const response = await dispatch(
+          googleLoginUser({ auth_token: parseInt(userInfo.sub) })
+        ).unwrap();
+
+        toast.success(
+          response?.message || "Registered & Logged in Successfully"
+        );
+      } catch (error) {
+        toast.error(error || "Google sign-up failed");
+      }
+    },
+    onError: (error) => toast.error("Google Sign-Up Failed: " + error),
+  });
   return (
     <div className="tp-login-area">
       <div className="container">
@@ -166,14 +196,40 @@ const Register = () => {
                       render={({ field }) => (
                         <div className="form-group mb-4">
                           <label>Password</label>
-                          <input
-                            type="password"
-                            placeholder="Your password here.."
-                            {...field}
-                            className={`form-control ${
-                              errors.password ? "is-invalid" : ""
-                            }`}
-                          />
+                          <div
+                            className="input-group align-items-center"
+                            style={{ flexWrap: "nowrap" }}
+                          >
+                            <input
+                              type={showPassword ? "text" : "password"}
+                              placeholder="Your password here.."
+                              {...field}
+                              className={`form-control ${
+                                errors.password ? "is-invalid" : ""
+                              }`}
+                            />
+                            <div
+                              className="cursor-pointer"
+                              style={{
+                                position: "absolute",
+                                right: "10px",
+                                zIndex: "99",
+                              }}
+                              onClick={togglePasswordVisibility}
+                            >
+                              {showPassword ? (
+                                <Icon
+                                  icon="fa6-regular:eye"
+                                  className="text-secondary"
+                                />
+                              ) : (
+                                <Icon
+                                  icon="fa6-regular:eye-slash"
+                                  className="text-secondary"
+                                />
+                              )}
+                            </div>
+                          </div>
                           {errors.password && (
                             <div className="invalid-feedback">
                               {errors.password.message}
@@ -203,6 +259,7 @@ const Register = () => {
                   <li>
                     <button
                       className=" w-auto px-3 btn btn-secondary"
+                      onClick={googleRegister}
                       type="button"
                     >
                       <span>
