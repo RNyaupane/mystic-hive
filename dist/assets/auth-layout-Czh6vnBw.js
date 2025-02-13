@@ -1,0 +1,1 @@
+import{u as r,a as c,r as n,j as e,O as i}from"./index-CHktpwbO.js";const x=()=>{const s=r(t=>{var o;return(o=t.auth)==null?void 0:o.accessToken}),a=r(t=>t.auth.isAuthenticated),u=c();return n.useEffect(()=>{s&&a&&u.back()},[s,a,u]),e.jsx(e.Fragment,{children:e.jsx(i,{})})};export{x as default};
