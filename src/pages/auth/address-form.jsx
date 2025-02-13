@@ -1,25 +1,7 @@
 import { useState } from "react";
+import { citiesByState, countries, statesByCountry } from "../../_mock/address";
 
-// Predefined options for countries, states, and cities
-const countries = ["Nepal", "India", "USA"];
-const statesByCountry = {
-  Nepal: ["Bagmati", "Gandaki", "Karnali"],
-  India: ["Maharashtra", "Karnataka", "Tamil Nadu"],
-  USA: ["California", "Texas", "New York"],
-};
-const citiesByState = {
-  Bagmati: ["Kathmandu", "Lalitpur", "Bhaktapur"],
-  Gandaki: ["Pokhara", "Gorkha", "Lamjung"],
-  Karnali: ["Surkhet", "Jumla", "Dolpa"],
-  Maharashtra: ["Mumbai", "Pune", "Nagpur"],
-  Karnataka: ["Bangalore", "Mysore", "Hubli"],
-  "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
-  California: ["Los Angeles", "San Francisco", "San Diego"],
-  Texas: ["Houston", "Dallas", "Austin"],
-  "New York": ["New York City", "Buffalo", "Rochester"],
-};
-
-const AddressForm = ({ onCancel, onSave }) => {
+const AddressForm = ({ onCancel, onSave, editMode, defaultValue }) => {
   const [formData, setFormData] = useState({
     city: "",
     state: "",
@@ -54,7 +36,9 @@ const AddressForm = ({ onCancel, onSave }) => {
           onChange={handleChange}
           className="form-control bg-white mb-3"
         >
-          <option value="">Select Country</option>
+          <option value="" disabled>
+            Select Country
+          </option>
           {countries.map((country) => (
             <option key={country} value={country}>
               {country}

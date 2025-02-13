@@ -34,7 +34,7 @@ const ProfilePicture = ({ src, onEdit, onLogout }) => (
   </div>
 );
 
-const AddressList = ({ addresses }) => (
+const AddressList = ({ addresses, setEditAddress }) => (
   <div className="row bg-light" style={{ width: "100%" }}>
     <div className=" p-0" style={{ overflow: "auto" }}>
       <table className="table-responsive cart-wrap ">
@@ -62,9 +62,13 @@ const AddressList = ({ addresses }) => (
                     <a title="View" className="">
                       <i className="fi ti-trash text-danger"></i>
                     </a>
-                    {/* <a title="View" className="">
+                    <a
+                      title="View"
+                      className="ps-2"
+                      onClick={() => setEditAddress(address?.id)}
+                    >
                       <i className="fi ti-pencil text-warning"></i>
-                    </a> */}
+                    </a>
                   </li>
                 </ul>
               </td>
@@ -80,6 +84,7 @@ const Profile = () => {
   const [userProfile, setUserProfile] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [openForm, setOpenForm] = useState(false);
+  const [editAddress, setEditAddress] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -169,7 +174,10 @@ const Profile = () => {
                           onSave={handleAddAddress}
                         />
                       )}
-                      <AddressList addresses={userProfile.addresses || []} />
+                      <AddressList
+                        setEditAddress={setEditAddress}
+                        addresses={userProfile.addresses || []}
+                      />
                     </div>
                   </div>
                 </div>

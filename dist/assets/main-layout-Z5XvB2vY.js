@@ -1,1 +1,0 @@
-import{j as t,O as r}from"./index-BP-RX_Oe.js";import{H as s,F as o}from"./header-fom8Maen.js";import"./empty-content-C-7DlC9a.js";const x=()=>t.jsxs(t.Fragment,{children:[t.jsx(s,{}),t.jsx(r,{}),t.jsx(o,{})]});export{x as default};

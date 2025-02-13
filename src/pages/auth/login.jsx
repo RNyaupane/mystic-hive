@@ -5,9 +5,15 @@ import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { loginUser, googleLoginUser } from "../../redux/reducers/authSlice"; // Add googleLoginUser action
 import { useGoogleLogin } from "@react-oauth/google";
+
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
+
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+const clientSecret = import.meta.env.VITE_GOOOGLE_CLIENT_SECRET;
+const clientSocialSecret = import.meta.env.VITE_SOCIAL_SECRET;
+
 // Validation schema
 const schema = yup.object().shape({
   email: yup
@@ -34,20 +40,43 @@ const Login = () => {
   });
 
   const googleLogin = useGoogleLogin({
-    onSuccess: async (googleData) => {
-      console.log("Google Response:", googleData);
+    onSuccess: async (codeResponse) => {
+      console.log("Authorization Code:", codeResponse);
 
+      // const userInfoResponse = await fetch(
+      //   `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${codeResponse.access_token}`
+      // );
+      // const userInfo = await userInfoResponse.json();
+      // console.log(userInfo);
+      // Exchange the authorization code for tokens
       try {
-        // Fetch user info using the access_token
-        const userInfoResponse = await fetch(
-          `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${googleData.access_token}`
+        const tokenResponse = await fetch(
+          "https://oauth2.googleapis.com/token",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+              code: codeResponse.code,
+              client_id: clientId,
+              client_secret: clientSecret,
+              redirect_uri: "http://localhost:5173",
+              grant_type: "authorization_code",
+            }),
+          }
         );
-        const userInfo = await userInfoResponse.json();
 
+        const tokens = await tokenResponse.json();
+        console.log("Tokens:", tokens);
+
+        // Now you should have both access_token and id_token
+        const { id_token, access_token } = tokens;
+
+        // Send the id_token to your backend
         const response = await dispatch(
           googleLoginUser({
-            // auth_token: googleData.access_token,
-            auth_token: parseInt(userInfo.sub),
+            auth_token: id_token,
           })
         ).unwrap();
 
@@ -55,8 +84,8 @@ const Login = () => {
           response?.message?.[0] || response?.message || "Login Successful"
         );
       } catch (error) {
-        console.error("Google Login Error:", error);
-        toast.error(error?.message || "Google login failed");
+        console.error("Token Exchange Error:", error);
+        toast.error("Google login failed");
       }
     },
     onError: (error) => {
@@ -64,6 +93,8 @@ const Login = () => {
       toast.error("Google Login Failed");
     },
     scope: "openid email profile",
+    flow: "auth-code",
+    responseType: "code", // Use authorization code flow
   });
 
   const onSubmit = async (data) => {
@@ -218,11 +249,9 @@ const Login = () => {
                     </button>
                   </div>
                 </div>
-
                 <h4 className="or">
                   <span>OR</span>
                 </h4>
-
                 {/* Google Login Button */}
                 <ul className="tp-socialLoginBtn">
                   <li>

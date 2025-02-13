@@ -78,7 +78,7 @@ const ProductDetailsPage = () => {
     return <PreLoader />;
   }
   return (
-    <div className="product-single-section section-padding ">
+    <div className="product-single-section section-padding">
       <div className="container">
         <div className="product-details">
           <div className="row align-items-start">

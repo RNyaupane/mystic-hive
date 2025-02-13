@@ -41,9 +41,9 @@ const HomeTestimonials = () => {
                 Client <span>Testimonial</span>
               </h2>
               <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry has been the industry standard consectetur adipisicing
-                elit.
+                Hear from our satisfied clients about their experiences working
+                with us. Their feedback speaks volumes about our dedication and
+                quality of service.
               </p>
             </div>
           </div>

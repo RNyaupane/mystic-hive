@@ -30,13 +30,12 @@ const AboutStart = () => {
                   </h2>
                 </div>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
-                  placeat consectetur sapiente tempore nobis iure quos neque
-                  laboriosam, doloribus labore ad assumenda veritatis asperiores
-                  possimus, tenetur id dolorum minus ipsa, quam eligendi odit
-                  accusamus necessitatibus. Dicta aut delectus minima atque illo
-                  hic, totam deleniti magni nam, ex perferendis, excepturi
-                  impedit voluptates ipsam.
+                  We are dedicated to bringing you the finest, 100% pure honey
+                  directly from trusted beekeepers. Our honey is raw,
+                  unprocessed, and rich in natural nutrients to enhance your
+                  well-being. Whether you&apos;re looking for a natural
+                  sweetener, a health boost, or a delicious treat, our honey is
+                  the perfect choice. Taste the difference with every spoonful!
                 </p>
                 <Link to="/about" className="btn theme-btn" tabIndex="0">
                   More About<i className="fa fa-angle-double-right"></i>

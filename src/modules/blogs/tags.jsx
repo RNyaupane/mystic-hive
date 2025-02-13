@@ -14,23 +14,21 @@ const BlogTags = () => {
   useEffect(() => {
     fetchTags();
   }, []);
-  console.log(tags);
+  console.log("HGI", tags);
   return (
     <div className="widget tag-widget">
       <h3>Tags</h3>
       <ul>
-        <li>
-          <a href="#">Honey</a>
-        </li>
-        <li>
-          <a href="#">Harvest</a>
-        </li>
-        <li>
-          <a href="#">Organic</a>
-        </li>
-        <li>
-          <a href="#">Bees</a>
-        </li>
+        {tags?.map((item, index) => (
+          <li key={index}>
+            <a
+              className="cursor-pointer"
+              style={{ textTransform: "capitalize" }}
+            >
+              {item?.name}
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   );

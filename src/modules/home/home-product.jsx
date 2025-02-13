@@ -66,12 +66,13 @@ const HomeProduct = () => {
           <div className="col-lg-6 offset-lg-3">
             <div className="section-title">
               <h2>
-                100% Fresh <span>Honey</span>
+                Raw, Pure & Fresh <span>Honey</span>
               </h2>
               <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry has been the industry&apos;s standard consectetur
-                adipisicing elit.
+                Taste the difference of 100% pure, raw honey—untouched by
+                chemicals, full of natural benefits. Whether in tea, baking, or
+                as a healthy sweetener, experience nature’s finest golden nectar
+                every day.
               </p>
             </div>
           </div>

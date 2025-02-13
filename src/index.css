@@ -29,6 +29,7 @@ body {
     font-size: 1.06667rem;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 @media (max-width: 767px) {
@@ -2032,7 +2033,7 @@ img {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     left: 0;
     width: 100%;
-    z-index: 99;
+    z-index: 9999;
 }
 
 @media (max-width: 991px) {
@@ -2058,7 +2059,7 @@ img {
     position: sticky;
     top: 0;
     width: 100%;
-    z-index: 99;
+    z-index: 999999;
     background: transparent;
     transition: all 0.5s ease-in-out;
 }
@@ -2092,7 +2093,7 @@ img {
     background: var(--whiteBg);
     left: 0;
     width: 100%;
-    z-index: 99;
+    z-index: 99999999999;
 }
 
 @media (max-width: 991px) {

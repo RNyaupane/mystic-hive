@@ -8,15 +8,16 @@ import AppContainer from "./AppContainer.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 createRoot(document.getElementById("root")).render(
-  <GoogleOAuthProvider clientId="820485442251-bc8o1ll8q7eucm2ru3edgbaer05msvgb.apps.googleusercontent.com">
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <GoogleOAuthProvider clientId={clientId}>
           <App />
-          <AppContainer />
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
-  </GoogleOAuthProvider>
+        </GoogleOAuthProvider>
+        <AppContainer />
+      </BrowserRouter>
+    </PersistGate>
+  </Provider>
 );

@@ -29,9 +29,10 @@ export default function AppContainer() {
   return (
     <>
       <ToastContainer
+        style={{ zIndex: "999999999999999" }}
         stacked
         position="top-right"
-        autoClose={5000}
+        autoClose={5000000000000000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

@@ -8,11 +8,12 @@ const HomeCategory = () => {
           <div className="col-lg-6">
             <div className="category-wrap">
               <div className="category-title">
-                <h2>Our Honey Category</h2>
+                <h2>Our Honey Collection</h2>
                 <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Nemo, eos fugit officiis error ipsum, dolor ducimus nam
-                  ratione nulla deleniti inventore blanditiis.
+                  Explore our range of pure, natural honey sourced from the
+                  finest flowers and crafted with care. Each variety offers a
+                  unique flavor and health benefits, perfect for every taste and
+                  need.
                 </p>
               </div>
               <div className="category-item">
@@ -27,9 +28,9 @@ const HomeCategory = () => {
                     <Link to="/shop">Queen Bee Honey</Link>
                   </h2>
                   <p>
-                    Lorem Ipsum is simply dummy text of the printing industry
-                    has been the industry&apos;s standard eos fugit
-                    industry&apos;s standard consectetur ipsum.
+                    A premium honey sourced from the nectar of wildflowers,
+                    offering a rich, smooth taste with natural antioxidants.
+                    Perfect for tea, desserts, or a spoonful of daily goodness.
                   </p>
                 </div>
               </div>
@@ -45,9 +46,9 @@ const HomeCategory = () => {
                     <Link to="/shop">Sunflower Honey</Link>
                   </h2>
                   <p>
-                    Lorem Ipsum is simply dummy text of the printing industry
-                    has been the industry&apos;s standard eos fugit
-                    industry&apos;s standard consectetur ipsum.
+                    Light and mildly sweet, sunflower honey is packed with
+                    vitamins and minerals. A perfect natural sweetener for your
+                    morning toast, yogurt, or smoothies.
                   </p>
                 </div>
               </div>
@@ -63,9 +64,9 @@ const HomeCategory = () => {
                     <Link to="/shop">Manuka Honey</Link>
                   </h2>
                   <p>
-                    Lorem Ipsum is simply dummy text of the printing industry
-                    has been the industry&apos;s standard eos fugit
-                    industry&apos;s standard consectetur ipsum.
+                    Known for its powerful antibacterial properties, Manuka
+                    honey supports immunity and digestion. Enjoy its rich,
+                    earthy flavor straight from the spoon or in herbal teas.
                   </p>
                 </div>
               </div>

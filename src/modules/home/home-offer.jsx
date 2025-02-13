@@ -13,17 +13,17 @@ const HomeOffer = () => {
           <div className="col-lg-5">
             <div className="offer-wrap">
               <div className="offer-title">
-                <small>Limited Offer For Customer</small>
+                <small>Exclusive Deal for Honey Lovers</small>
                 <h2>
-                  Fresh Sunflower <span>Original Honey Up</span> <br /> To 58%
-                  Off.
+                  Fresh Sunflower <span>Organic Honey</span> <br /> Up to 58%
+                  Off!
                 </h2>
               </div>
               <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo,
-                eos fugit officiis error ipsum, dolor ducimus nam ratione nulla
-                deleniti inventore blanditiis lorem in orci sed vestibulum
-                tempus.
+                Enjoy the rich taste and natural goodness of our fresh sunflower
+                honey. Sourced from the finest sunflower fields, it&apos;s
+                packed with nutrients, antioxidants, and a smooth, floral
+                sweetness perfect for every occasion.
               </p>
               <Link to="/shop" className="btn theme-btn" tabIndex="0">
                 Shop Now <i className="fa fa-angle-double-right"></i>
