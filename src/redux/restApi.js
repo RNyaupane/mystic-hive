@@ -65,11 +65,9 @@ axiosInstance.interceptors.response.use(
     // }
     if (
       error.response?.status === 401 &&
-      !!!originalRequest._retry &&
-      error.response?.config?.url !== "auth/refresh/token" &&
+      // !!!originalRequest._retry &&
+      // error.response?.config?.url !== "auth/refresh/token" &&
       !!!Public_Paths?.includes(pathname)
-      // &&
-      // !publicRoutes.includes(Router.router?.route ?? '')
     ) {
       // if (!!!store?.getState()?.auth?.accessToken) {
       toast.error("Unauthorized");

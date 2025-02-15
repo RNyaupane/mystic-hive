@@ -1,8 +1,14 @@
 import { requests } from "../restApi";
 
 export const productApi = {
-  getProduct: () => requests.get("shop/products/", {}),
-  getProductDetail: (data) => requests.get(`shop/products/${data?.id}`),
+  getProduct: () =>
+    requests.get("shop/products/", {}, { headers: { Authorization: "" } }),
+  getProductDetail: (data) =>
+    requests.get(
+      `shop/products/${data?.id}`,
+      {},
+      { headers: { Authorization: "" } }
+    ),
   createCart: () => requests.post(`shop/carts/`),
   getCartItem: (cartId) =>
     requests.get(
