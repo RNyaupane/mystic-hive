@@ -1,1 +1,0 @@
-import{j as t}from"./index-CHktpwbO.js";const a=({title:s})=>t.jsx("div",{className:"w-100 h-100 d-flex",style:{minHeight:"300px"},children:t.jsxs("div",{className:"m-auto text-center",children:[t.jsx("img",{src:"/assets/img/empty.png",alt:"No Data",width:160}),t.jsx("h4",{className:"pt-4 text-secondary",children:s||"No Data Found"})]})});export{a as E};

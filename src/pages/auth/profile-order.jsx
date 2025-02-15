@@ -1,5 +1,5 @@
 const OrderList = ({ orders }) => (
-  <div className="cart-wrapper">
+  <div className="cart-wrapper overflow-auto">
     <table className="table-responsive cart-wrap">
       <thead>
         <tr>
