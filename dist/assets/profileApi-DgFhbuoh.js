@@ -1,0 +1,1 @@
+import{v as e}from"./index-CvIzpCtl.js";const s={getProfile:()=>e.get("auth/profile/me/",{}),getAddress:()=>e.get("auth/address/"),getTestimonials:()=>e.get("client-testimonials/",{},{headers:{Authorization:""}}),getOrderHistory:()=>e.get("client-testimonials/")};export{s as p};
