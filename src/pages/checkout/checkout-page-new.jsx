@@ -95,7 +95,6 @@ const CheckoutPageNew = () => {
         });
         if (paymentResponse) {
           toast.success("Order Placed Successfully");
-          
         }
       } catch (err) {
         console.warn(err);
@@ -115,7 +114,7 @@ const CheckoutPageNew = () => {
           <div className="checkout-wrap">
             <div className="row">
               <div className="col-lg-8 col-12">
-                <AddreshsList
+                <AddressList
                   address={address}
                   addLoad={addLoad}
                   activeAccordion={activeAccordion}

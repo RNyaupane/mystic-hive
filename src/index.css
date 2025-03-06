@@ -3,6 +3,12 @@
 ----------------------------*/
 @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap");
 
+@font-face {
+    font-family: 'CustomFont';
+    src: url('../public/assets/fonts/text-fonts/now-medium.otf') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /*--------------------------------------------------------------
 #0.1    Theme Reset Style
@@ -23,7 +29,7 @@ html {
 }
 
 body {
-    font-family: "Poppins", sans-serif;
+    font-family: "CustomFont", "Poppins", sans-serif;
     background-color: var(--whiteBg);
     font-size: 16px;
     font-size: 1.06667rem;
@@ -47,7 +53,7 @@ h1,
 h2,
 h3,
 body {
-    font-family: "Conv_Now-Bold" !important;
+    font-family: "CustomFont", "Conv_Now-Bold" !important;
     color: var(--headingDark);
 }
 

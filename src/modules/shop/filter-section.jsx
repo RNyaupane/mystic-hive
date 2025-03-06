@@ -61,12 +61,7 @@ const FilterSection = ({
     { label: "$400 and more", min: 400, max: null },
   ];
 
-  const sizeOptions = [
-    { label: "Small Jar" },
-    { label: "Large Jar" },
-    { label: "Medium Jar" },
-    { label: "Extra large Jar" },
-  ];
+  const sizeOptions = [{ label: "500 ml" }, { label: "1 Liter" }];
 
   const colorOptions = Array.from({ length: 7 }, (_, i) => ({ value: 30 }));
 
